@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:postgresql://localhost:35432/postgres-theeye
+    username: theeye
+    password: theeye-password
+    driver-class-name: org.postgresql.Driver
+security:
+  basic:
+    enabled: false
