@@ -13,24 +13,24 @@ import java.util.Optional;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class Tile {
 
-   @Nullable
-   private Piece piece;
+     @Nullable
+     private Piece piece;
 
-   public boolean isOccupied() {
-      return Optional.ofNullable(piece)
-                     .isPresent();
-   }
+     public boolean isOccupied() {
+          return Optional.ofNullable(piece)
+                         .isPresent();
+     }
 
-   public void unoccupy() {
-      piece = null;
-   }
+     public void unoccupy() {
+          piece = null;
+     }
 
-   public char getFen() {
-      return Optional.ofNullable(piece)
-                     .map(Piece::getFenCode)
-                     .orElse(FenCodes.EMPTY);
-   }
+     public char getFen() {
+          return Optional.ofNullable(piece)
+                         .map(Piece::getFenCode)
+                         .orElse(FenCodes.NO_PIECE);
+     }
 }

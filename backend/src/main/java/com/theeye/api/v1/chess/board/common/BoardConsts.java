@@ -4,6 +4,6 @@ public class BoardConsts {
 
      public final static Integer ROWS = 8;
      public final static Integer COLUMNS = 8;
-     public final static String startingSetUp =
-             "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+     public final static String STARTING_SET_UP_FEN =
+             "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 }

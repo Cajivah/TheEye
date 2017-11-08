@@ -8,12 +8,12 @@ import lombok.Value;
 @Value
 public class Move {
 
-   private Coords from;
-   private Coords to;
-   private Piece piece;
-   private PossibleMoveResult moveResult;
+     private Coords from;
+     private Coords to;
+     private Piece piece;
+     private PossibleMoveResult moveResult;
 
-   public PlayerColor getPlayer() {
-      return piece.getOwner();
-   }
+     public PlayerColor getPlayer() {
+          return piece.getOwner();
+     }
 }

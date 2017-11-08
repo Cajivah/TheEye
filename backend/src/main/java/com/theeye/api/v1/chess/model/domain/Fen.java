@@ -1,11 +1,15 @@
 package com.theeye.api.v1.chess.model.domain;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
-@Builder
+@AllArgsConstructor
 public class Fen {
 
-   String fenDescription;
+     private String fenDescription;
+
+     public static Fen of(String fen) {
+          return new Fen(fen);
+     }
 }

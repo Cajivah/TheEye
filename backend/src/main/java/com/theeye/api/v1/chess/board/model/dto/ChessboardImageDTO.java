@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ChessboardImageDTO {
 
-   @NotNull
-   @NotEmpty
-   private String base64Image;
-   private boolean warped;
-   private boolean greyscaled;
-   private boolean rotated;
+     @NotNull
+     @NotEmpty
+     private String base64Image;
+     private boolean warped;
+     private boolean greyscaled;
+     private boolean rotated;
 }

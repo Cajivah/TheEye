@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class Coords {
 
-   private int row;
-   private int column;
+     private int row;
+     private int column;
 }

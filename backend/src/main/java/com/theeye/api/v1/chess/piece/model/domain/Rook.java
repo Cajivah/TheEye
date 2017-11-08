@@ -5,21 +5,25 @@ import com.theeye.api.v1.chess.piece.common.fen.FenCodes;
 
 public class Rook extends Piece {
 
-   private static final String AS_PGN = "R";
+     private static final String AS_PGN = "R";
 
-   public Rook(PlayerColor playerColor) {
-      super(playerColor);
-   }
+     public Rook(PlayerColor playerColor) {
+          super(playerColor);
+     }
 
-   @Override
-   public String toPGN() {
-      return AS_PGN;
-   }
+     public static Rook of(PlayerColor playerColor) {
+          return new Rook(playerColor);
+     }
 
-   @Override
-   public char getFenCode() {
-      return getOwner().equals(PlayerColor.White)
-              ? FenCodes.ROOK_WHITE
-              : FenCodes.ROOK_BLACK;
-   }
+     @Override
+     public String toPGN() {
+          return AS_PGN;
+     }
+
+     @Override
+     public char getFenCode() {
+          return getOwner().equals(PlayerColor.White)
+                  ? FenCodes.ROOK_WHITE
+                  : FenCodes.ROOK_BLACK;
+     }
 }

@@ -6,6 +6,6 @@ import lombok.Value;
 @Value
 public class MoveDTO {
 
-   private Coords from;
-   private Coords to;
+     private Coords from;
+     private Coords to;
 }

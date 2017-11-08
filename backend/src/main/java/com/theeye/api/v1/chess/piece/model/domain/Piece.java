@@ -6,13 +6,13 @@ import lombok.Data;
 @Data
 public abstract class Piece {
 
-   private PlayerColor owner;
+     private PlayerColor owner;
 
-   public Piece(PlayerColor playerColor) {
-      this.owner = playerColor;
-   }
+     public Piece(PlayerColor playerColor) {
+          this.owner = playerColor;
+     }
 
-   public abstract String toPGN();
+     public abstract String toPGN();
 
-   public abstract char getFenCode();
+     public abstract char getFenCode();
 }

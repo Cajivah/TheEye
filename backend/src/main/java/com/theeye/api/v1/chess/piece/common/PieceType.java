@@ -1,28 +1,34 @@
 package com.theeye.api.v1.chess.piece.common;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.piece.model.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.function.Supplier;
 
+import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
+
 @AllArgsConstructor
 @Getter
 public enum PieceType {
 
-   PAWN_WHITE(() -> new Pawn(PlayerColor.White)),
-   PAWN_BLACK(() -> new Pawn(PlayerColor.Black)),
-   ROOK_WHITE(() -> new Rook(PlayerColor.White)),
-   ROOK_BLACK(() -> new Rook(PlayerColor.Black)),
-   KNIGHT_WHITE(() -> new Knight(PlayerColor.White)),
-   KNIGHT_BLACK(() -> new Knight(PlayerColor.Black)),
-   BISHOP_WHITE(() -> new Bishop(PlayerColor.White)),
-   BISHOP_BLACK(() -> new Bishop(PlayerColor.Black)),
-   QUEEN_WHITE(() -> new Queen(PlayerColor.White)),
-   QUEEN_BLACK(() -> new Queen(PlayerColor.Black)),
-   KING_WHITE(() -> new King(PlayerColor.White)),
-   KING_BLACK(() -> new King(PlayerColor.Black));
+     PAWN_WHITE(() -> Pawn.of(White)),
+     PAWN_BLACK(() -> Pawn.of(Black)),
+     ROOK_WHITE(() -> Rook.of(White)),
+     ROOK_BLACK(() -> Rook.of(Black)),
+     KNIGHT_WHITE(() -> Knight.of(White)),
+     KNIGHT_BLACK(() -> Knight.of(Black)),
+     BISHOP_WHITE(() -> Bishop.of(White)),
+     BISHOP_BLACK(() -> Bishop.of(Black)),
+     QUEEN_WHITE(() -> Queen.of(White)),
+     QUEEN_BLACK(() -> Queen.of(Black)),
+     KING_WHITE(() -> King.of(White)),
+     KING_BLACK(() -> King.of(Black)),
+     EMPTY(() -> Empty.of(None));
 
-   private final Supplier<Piece> pieceSupplier;
+     private final Supplier<Piece> pieceSupplier;
+
+     public Piece create() {
+          return getPieceSupplier().get();
+     }
 }

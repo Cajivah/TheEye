@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Game {
 
-   private Board board;
+     private Board board;
 
-   private List<Move> movesHistory;
+     private List<Move> movesHistory;
 }

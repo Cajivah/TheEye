@@ -9,8 +9,11 @@ import com.theeye.api.v1.chess.model.domain.Fen;
 import com.theeye.api.v1.chess.piece.common.PieceType;
 import com.theeye.api.v1.chess.piece.common.fen.FenCodeToPieceTypeMap;
 import com.theeye.api.v1.chess.piece.common.fen.FenCodes;
+import com.theeye.api.v1.chess.piece.common.fen.FenDecoder;
+import com.theeye.api.v1.chess.piece.common.fen.FenEncoder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -19,48 +22,58 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class BoardMapper {
 
-   public Board toBoard(Fen fen) {
-      String[] split = fen.getFenDescription().split(String.valueOf(FenCodes.ROW_DELIMITER));
-      Tile[][] tiles = Arrays.stream(split)
-                             .map(String::toCharArray)
-                             .map(this::parseFenRow)
-                             .toArray(size -> new Tile[BoardConsts.ROWS][BoardConsts.COLUMNS]);
-      return Board.builder()
-                  .tiles(tiles)
-                  .build();
-   }
+     private FenDecoder fenDecoder;
+     private FenEncoder fenEncoder;
 
-   private Tile[] parseFenRow(char[] row) {
-      List<Tile> tiles = new LinkedList<>();
-      for (char code : row) {
-         parseFenCode(tiles, code);
-      }
-      return tiles.toArray(new Tile[BoardConsts.COLUMNS]);
-   }
+     @Autowired
+     public void setFenDecoder(FenDecoder fenDecoder,
+                               FenEncoder fenEncoder) {
+          this.fenDecoder = fenDecoder;
+          this.fenEncoder = fenEncoder;
+     }
 
-   private void parseFenCode(List<Tile> tiles, char code) {
-      if(Character.isDigit(code)) {
-         parseFenNumber(tiles, code);
-      } else {
-         parseFenChar(tiles, code);
-      }
-   }
+     public Board toBoard(Fen fen) {
+          String[] split = fen.getFenDescription().split(String.valueOf(FenCodes.ROW_DELIMITER));
+          Tile[][] tiles = Arrays.stream(split)
+                                 .map(String::toCharArray)
+                                 .map(this::parseFenRow)
+                                 .toArray(size -> new Tile[BoardConsts.ROWS][BoardConsts.COLUMNS]);
+          return Board.builder()
+                      .tiles(tiles)
+                      .build();
+     }
 
-   private void parseFenChar(List<Tile> tiles, char code) {
-      PieceType pieceType = FenCodeToPieceTypeMap.forFen(code);
-      tiles.add(new Tile(pieceType.getPieceSupplier().get()));
-   }
+     private Tile[] parseFenRow(char[] row) {
+          List<Tile> tiles = new LinkedList<>();
+          for (char code : row) {
+               parseFenCode(tiles, code);
+          }
+          return tiles.toArray(new Tile[BoardConsts.COLUMNS]);
+     }
 
-   private void parseFenNumber(List<Tile> tiles, char code) {
-      for (int i = Character.getNumericValue(code); i >= 0; --i) {
-         tiles.add(new Tile());
-      }
-   }
+     private void parseFenCode(List<Tile> tiles, char code) {
+          if (Character.isDigit(code)) {
+               parseFenNumber(tiles, code);
+          } else {
+               parseFenChar(tiles, code);
+          }
+     }
 
-   public Fen toFEN(Board board) {
-      return null;
-   }
+     private void parseFenChar(List<Tile> tiles, char code) {
+          PieceType pieceType = FenCodeToPieceTypeMap.forFen(code);
+          tiles.add(Tile.of(pieceType.getPieceSupplier().get()));
+     }
 
-   @Mapping(target = "position", source = "board")
-   public abstract NewPositionDTO toNewPositionDTO(ResolvingResult resolvingResult);
+     private void parseFenNumber(List<Tile> tiles, char code) {
+          for (int i = Character.getNumericValue(code); i >= 0; --i) {
+               tiles.add(new Tile());
+          }
+     }
+
+     public Fen toFEN(Board board) {
+          return fenEncoder.encode(board);
+     }
+
+     @Mapping(target = "position", source = "board")
+     public abstract NewPositionDTO toNewPositionDTO(ResolvingResult resolvingResult);
 }
