@@ -5,7 +5,9 @@ import com.theeye.api.v1.chess.board.common.BoardConsts;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
-import com.theeye.api.v1.chess.model.domain.Fen;
+import com.theeye.api.v1.chess.fen.model.domain.Fen;
+import com.theeye.api.v1.chess.fen.parser.FenDecoder;
+import com.theeye.api.v1.chess.fen.parser.FenParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static com.theeye.api.factory.CastlingStatusTestFactory.createAllFalse;
-import static com.theeye.api.v1.chess.piece.common.PieceType.*;
+import static com.theeye.api.v1.chess.piece.model.enumeration.PieceType.*;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

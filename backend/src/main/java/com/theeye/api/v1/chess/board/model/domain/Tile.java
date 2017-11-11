@@ -1,6 +1,6 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
-import com.theeye.api.v1.chess.piece.common.fen.FenCodes;
+import com.theeye.api.v1.chess.fen.common.FenCodes;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

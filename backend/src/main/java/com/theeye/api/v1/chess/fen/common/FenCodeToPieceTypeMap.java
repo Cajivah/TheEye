@@ -1,8 +1,8 @@
-package com.theeye.api.v1.chess.piece.common.fen;
+package com.theeye.api.v1.chess.fen.common;
 
 import com.google.common.collect.ImmutableMap;
-import com.theeye.api.v1.chess.piece.common.PieceType;
 import com.theeye.api.v1.chess.piece.exception.InvalidFenException;
+import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 
 import java.util.Map;
 import java.util.Optional;

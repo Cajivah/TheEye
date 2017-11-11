@@ -1,12 +1,14 @@
-package com.theeye.api.v1.chess.piece.common.fen;
+package com.theeye.api.v1.chess.fen.parser;
 
 import com.theeye.api.v1.chess.board.common.BoardConsts;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
-import com.theeye.api.v1.chess.piece.common.PieceType;
+import com.theeye.api.v1.chess.fen.common.FenCodeToPieceTypeMap;
+import com.theeye.api.v1.chess.fen.common.FenCodes;
 import com.theeye.api.v1.chess.piece.model.domain.Empty;
-import com.theeye.com.theeye.common.StringUtil;
+import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
+import com.theeye.common.StringUtil;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +16,15 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.theeye.api.v1.chess.piece.common.fen.FenCodes.*;
-
 @Component
 public class FenParser {
 
      public PlayerColor parseActiveColour(String fenSection) {
           String sanitized = fenSection.trim();
           switch (sanitized) {
-               case WHITE_ACTIVE:
+               case FenCodes.WHITE_ACTIVE:
                     return PlayerColor.White;
-               case BLACK_ACTIVE:
+               case FenCodes.BLACK_ACTIVE:
                     return PlayerColor.Black;
                default:
                     return PlayerColor.None;
@@ -34,10 +34,10 @@ public class FenParser {
      public CastlingStatus parseCastling(String fenSection) {
           String sanitized = fenSection.trim();
           return CastlingStatus.builder()
-                               .kingSideWhiteValid(sanitized.contains(String.valueOf(KING_WHITE)))
-                               .queenSideWhiteValid(sanitized.contains(String.valueOf(QUEEN_WHITE)))
-                               .kingSideBlackValid(sanitized.contains(String.valueOf(KING_BLACK)))
-                               .queenSideBlackValid(sanitized.contains(String.valueOf(QUEEN_BLACK)))
+                               .kingSideWhiteValid(sanitized.contains(String.valueOf(FenCodes.KING_WHITE)))
+                               .queenSideWhiteValid(sanitized.contains(String.valueOf(FenCodes.QUEEN_WHITE)))
+                               .kingSideBlackValid(sanitized.contains(String.valueOf(FenCodes.KING_BLACK)))
+                               .queenSideBlackValid(sanitized.contains(String.valueOf(FenCodes.QUEEN_BLACK)))
                                .build();
      }
 
@@ -60,7 +60,7 @@ public class FenParser {
      }
 
      public Tile[][] parsePositions(String fenSection) {
-          String[] split = fenSection.split(String.valueOf(ROW_DELIMITER));
+          String[] split = fenSection.split(String.valueOf(FenCodes.ROW_DELIMITER));
           ArrayUtils.reverse(split);
           return Arrays.stream(split)
                        .map(String::toCharArray)

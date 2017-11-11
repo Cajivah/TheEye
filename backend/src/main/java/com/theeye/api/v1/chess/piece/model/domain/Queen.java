@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.piece.model.domain;
 
 import com.theeye.api.v1.chess.board.common.PlayerColor;
-import com.theeye.api.v1.chess.piece.common.fen.FenCodes;
+import com.theeye.api.v1.chess.fen.common.FenCodes;
 
 public class Queen extends Piece {
 

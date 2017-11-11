@@ -3,8 +3,8 @@ package com.theeye.api.v1.chess.board.factory;
 
 import com.theeye.api.v1.chess.board.common.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Board;
-import com.theeye.api.v1.chess.model.domain.Fen;
-import com.theeye.api.v1.chess.piece.common.fen.FenDecoder;
+import com.theeye.api.v1.chess.fen.model.domain.Fen;
+import com.theeye.api.v1.chess.fen.parser.FenDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

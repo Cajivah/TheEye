@@ -1,4 +1,4 @@
-package com.theeye.api.v1.chess.piece.common.fen;
+package com.theeye.api.v1.chess.fen.common;
 
 public class FenCodes {
 

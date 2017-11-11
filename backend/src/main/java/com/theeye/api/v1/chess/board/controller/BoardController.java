@@ -3,7 +3,6 @@ package com.theeye.api.v1.chess.board.controller;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
 import com.theeye.api.v1.chess.board.model.dto.NewPositionDTO;
 import com.theeye.api.v1.chess.board.service.MoveResolverService;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.springframework.beans.factory.annotation.Autowired;

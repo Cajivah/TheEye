@@ -1,4 +1,4 @@
-package com.theeye.api.v1.chess.piece.common;
+package com.theeye.api.v1.chess.piece.model.enumeration;
 
 import com.theeye.api.v1.chess.piece.model.domain.*;
 import lombok.AllArgsConstructor;

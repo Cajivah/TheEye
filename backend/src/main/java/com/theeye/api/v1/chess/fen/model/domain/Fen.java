@@ -1,4 +1,4 @@
-package com.theeye.api.v1.chess.model.domain;
+package com.theeye.api.v1.chess.fen.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;

@@ -1,4 +1,4 @@
-package com.theeye.com.theeye.common;
+package com.theeye.common;
 
 public class StringUtil {
 
