@@ -1,13 +1,10 @@
 package com.theeye.api.v1.chess.board.mapper;
 
 import com.theeye.api.v1.chess.board.model.domain.Board;
-import com.theeye.api.v1.chess.board.model.domain.ResolvingResult;
-import com.theeye.api.v1.chess.board.model.dto.NewPositionDTO;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import com.theeye.api.v1.chess.fen.parser.FenDecoder;
 import com.theeye.api.v1.chess.fen.parser.FenEncoder;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
@@ -31,7 +28,4 @@ public abstract class BoardMapper {
      public Fen toFEN(Board board) {
           return fenEncoder.encode(board);
      }
-
-     @Mapping(target = "position", source = "board")
-     public abstract NewPositionDTO toNewPositionDTO(ResolvingResult resolvingResult);
 }

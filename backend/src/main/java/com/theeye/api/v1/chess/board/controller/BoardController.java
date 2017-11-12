@@ -1,10 +1,11 @@
 package com.theeye.api.v1.chess.board.controller;
 
+import com.theeye.api.v1.chess.board.mapper.MoveMapper;
+import com.theeye.api.v1.chess.board.model.domain.ResolvedMove;
+import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
 import com.theeye.api.v1.chess.board.model.dto.NewPositionDTO;
 import com.theeye.api.v1.chess.board.service.MoveResolverService;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfDouble;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,15 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardController {
 
      private final MoveResolverService moveResolverService;
+     private final MoveMapper moveMapper;
 
      @Autowired
-     public BoardController(MoveResolverService moveResolverService) {
+     public BoardController(MoveResolverService moveResolverService,
+                            MoveMapper moveMapper) {
           this.moveResolverService = moveResolverService;
+          this.moveMapper = moveMapper;
      }
 
      @PostMapping("/resolve")
      public NewPositionDTO findNewPosition(@RequestBody MoveToResolveDTO moveToResolve) {
-          Mat mat = new MatOfDouble(1,2,3,4);
-          return null;
+          UnresolvedMove unresolvedMove = moveMapper.toUnresolvedMove(moveToResolve);
+          ResolvedMove resolvedMove = moveResolverService.resolveMove(unresolvedMove);
+          return moveMapper.toNewPosition(resolvedMove);
      }
 }
