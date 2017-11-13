@@ -1,9 +1,12 @@
 package com.theeye.api.v1.chess.analysis.service;
 
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
+import com.theeye.api.v1.chess.analysis.util.LineUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -25,7 +28,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AnalysisServiceTest {
 
-     private AnalysisService sut = new AnalysisService(new LineMapper());
+     @Mock
+     LineMapper lineMapper;
+
+     @Mock
+     private LineUtils lineUtils;
+
+     @InjectMocks
+     private AnalysisService sut;
 
      static {
           System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
