@@ -7,6 +7,8 @@ import org.opencv.core.Mat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class MoveResolverService {
 
@@ -17,7 +19,7 @@ public class MoveResolverService {
           this.imageMapper = imageMapper;
      }
 
-     public ResolvedMove resolveMove(UnresolvedMove unresolvedMove) {
+     public ResolvedMove resolveMove(UnresolvedMove unresolvedMove) throws IOException {
           Mat mat = imageMapper.toMat(unresolvedMove.getChessboardImage().getImage());
           return null;
      }

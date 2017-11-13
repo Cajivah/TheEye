@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1/chess/board")
 public class BoardController {
@@ -27,7 +29,7 @@ public class BoardController {
      }
 
      @PostMapping("/resolve")
-     public NewPositionDTO findNewPosition(@RequestBody MoveToResolveDTO moveToResolve) {
+     public NewPositionDTO findNewPosition(@RequestBody MoveToResolveDTO moveToResolve) throws IOException {
           UnresolvedMove unresolvedMove = moveMapper.toUnresolvedMove(moveToResolve);
           ResolvedMove resolvedMove = moveResolverService.resolveMove(unresolvedMove);
           return moveMapper.toNewPosition(resolvedMove);
