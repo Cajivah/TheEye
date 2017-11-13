@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LineUtilsTest {
 
-     private LineUtils sut = new LineUtils();
-
      @Nested
      @DisplayName("Given lines to filter")
      class lines {
@@ -33,7 +31,9 @@ class LineUtilsTest {
                @Test
                @DisplayName("Should return")
                void filterHorizontalLines() {
-                    List<ParametrizedLine2D> filtered = sut.filterHorizontalLines(lines);
+                    List<ParametrizedLine2D> filtered = ParametrizedLineWorker.of(lines)
+                                                                              .filterHorizontalLines()
+                                                                              .getLines();
                     assertEquals(4, filtered.size());
                     assertEquals(4, filtered.get(0).c);
                }
@@ -51,7 +51,9 @@ class LineUtilsTest {
                @Test
                @DisplayName("Should return")
                void filterHorizontalLines() {
-                    List<ParametrizedLine2D> filtered = sut.filterVerticalLines(lines);
+                    List<ParametrizedLine2D> filtered = ParametrizedLineWorker.of(lines)
+                                                                              .filterVerticalLines()
+                                                                              .getLines();
                     assertEquals(1, filtered.size());
                     assertEquals(0, filtered.get(0).c);
                }

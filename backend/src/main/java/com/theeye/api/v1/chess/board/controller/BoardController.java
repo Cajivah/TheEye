@@ -34,4 +34,6 @@ public class BoardController {
           ResolvedMove resolvedMove = moveResolverService.resolveMove(unresolvedMove);
           return moveMapper.toNewPosition(resolvedMove);
      }
+
+//     @PostMapping("/")
 }

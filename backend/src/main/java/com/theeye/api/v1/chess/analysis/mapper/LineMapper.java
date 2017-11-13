@@ -39,7 +39,8 @@ public class LineMapper {
           } else {
                a = (line.y1 - line.y2)/(line.x1-line.x2);
                b = 1;
-               c = line.y1 - a * line.x1;
+               c = a * line.x1 - line.y1;
+               a = -a;
           }
           return new ParametrizedLine2D(line, a, b, c);
      }
