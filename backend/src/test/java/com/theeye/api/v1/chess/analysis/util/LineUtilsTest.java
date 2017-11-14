@@ -31,9 +31,9 @@ class LineUtilsTest {
                @Test
                @DisplayName("Should return")
                void filterHorizontalLines() {
-                    List<ParametrizedLine2D> filtered = ParametrizedLineWorker.of(lines)
-                                                                              .filterHorizontalLines()
-                                                                              .getLines();
+                    List<ParametrizedLine2D> filtered = ParametrizedLineProcessor.of(lines)
+                                                                                 .filterHorizontalLines()
+                                                                                 .getLines();
                     assertEquals(4, filtered.size());
                     assertEquals(4, filtered.get(0).c);
                }
@@ -51,9 +51,9 @@ class LineUtilsTest {
                @Test
                @DisplayName("Should return")
                void filterHorizontalLines() {
-                    List<ParametrizedLine2D> filtered = ParametrizedLineWorker.of(lines)
-                                                                              .filterVerticalLines()
-                                                                              .getLines();
+                    List<ParametrizedLine2D> filtered = ParametrizedLineProcessor.of(lines)
+                                                                                 .filterVerticalLines()
+                                                                                 .getLines();
                     assertEquals(1, filtered.size());
                     assertEquals(0, filtered.get(0).c);
                }
