@@ -13,7 +13,7 @@ cmake-build-debug/
 
 # IntelliJ
 out/
-
+test-results/
 # mpeltonen/sbt-idea plugin
 */.idea_modules/
 
