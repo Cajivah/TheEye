@@ -2,11 +2,11 @@ package com.theeye.api.v1.chess.analysis.service;
 
 import com.sun.javafx.geom.Point2D;
 import com.theeye.api.v1.chess.analysis.exception.PatternNotFoundException;
+import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
-import com.theeye.api.v1.chess.analysis.util.ParametrizedLineWorker;
-import com.theeye.api.v1.chess.analysis.util.MatWorker;
-import com.theeye.common.ComparisionUtil;
+import com.theeye.api.v1.chess.analysis.util.MatProcessor;
+import com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.theeye.api.v1.chess.analysis.util.ParametrizedLineWorker.*;
-import static com.theeye.common.ComparisionUtil.*;
+import static com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor.CLOSER_BOUND;
+import static com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor.FURTHER_BOUND;
+import static com.theeye.common.ComparisionUtil.getBigger;
+import static com.theeye.common.ComparisionUtil.getSmaller;
 import static org.opencv.calib3d.Calib3d.CALIB_CB_ADAPTIVE_THRESH;
 import static org.opencv.calib3d.Calib3d.CALIB_CB_FILTER_QUADS;
 
@@ -33,34 +35,45 @@ public class AnalysisService {
      public static final int TOP_LEFT_CORNER = 3;
 
      private final LineMapper lineMapper;
+     private final CoordsMapper coordsMapper;
+     private final TileCornersService tileCornersService;
 
      @Autowired
-     public AnalysisService(LineMapper lineMapper) {
+     public AnalysisService(LineMapper lineMapper,
+                            CoordsMapper coordsMapper,
+                            TileCornersService tileCornersService) {
           this.lineMapper = lineMapper;
+          this.coordsMapper = coordsMapper;
+          this.tileCornersService = tileCornersService;
      }
 
-     public void determinePositions(Mat image) {
-          MatOfPoint2f tilesCorners = new MatOfPoint2f();
-          boolean patternFound = detectTilesCorners(image, tilesCorners);
+     public Point[][] detectAllTilesCornerPoints(Mat image) {
+          MatOfPoint2f innerCorners = detectInnerTilesCorners(image);
+          return tileCornersService.findMissingBorderCorners(innerCorners);
      }
 
-     public boolean detectTilesCorners(Mat image, MatOfPoint2f corners) {
-          boolean patternFound = Calib3d.findChessboardCorners(image, new Size(CORNERS_PATTERN_WIDTH, CORNERS_PATTERN_HEIGHT), corners,  CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_FILTER_QUADS);
+     public MatOfPoint2f detectInnerTilesCorners(Mat image) {
+          MatOfPoint2f innerCorners = new MatOfPoint2f();
+          boolean patternFound = Calib3d.findChessboardCorners(
+                  image,
+                  new Size(CORNERS_PATTERN_WIDTH, CORNERS_PATTERN_HEIGHT),
+                  innerCorners,
+                  CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_FILTER_QUADS);
           if(!patternFound) {
-               //throw new PatternNotFoundException();
+               throw new PatternNotFoundException();
           }
-          return patternFound;
+          return innerCorners;
      }
 
      @NotNull
      public Mat detectLines(Mat image) {
           Mat preprocessedImage =
-                  MatWorker.ofClone(image)
-                           .applyGaussianBlur()
-                           .applyGreyscale()
-                           .applySobelDerivatives()
-                           .applyCannyEdgeDetection()
-                           .getMat();
+                  MatProcessor.ofClone(image)
+                              .applyGaussianBlur()
+                              .applyGreyscale()
+                              .applySobelDerivatives()
+                              .applyCannyEdgeDetection()
+                              .getMat();
 
           Mat lines = new Mat();
           Imgproc.HoughLinesP(preprocessedImage, lines, 1, Math.PI / 180, 70, 100, 15);
@@ -73,21 +86,22 @@ public class AnalysisService {
           List<ParametrizedLine2D> parametrizedLines = lineMapper.toParametrizedLines(lines);
           Point2D horizontalCenter = new Point2D(image.width() / 2, 0);
           List<ParametrizedLine2D> horizontalBounds =
-                  ParametrizedLineWorker.of(parametrizedLines)
-                                        .filterHorizontalLines()
-                                        .sortByDistance(horizontalCenter)
-                                        .firstAndLast()
-                                        .getLines();
+                  ParametrizedLineProcessor.of(parametrizedLines)
+                                           .filterHorizontalLines()
+                                           .sortByDistance(horizontalCenter)
+                                           .firstAndLast()
+                                           .getLines();
           Point2D verticalCenter = new Point2D(0, image.height() / 2);
           List<ParametrizedLine2D> verticalBounds =
-                  ParametrizedLineWorker.of(parametrizedLines)
-                                        .filterVerticalLines()
-                                        .sortByDistance(verticalCenter)
-                                        .firstAndLast()
-                                        .getLines();
+                  ParametrizedLineProcessor.of(parametrizedLines)
+                                           .filterVerticalLines()
+                                           .sortByDistance(verticalCenter)
+                                           .firstAndLast()
+                                           .getLines();
           return getBoundsIntersections(horizontalBounds, verticalBounds);
      }
 
+     @NotNull
      private Point[] getBoundsIntersections(List<ParametrizedLine2D> horizontalBounds,
                                             List<ParametrizedLine2D> verticalBounds) {
           ParametrizedLine2D bottomBound = horizontalBounds.get(FURTHER_BOUND);

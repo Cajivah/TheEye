@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @AllArgsConstructor(staticName = "of")
-public class ParametrizedLineWorker {
+public class ParametrizedLineProcessor {
 
      @Getter
      private List<ParametrizedLine2D> lines;
@@ -25,12 +25,12 @@ public class ParametrizedLineWorker {
      private final static Predicate<ParametrizedLine2D> closeToVertical = line -> line.a <= -1 || line.a > 1 || line.b == 0;
 
 
-     public ParametrizedLineWorker filterHorizontalLines() {
+     public ParametrizedLineProcessor filterHorizontalLines() {
           lines = filterLines(lines, closeToHorizontal);
           return this;
      }
 
-     public ParametrizedLineWorker filterVerticalLines() {
+     public ParametrizedLineProcessor filterVerticalLines() {
           lines = filterLines(lines, closeToVertical);
           return this;
      }
@@ -42,7 +42,7 @@ public class ParametrizedLineWorker {
                                   .collect(Collectors.toList());
      }
 
-     public ParametrizedLineWorker sortByDistance(Point2D distanceFrom) {
+     public ParametrizedLineProcessor sortByDistance(Point2D distanceFrom) {
           final Comparator<ParametrizedLine2D> byDistanceDescending = (line1, line2) -> line1.ptLineDist(distanceFrom) < line2.ptLineDist(distanceFrom) ? 1 : -1;
           lines = lines.stream()
                        .sorted(byDistanceDescending)
@@ -50,7 +50,7 @@ public class ParametrizedLineWorker {
           return this;
      }
 
-     public ParametrizedLineWorker firstAndLast() {
+     public ParametrizedLineProcessor firstAndLast() {
           lines = Lists.newArrayList(lines.get(0), lines.get(lines.size() - 1));
           return this;
      }

@@ -1,5 +1,6 @@
 package com.theeye.api.v1.chess.board.mapper;
 
+import com.theeye.api.v1.chess.analysis.mapper.ImageMapper;
 import com.theeye.api.v1.chess.board.model.domain.ResolvedMove;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;

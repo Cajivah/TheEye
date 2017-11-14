@@ -7,13 +7,11 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import static org.opencv.core.Core.BORDER_DEFAULT;
-import static org.opencv.core.Core.addWeighted;
-import static org.opencv.core.Core.convertScaleAbs;
+import static org.opencv.core.Core.*;
 import static org.opencv.core.CvType.CV_16S;
 
 @AllArgsConstructor(staticName = "of")
-public class MatWorker {
+public class MatProcessor {
 
      private static final int CANNY_LOW_THRESHOLD = 65;
      private static final int CANNY_RATIO = 5;
@@ -27,24 +25,24 @@ public class MatWorker {
      @Getter
      private Mat mat;
 
-     public static MatWorker ofClone(Mat mat) {
-          return new MatWorker(mat.clone());
+     public static MatProcessor ofClone(Mat mat) {
+          return new MatProcessor(mat.clone());
      }
 
      @NotNull
-     public MatWorker applyCannyEdgeDetection() {
+     public MatProcessor applyCannyEdgeDetection() {
           Imgproc.Canny(mat, mat, CANNY_LOW_THRESHOLD, CANNY_LOW_THRESHOLD * CANNY_RATIO);
           return this;
      }
 
      @NotNull
-     public MatWorker applyCannyEdgeDetection(int lowTreshold, int ratio) {
+     public MatProcessor applyCannyEdgeDetection(int lowTreshold, int ratio) {
           Imgproc.Canny(mat, mat, lowTreshold, lowTreshold * ratio);
           return this;
      }
 
      @NotNull
-     public MatWorker applySobelDerivatives() {
+     public MatProcessor applySobelDerivatives() {
           Mat grad_x = new Mat(), grad_y = new Mat();
           Mat abs_grad_x = new Mat(), abs_grad_y = new Mat();
           Imgproc.Sobel(mat, grad_x, SOBEL_DDEPTH, 1, 0, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
@@ -56,13 +54,13 @@ public class MatWorker {
      }
 
      @NotNull
-     public MatWorker applyGaussianBlur() {
+     public MatProcessor applyGaussianBlur() {
           Imgproc.GaussianBlur(mat, mat, new Size(GAUSSIAN_WIDTH,GAUSSIAN_HEIGHT), 0, 0, BORDER_DEFAULT );
           return this;
      }
 
      @NotNull
-     public MatWorker applyGreyscale() {
+     public MatProcessor applyGreyscale() {
           Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
           return this;
      }

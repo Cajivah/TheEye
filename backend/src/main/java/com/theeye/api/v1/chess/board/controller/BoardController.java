@@ -1,8 +1,10 @@
 package com.theeye.api.v1.chess.board.controller;
 
+import com.theeye.api.v1.chess.analysis.service.AnalysisService;
 import com.theeye.api.v1.chess.board.mapper.MoveMapper;
 import com.theeye.api.v1.chess.board.model.domain.ResolvedMove;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
+import com.theeye.api.v1.chess.board.model.dto.ChessboardImageDTO;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
 import com.theeye.api.v1.chess.board.model.dto.NewPositionDTO;
 import com.theeye.api.v1.chess.board.service.MoveResolverService;
@@ -19,13 +21,16 @@ import java.io.IOException;
 public class BoardController {
 
      private final MoveResolverService moveResolverService;
+     private final AnalysisService analysisService;
      private final MoveMapper moveMapper;
 
      @Autowired
      public BoardController(MoveResolverService moveResolverService,
-                            MoveMapper moveMapper) {
+                            MoveMapper moveMapper,
+                            AnalysisService analysisService) {
           this.moveResolverService = moveResolverService;
           this.moveMapper = moveMapper;
+          this.analysisService = analysisService;
      }
 
      @PostMapping("/resolve")
@@ -35,5 +40,5 @@ public class BoardController {
           return moveMapper.toNewPosition(resolvedMove);
      }
 
-//     @PostMapping("/")
+
 }

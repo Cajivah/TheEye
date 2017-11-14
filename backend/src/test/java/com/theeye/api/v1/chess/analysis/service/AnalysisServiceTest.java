@@ -1,13 +1,11 @@
 package com.theeye.api.v1.chess.analysis.service;
 
-import com.sun.javafx.geom.Point2D;
+import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
-import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
-import com.theeye.api.v1.chess.analysis.util.MatWorker;
-import com.theeye.api.v1.chess.analysis.util.ParametrizedLineWorker;
+import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opencv.calib3d.Calib3d;
@@ -23,6 +21,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.theeye.api.v1.chess.analysis.service.AnalysisService.CORNERS_PATTERN_HEIGHT;
@@ -33,8 +35,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AnalysisServiceTest {
 
      private LineMapper lineMapper = new LineMapper();
+     private CoordsMapper coordsMapper = new CoordsMapper();
+     private TileCornersService tileCornersService = new TileCornersService();
 
-     private AnalysisService sut = new AnalysisService(lineMapper);
+     private AnalysisService sut = new AnalysisService(lineMapper, coordsMapper, tileCornersService);
 
      static {
           System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -56,7 +60,7 @@ class AnalysisServiceTest {
 
      @BeforeEach
      public void setUp() throws IOException {
-          Resource resource = new ClassPathResource(filenames.get(1));
+          Resource resource = new ClassPathResource(filenames.get(7));
           byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
           BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
           ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -65,15 +69,21 @@ class AnalysisServiceTest {
           mat = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
      }
 
+     @BeforeAll
+     private static void setUpAll() throws IOException {
+          Path path = Paths.get("test-results");
+          if(!Files.exists(path)) {
+               Files.createDirectory(path);
+          }
+     }
+
      @Test
      void tileCornerDetectionTrimmed() throws IOException {
           Mat lines = sut.detectLines(this.mat);
           Point[] corners = sut.findCorners(mat, lines);
           Mat trimmed = sut.trimToCorners(this.mat, corners);
-          MatOfPoint2f tileCorners = new MatOfPoint2f();
-          boolean patternFound = sut.detectTilesCorners(mat, tileCorners);
+          MatOfPoint2f tileCorners = sut.detectInnerTilesCorners(mat);
           Calib3d.drawChessboardCorners(mat, new Size(CORNERS_PATTERN_HEIGHT, CORNERS_PATTERN_WIDTH), tileCorners, true);
-          assertTrue(patternFound);
           saveToFile(mat, "InnerCornerDetection");
      }
 
@@ -83,43 +93,21 @@ class AnalysisServiceTest {
           Point[] corners = sut.findCorners(mat, lines);
           Mat trimmed = sut.trimToCorners(this.mat, corners);
 
-          Mat mat = new Mat();
-          Core.copyMakeBorder(trimmed, mat, 100, 100, 100, 100, Core.BORDER_CONSTANT, new Scalar(255, 255, 255));
-          MatOfPoint2f tileCorners = new MatOfPoint2f();
-          boolean patternFound = sut.detectTilesCorners(mat, tileCorners);
-          Calib3d.drawChessboardCorners(mat, new Size(CORNERS_PATTERN_HEIGHT, CORNERS_PATTERN_WIDTH), tileCorners, true);
-
-          saveToFile(mat, "TrimToRoi");
+          saveToFile(trimmed, "TrimToRoi");
      }
 
      @Test
      void test() throws IOException {
           Mat lines = sut.detectLines(this.mat);
-          List<ParametrizedLine2D> parametrizedLines = lineMapper.toParametrizedLines(lines);
-          Point2D horizontalCenter = new Point2D(mat.width() / 2, 0);
-          List<ParametrizedLine2D> horizontalBounds =
-                  ParametrizedLineWorker.of(parametrizedLines)
-                                        .filterHorizontalLines()
-                                        .sortByDistance(horizontalCenter)
-                                        .firstAndLast()
-                                        .getLines();
-          Point2D verticalCenter = new Point2D(0, mat.height() / 2);
-          List<ParametrizedLine2D> verticalBounds =
-                  ParametrizedLineWorker.of(parametrizedLines)
-                                        .filterVerticalLines()
-                                        .sortByDistance(verticalCenter)
-                                        .firstAndLast()
-                                        .getLines();
-          ParametrizedLine2D bound = horizontalBounds.get(0);
-          Imgproc.line(mat, new Point(bound.x1, bound.y1), new Point(bound.x2, bound.y2), new Scalar(0, 0, 255), 2);
-          bound = horizontalBounds.get(1);
-          Imgproc.line(mat, new Point(bound.x1, bound.y1), new Point(bound.x2, bound.y2), new Scalar(0, 255, 255), 2);
-          bound = verticalBounds.get(0);
-          Imgproc.line(mat, new Point(bound.x1, bound.y1), new Point(bound.x2, bound.y2), new Scalar(0, 255,0), 2);
-          bound = verticalBounds.get(1);
-          Imgproc.line(mat, new Point(bound.x1, bound.y1), new Point(bound.x2, bound.y2), new Scalar(255, 255, 0), 2);
+          Point[] corners = sut.findCorners(mat, lines);
+          Mat trimmed = sut.trimToCorners(this.mat, corners);
+          Point[][] points = sut.detectAllTilesCornerPoints(trimmed);
+          Arrays.stream(points).flatMap(Arrays::stream).forEach(point -> drawCircles(trimmed, point));
+          saveToFile(trimmed, "test");
+     }
 
-          saveToFile(mat, "bounds");
+     private void drawCircles(Mat trimmed, Point p) {
+          Imgproc.circle(trimmed, p, 5, new Scalar(0, 0, 255), 3);
      }
 
      @Test
@@ -139,7 +127,6 @@ class AnalysisServiceTest {
           Mat lines = sut.detectLines(mat);
           Point[] corners = sut.findCorners(mat, lines);
           for(int i = 0; i < corners.length; i++) {
-//               Imgproc.line(mat, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2);
                Imgproc.circle(mat, corners[i], 5, new Scalar(0, 0, 255), 3);
           }
           assertNotNull(lines);
