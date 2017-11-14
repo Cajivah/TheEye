@@ -1,4 +1,4 @@
-package com.theeye.api.v1.chess.board.mapper;
+package com.theeye.api.v1.chess.analysis.mapper;
 
 import com.theeye.api.v1.chess.board.model.domain.ChessboardImage;
 import com.theeye.api.v1.chess.board.model.dto.ChessboardImageDTO;
@@ -34,5 +34,10 @@ public abstract class ImageMapper {
           byte[] bytes = baos.toByteArray();
 
           return Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+     }
+
+     public Mat toMat(String base64Image) throws IOException {
+          BufferedImage bufferedImage = toBufferedImage(base64Image);
+          return toMat(bufferedImage);
      }
 }

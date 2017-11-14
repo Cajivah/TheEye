@@ -5,7 +5,6 @@ import com.theeye.api.v1.chess.analysis.exception.PatternNotFoundException;
 import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
-import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
 import com.theeye.api.v1.chess.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor;
 import org.jetbrains.annotations.NotNull;
@@ -48,10 +47,9 @@ public class AnalysisService {
           this.tileCornersService = tileCornersService;
      }
 
-     public TileCorners[][] detectAllTilesCorners(Mat image) {
+     public Point[][] detectAllTilesCornerPoints(Mat image) {
           MatOfPoint2f innerCorners = detectInnerTilesCorners(image);
-          Point[][] allCorners = tileCornersService.findMissingBorderCorners(innerCorners);
-          return coordsMapper.toTilesCoords(allCorners);
+          return tileCornersService.findMissingBorderCorners(innerCorners);
      }
 
      public MatOfPoint2f detectInnerTilesCorners(Mat image) {

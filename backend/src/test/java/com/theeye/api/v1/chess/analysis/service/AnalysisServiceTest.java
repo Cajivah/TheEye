@@ -101,16 +101,13 @@ class AnalysisServiceTest {
           Mat lines = sut.detectLines(this.mat);
           Point[] corners = sut.findCorners(mat, lines);
           Mat trimmed = sut.trimToCorners(this.mat, corners);
-          TileCorners[][] tileCorners = sut.detectAllTilesCorners(trimmed);
-          Arrays.stream(tileCorners).flatMap(Arrays::stream).forEach(tile -> drawCircles(trimmed, tile));
-          saveToFile(mat, "test");
+          Point[][] points = sut.detectAllTilesCornerPoints(trimmed);
+          Arrays.stream(points).flatMap(Arrays::stream).forEach(point -> drawCircles(trimmed, point));
+          saveToFile(trimmed, "test");
      }
 
-     private void drawCircles(Mat trimmed, TileCorners tile) {
-          Imgproc.circle(trimmed, tile.getTopLeft(), 5, new Scalar(0, 0, 255), 3);
-          Imgproc.circle(trimmed, tile.getBottomRight(), 5, new Scalar(0, 0, 255), 3);
-          Imgproc.circle(trimmed, tile.getTopRight(), 5, new Scalar(0, 0, 255), 3);
-          Imgproc.circle(trimmed, tile.getBottomLeft(), 5, new Scalar(0, 0, 255), 3);
+     private void drawCircles(Mat trimmed, Point p) {
+          Imgproc.circle(trimmed, p, 5, new Scalar(0, 0, 255), 3);
      }
 
      @Test
