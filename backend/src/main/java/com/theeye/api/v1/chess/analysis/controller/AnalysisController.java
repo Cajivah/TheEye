@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class AnalysisController {
      }
 
      @PostMapping("/features")
-     public ChessBoardFeaturesDTO findChessboardCorners(@RequestBody ChessboardImageDTO emptyChessboard) throws IOException {
+     public ChessBoardFeaturesDTO findChessboardCorners(@RequestBody @Validated ChessboardImageDTO emptyChessboard) throws IOException {
           Mat mat = imageMapper.toMat(emptyChessboard.getBase64Image());
           Mat lines = analysisService.detectLines(mat);
           Point[] roiCorners = analysisService.findCorners(mat, lines);
