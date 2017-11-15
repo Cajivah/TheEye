@@ -7,6 +7,8 @@ import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
 import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
+import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
+import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;
 import com.theeye.api.v1.chess.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor;
 import org.jetbrains.annotations.NotNull;
@@ -39,14 +41,17 @@ public class AnalysisService {
      private final LineMapper lineMapper;
      private final CoordsMapper coordsMapper;
      private final TileCornersService tileCornersService;
+     private final ColorAnalysisService colorAnalysisService;
 
      @Autowired
      public AnalysisService(LineMapper lineMapper,
                             CoordsMapper coordsMapper,
-                            TileCornersService tileCornersService) {
+                            TileCornersService tileCornersService,
+                            ColorAnalysisService colorAnalysisService) {
           this.lineMapper = lineMapper;
           this.coordsMapper = coordsMapper;
           this.tileCornersService = tileCornersService;
+          this.colorAnalysisService = colorAnalysisService;
      }
 
      public Point[][] detectAllTilesCornerPoints(Mat image) {
@@ -136,6 +141,9 @@ public class AnalysisService {
      }
 
      public ReferenceColors getReferenceColors(Mat preparedImage, TileCorners[][] tilesCorners) {
-          return null; //todo
+          return ReferenceColors.builder()
+                                .whiteTiles(colorAnalysisService.getBlackTilesAverages(preparedImage, tilesCorners))
+                                .blackTiles(colorAnalysisService.getWhiteTilesAverages(preparedImage, tilesCorners))
+                                .build();
      }
 }

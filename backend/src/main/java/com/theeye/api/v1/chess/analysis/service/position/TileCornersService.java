@@ -1,4 +1,4 @@
-package com.theeye.api.v1.chess.analysis.service;
+package com.theeye.api.v1.chess.analysis.service.position;
 
 import com.sun.javafx.geom.Vec2f;
 import com.theeye.api.v1.chess.analysis.util.CoordUtil;
