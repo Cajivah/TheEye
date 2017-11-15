@@ -7,10 +7,12 @@ import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
 import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
+import com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;
 import com.theeye.api.v1.chess.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor;
+import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import org.jetbrains.annotations.NotNull;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
@@ -142,5 +144,9 @@ public class AnalysisService {
                                 .whiteTiles(colorAnalysisService.getBlackTilesAverages(preparedImage, tilesCorners))
                                 .blackTiles(colorAnalysisService.getWhiteTilesAverages(preparedImage, tilesCorners))
                                 .build();
+     }
+
+     public Occupancy[][] determineOccupancy(UnresolvedMove unresolvedMove) {
+          return new Occupancy[0][];
      }
 }

@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.analysis.mapper;
 
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
-import com.theeye.api.v1.chess.analysis.model.dto.ChessBoardFeaturesDTO;
+import com.theeye.api.v1.chess.analysis.model.dto.ChessboardPositionFeaturesDTO;
 import com.theeye.api.v1.chess.analysis.model.dto.PointDTO;
 import com.theeye.api.v1.chess.board.common.BoardConsts;
 import org.mapstruct.Mapper;
@@ -50,11 +50,11 @@ public class CoordsMapper {
           return pointDTOs;
      }
 
-     public ChessBoardFeaturesDTO toChessboardFeaturesDTO(Point[] roiCorners, Point[][] tileCornerPoints) {
-          return ChessBoardFeaturesDTO.builder()
-                                      .chessboardCorners(toPointsDTO(roiCorners))
-                                      .tilesCornerPoints(toPointsDTO(tileCornerPoints))
-                                      .build();
+     public ChessboardPositionFeaturesDTO toChessboardFeaturesDTO(Point[] roiCorners, Point[][] tileCornerPoints) {
+          return ChessboardPositionFeaturesDTO.builder()
+                                              .chessboardCorners(toPointsDTO(roiCorners))
+                                              .tilesCornerPoints(toPointsDTO(tileCornerPoints))
+                                              .build();
      }
 
      public TileCorners[][] toTilesCoords(PointDTO[][] tilesCornerPoints) {
