@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class Board {
 
-     private Tile tiles[][];
+     private Tile[][] tiles;
      private PlayerColor activeColour;
      private CastlingStatus castling;
      private String enPassant;
@@ -33,3 +33,5 @@ public class Board {
           tiles[coords.getRow()][coords.getRow()] = tile;
      }
 }
+
+

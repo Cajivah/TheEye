@@ -1,5 +1,9 @@
 package com.theeye.api.v1.chess.board.common;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoardConsts {
 
      public final static Integer ROWS = 8;

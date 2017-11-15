@@ -22,7 +22,7 @@ public class Queen extends Piece {
 
      @Override
      public char getFenCode() {
-          return getOwner().equals(PlayerColor.White)
+          return getOwner().equals(PlayerColor.WHITE)
                   ? FenCodes.QUEEN_WHITE
                   : FenCodes.QUEEN_BLACK;
      }

@@ -106,7 +106,7 @@ class FenDecoderTest {
                                              expected[rowIndex])
                              );
 
-                    assertEquals(PlayerColor.Black, decoded.getActiveColour());
+                    assertEquals(PlayerColor.BLACK, decoded.getActiveColour());
                     assertEquals(4, decoded.getHalfmoveClock());
                     assertEquals(8, decoded.getFullmoveNumber());
                     assertEquals(createAllFalse(), decoded.getCastling());

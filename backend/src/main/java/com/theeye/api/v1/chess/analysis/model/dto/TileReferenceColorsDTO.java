@@ -7,7 +7,7 @@ import lombok.Value;
 @Builder
 public class TileReferenceColorsDTO {
 
-     int occupiedByWhite;
-     int occupiedByBlack;
-     int unoccupied;
+     private RGBColorDTO occupiedByWhite;
+     private RGBColorDTO occupiedByBlack;
+     private RGBColorDTO unoccupied;
 }

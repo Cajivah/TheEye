@@ -23,11 +23,11 @@ public class FenParser {
           String sanitized = fenSection.trim();
           switch (sanitized) {
                case FenCodes.WHITE_ACTIVE:
-                    return PlayerColor.White;
+                    return PlayerColor.WHITE;
                case FenCodes.BLACK_ACTIVE:
-                    return PlayerColor.Black;
+                    return PlayerColor.BLACK;
                default:
-                    return PlayerColor.None;
+                    return PlayerColor.NONE;
           }
      }
 
@@ -91,7 +91,7 @@ public class FenParser {
 
      private void parseFenNumber(List<Tile> tiles, char code) {
           for (int i = Character.getNumericValue(code) - 1; i >= 0; --i) {
-               tiles.add(Tile.of(Empty.of(PlayerColor.None)));
+               tiles.add(Tile.of(Empty.of(PlayerColor.NONE)));
           }
      }
 }

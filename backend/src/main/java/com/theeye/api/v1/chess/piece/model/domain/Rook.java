@@ -22,7 +22,7 @@ public class Rook extends Piece {
 
      @Override
      public char getFenCode() {
-          return getOwner().equals(PlayerColor.White)
+          return getOwner().equals(PlayerColor.WHITE)
                   ? FenCodes.ROOK_WHITE
                   : FenCodes.ROOK_BLACK;
      }

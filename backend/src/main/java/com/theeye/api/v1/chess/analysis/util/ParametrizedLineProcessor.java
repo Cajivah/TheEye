@@ -18,11 +18,13 @@ public class ParametrizedLineProcessor {
      @Getter
      private List<ParametrizedLine2D> lines;
 
+     private final static Predicate<ParametrizedLine2D> closeToHorizontal =
+             line -> line.getB() != 0 && line.getB() > -1 && line.getA() <= 1;
+     private final static Predicate<ParametrizedLine2D> closeToVertical =
+             line -> line.getA() <= -1 || line.getA() > 1 || line.getB() == 0;
+
      public static final int FURTHER_BOUND = 0;
      public static final int CLOSER_BOUND = 1;
-
-     private final static Predicate<ParametrizedLine2D> closeToHorizontal = line -> line.b != 0 && line.a > -1 && line.a <= 1;
-     private final static Predicate<ParametrizedLine2D> closeToVertical = line -> line.a <= -1 || line.a > 1 || line.b == 0;
 
 
      public ParametrizedLineProcessor filterHorizontalLines() {

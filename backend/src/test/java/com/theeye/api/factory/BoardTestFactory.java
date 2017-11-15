@@ -15,20 +15,20 @@ public class BoardTestFactory {
 
      public static Board createInitialBoard() {
           Tile[][] tiles = new Tile[][]{
-                  createFirstRow(White),
-                  createPawnRow(White),
+                  createFirstRow(WHITE),
+                  createPawnRow(WHITE),
                   createEmptyRow(),
                   createEmptyRow(),
                   createEmptyRow(),
                   createEmptyRow(),
-                  createPawnRow(Black),
-                  createFirstRow(Black)
+                  createPawnRow(BLACK),
+                  createFirstRow(BLACK)
           };
 
 
           return Board.builder()
                       .tiles(tiles)
-                      .activeColour(PlayerColor.White)
+                      .activeColour(PlayerColor.WHITE)
                       .castling(createAllTrue())
                       .enPassant("-")
                       .halfmoveClock(0)
@@ -56,7 +56,7 @@ public class BoardTestFactory {
      public static Tile[] createEmptyRow() {
           return IntStream.range(0, BoardConsts.COLUMNS)
                           .boxed()
-                          .map(i -> Tile.of(Empty.of(None)))
+                          .map(i -> Tile.of(Empty.of(NONE)))
                           .toArray(Tile[]::new);
      }
 }

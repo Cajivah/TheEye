@@ -2,7 +2,8 @@ package com.theeye.api.v1.chess.analysis.service;
 
 import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
-import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
+import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
+import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,10 +36,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AnalysisServiceTest {
 
      private LineMapper lineMapper = new LineMapper();
-     private CoordsMapper coordsMapper = new CoordsMapper();
      private TileCornersService tileCornersService = new TileCornersService();
+     private ColorAnalysisService colorAnalysisService = new ColorAnalysisService();
 
-     private AnalysisService sut = new AnalysisService(lineMapper, coordsMapper, tileCornersService);
+     private AnalysisService sut =
+             new AnalysisService(
+                     lineMapper,
+                     tileCornersService,
+                     colorAnalysisService);
 
      static {
           System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

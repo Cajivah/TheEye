@@ -1,7 +1,11 @@
 package com.theeye.common;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Base64;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Base64Util {
 
      private static final int BASE64_IMAGE_HEADER_SECTION = 0;
@@ -12,5 +16,4 @@ public class Base64Util {
           String[] sections = imageBase64.split(BASE64_IMAGE_SECTION_SEPARATOR);
           return Base64.getDecoder().decode(sections[BASE64_IMAGE_CONTENT_SECTION]);
      }
-
 }

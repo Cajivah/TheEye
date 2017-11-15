@@ -8,5 +8,5 @@ import lombok.Value;
 public class ReferenceColorsDTO {
 
      private TileReferenceColorsDTO whiteTile;
-     private TileReferenceColorsDTO blackTIle;
+     private TileReferenceColorsDTO blackTile;
 }

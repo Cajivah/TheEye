@@ -2,14 +2,18 @@ package com.theeye.api.v1.chess.analysis.model.domain;
 
 import com.sun.javafx.geom.Line2D;
 import com.theeye.api.v1.chess.analysis.exception.IncorrectBoundsException;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.opencv.core.Point;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ParametrizedLine2D extends Line2D {
 
      // Ax+By+C=0
-     public double a;
-     public double b;
-     public double c;
+     private double a;
+     private double b;
+     private double c;
 
      public ParametrizedLine2D(Line2D line, double a, double b, double c) {
           super(line.x1, line.y1, line.x2, line.y2);

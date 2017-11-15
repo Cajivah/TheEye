@@ -61,9 +61,9 @@ public class FenEncoder {
      }
 
      private String encodeActiveColour(PlayerColor activeColour) {
-          if (activeColour.equals(PlayerColor.White)) {
+          if (activeColour.equals(PlayerColor.WHITE)) {
                return FenCodes.WHITE_ACTIVE;
-          } else if (activeColour.equals(PlayerColor.Black)) {
+          } else if (activeColour.equals(PlayerColor.BLACK)) {
                return FenCodes.BLACK_ACTIVE;
           } else {
                return FenCodes.EMPTY;

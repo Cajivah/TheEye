@@ -22,7 +22,7 @@ public class Knight extends Piece {
 
      @Override
      public char getFenCode() {
-          return getOwner().equals(PlayerColor.White)
+          return getOwner().equals(PlayerColor.WHITE)
                   ? FenCodes.KNIGHT_WHITE
                   : FenCodes.KNIGHT_BLACK;
      }
