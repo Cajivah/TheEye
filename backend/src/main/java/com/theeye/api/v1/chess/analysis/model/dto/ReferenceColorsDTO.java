@@ -7,6 +7,6 @@ import lombok.Value;
 @Builder
 public class ReferenceColorsDTO {
 
-     private TileReferenceColorsDTO whiteTile;
-     private TileReferenceColorsDTO blackTile;
+     private TileReferenceColorsDTO whiteTiles;
+     private TileReferenceColorsDTO blackTiles;
 }

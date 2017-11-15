@@ -2,16 +2,18 @@ package com.theeye.api.v1.chess.analysis.service;
 
 import com.sun.javafx.geom.Point2D;
 import com.theeye.api.v1.chess.analysis.exception.PatternNotFoundException;
-import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
 import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
+import com.theeye.api.v1.chess.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;
+import com.theeye.api.v1.chess.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor;
+import com.theeye.api.v1.chess.board.common.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import org.jetbrains.annotations.NotNull;
 import org.opencv.calib3d.Calib3d;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.theeye.api.v1.chess.analysis.util.CoordUtil.findDistance3D;
 import static com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor.CLOSER_BOUND;
 import static com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor.FURTHER_BOUND;
 import static com.theeye.common.ComparisionUtil.getBigger;
@@ -146,7 +149,48 @@ public class AnalysisService {
                                 .build();
      }
 
-     public Occupancy[][] determineOccupancy(UnresolvedMove unresolvedMove) {
-          return new Occupancy[0][];
+     public Occupancy[][] getChessboardOccupancy(UnresolvedMove unresolvedMove) {
+          Mat image = unresolvedMove.getChessboardImage().getImage();
+          Mat trimmedImage = doPreprocessing(image, unresolvedMove.getChessboardCorners());
+          Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(trimmedImage, unresolvedMove.getTilesCorners());
+          return determineOccupancy(tilesColors, unresolvedMove.getReferenceColors());
+     }
+
+     private Occupancy[][] determineOccupancy(Scalar[][] tilesColors, ReferenceColors referenceColors) {
+          Occupancy[][] occupancies = new Occupancy[BoardConsts.ROWS][BoardConsts.COLUMNS];
+          for(int row = 0; row < BoardConsts.ROWS; ++row) {
+               Occupancy[] occupancyRow = occupancies[row];
+               Scalar[] tilesColorRow = tilesColors[row];
+               determineOccupancyForRow(referenceColors, row, occupancyRow, tilesColorRow);
+          }
+          return occupancies;
+     }
+
+     private void determineOccupancyForRow(ReferenceColors referenceColors, int i, Occupancy[] occupancyRow, Scalar[] tilesColorRow) {
+          for(int j = 0; j < BoardConsts.COLUMNS; ++j) {
+               Scalar tileColor = tilesColorRow[j];
+               boolean isTileBackgroundBlack = (((i + j) % 2) == 0);
+               TileReferenceColors reference =
+                       isTileBackgroundBlack
+                               ? referenceColors.getBlackTiles()
+                               : referenceColors.getWhiteTiles();
+               Occupancy occupancy = findOccupationState(tileColor, reference);
+               occupancyRow[j] = occupancy;
+          }
+     }
+
+     private Occupancy findOccupationState(Scalar tileColor, TileReferenceColors reference) {
+          double occupiedByWhiteDistance = findDistance3D(tileColor, reference.getOccupiedByWhite());
+          double occupiedByBlackDistance = findDistance3D(tileColor, reference.getOccupiedByBlack());
+          double unoccupiedDistance = findDistance3D(tileColor, reference.getUnoccupied());
+          Occupancy occupancy;
+          if(unoccupiedDistance < occupiedByBlackDistance && unoccupiedDistance < unoccupiedDistance) {
+               occupancy = Occupancy.UNOCCUPIED;
+          } else if(occupiedByWhiteDistance < occupiedByBlackDistance) {
+               occupancy = Occupancy.OCCUPIED_BY_WHITE;
+          } else {
+               occupancy = Occupancy.OCCUPIED_BY_BLACK;
+          }
+          return occupancy;
      }
 }

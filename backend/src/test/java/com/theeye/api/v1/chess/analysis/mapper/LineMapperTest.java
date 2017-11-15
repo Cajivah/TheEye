@@ -28,8 +28,8 @@ class LineMapperTest {
                        "1, 1, 1, 2, 1, 0, -1",
                        "1, 1, 2, 1, 0, 1, -1",
                        "1, 2, 1, 2, 0, 0, 0",
-                       "1, 2, 3, 4, 1, 1, 1",
-                       "1, 2, 2, 4, 2, 1, 0",
+                       "1, 2, 3, 4, -1, 1, -1",
+                       "1, 2, 2, 4, -2, 1, 0",
                })
                void toParametrizedLine(float x1, float y1, float x2, float y2, double a, double b, double c) {
                     Line2D line = new Line2D(x1, y1, x2, y2);

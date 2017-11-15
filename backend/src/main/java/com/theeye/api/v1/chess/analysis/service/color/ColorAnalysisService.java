@@ -6,10 +6,9 @@ import com.theeye.api.v1.chess.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.enumeration.TileColor;
 import com.theeye.api.v1.chess.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.analysis.util.TileScaler;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
+import com.theeye.api.v1.chess.board.common.BoardConsts;
+import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
+import org.opencv.core.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -86,9 +85,13 @@ public class ColorAnalysisService {
 
      private Scalar computeAverageColor(Mat image, List<TileCorners> tiles) {
           return tiles.stream()
-                      .map(tile -> getRoiSubmat(image, tile))
-                      .map(this::getAverage)
+                      .map(tile -> computeAverageColor(image, tile))
                       .collect(RGBCollector.getRgbAverageCollector());
+     }
+
+     private Scalar computeAverageColor(Mat image, TileCorners tile) {
+          Mat roi = getRoiSubmat(image, tile);
+          return getAverage(roi);
      }
 
      private Scalar getAverage(Mat roi) {
@@ -121,5 +124,19 @@ public class ColorAnalysisService {
                tilesList.add(column[i]);
           }
           return tilesList;
+     }
+
+     public Scalar[][] getTilesColorsInPlay(Mat image, TileCorners[][] tilesCorners) {
+          Scalar[][] tilesColors = new Scalar[BoardConsts.ROWS][BoardConsts.COLUMNS];
+          for(int i = 0; i < BoardConsts.ROWS; ++i) {
+               TileCorners[] tilesRow = tilesCorners[i];
+               Scalar[] colorsRow = tilesColors[i];
+               for(int j = 0; j < BoardConsts.COLUMNS; ++j) {
+                    TileCorners tileCorners = tilesRow[j];
+                    Scalar colors = computeAverageColor(image, tileCorners);
+                    colorsRow[j] = colors;
+               }
+          }
+          return tilesColors;
      }
 }

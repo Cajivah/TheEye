@@ -24,7 +24,8 @@ public class MoveResolverService {
      }
 
      public Board resolveMove(UnresolvedMove unresolvedMove) throws IOException {
-          Occupancy[][] tilesOccupancy = analysisService.determineOccupancy(unresolvedMove);
+
+          Occupancy[][] tilesOccupancy = analysisService.getChessboardOccupancy(unresolvedMove);
           return determineNewState(unresolvedMove.getLastBoard(), tilesOccupancy);
      }
 

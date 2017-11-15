@@ -1,6 +1,7 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
 import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
+import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class UnresolvedMove {
      ChessboardImage chessboardImage;
      ReferenceColors referenceColors;
      Point[] chessboardCorners;
-     Point[][] tilesCornerPoints;
+     TileCorners[][] tilesCorners;
 }

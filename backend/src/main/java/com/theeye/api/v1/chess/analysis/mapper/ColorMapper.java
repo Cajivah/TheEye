@@ -15,8 +15,8 @@ public abstract class ColorMapper {
 
      public ReferenceColorsDTO toReferenceColorsDTO(ReferenceColors referenceColors) {
           return ReferenceColorsDTO.builder()
-                                   .whiteTile(toTileReferenceColorsDTO(referenceColors.getWhiteTiles()))
-                                   .blackTile(toTileReferenceColorsDTO(referenceColors.getBlackTiles()))
+                                   .whiteTiles(toTileReferenceColorsDTO(referenceColors.getWhiteTiles()))
+                                   .blackTiles(toTileReferenceColorsDTO(referenceColors.getBlackTiles()))
                                    .build();
      }
 
@@ -34,5 +34,24 @@ public abstract class ColorMapper {
                             .green((int) scalar.val[SCALAR_GREEN_INDEX])
                             .blue((int) scalar.val[SCALAR_BLUE_INDEX])
                             .build();
+     }
+
+     public ReferenceColors toReferenceColors(ReferenceColorsDTO referenceColorsDTO) {
+          return ReferenceColors.builder()
+                                .whiteTiles(toTileReferenceColors(referenceColorsDTO.getWhiteTiles()))
+                                .blackTiles(toTileReferenceColors(referenceColorsDTO.getBlackTiles()))
+                                .build();
+     }
+
+     private TileReferenceColors toTileReferenceColors(TileReferenceColorsDTO tileReferenceColorsDTO) {
+          return TileReferenceColors.builder()
+                                    .occupiedByWhite(toScalar(tileReferenceColorsDTO.getOccupiedByWhite()))
+                                    .occupiedByBlack(toScalar(tileReferenceColorsDTO.getOccupiedByBlack()))
+                                    .unoccupied(toScalar(tileReferenceColorsDTO.getUnoccupied()))
+                                    .build();
+     }
+
+     private Scalar toScalar(RGBColorDTO rgbColorDTO) {
+          return new Scalar(rgbColorDTO.getBlue(), rgbColorDTO.getGreen(), rgbColorDTO.getRed());
      }
 }

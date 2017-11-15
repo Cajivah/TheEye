@@ -4,11 +4,13 @@ import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;
+import extension.NativeLibraryExtension;
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -33,6 +35,7 @@ import static com.theeye.api.v1.chess.analysis.service.AnalysisService.CORNERS_P
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(NativeLibraryExtension.class)
 class AnalysisServiceTest {
 
      private LineMapper lineMapper = new LineMapper();
