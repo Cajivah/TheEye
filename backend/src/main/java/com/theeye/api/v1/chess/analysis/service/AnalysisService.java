@@ -5,6 +5,8 @@ import com.theeye.api.v1.chess.analysis.exception.PatternNotFoundException;
 import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
+import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
+import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
 import com.theeye.api.v1.chess.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.analysis.util.ParametrizedLineProcessor;
 import org.jetbrains.annotations.NotNull;
@@ -127,5 +129,13 @@ public class AnalysisService {
           Point rightBottomFrameCorner = new Point(maxRight, maxBottom);
           Rect frame = new Rect(leftTopFrameCorner, rightBottomFrameCorner);
           return image.submat(frame);
+     }
+
+     public Mat doPreprocessing(Mat src, Point[] chessboardCorners) {
+          return trimToCorners(src, chessboardCorners);
+     }
+
+     public ReferenceColors getReferenceColors(Mat preparedImage, TileCorners[][] tilesCorners) {
+          return null; //todo
      }
 }

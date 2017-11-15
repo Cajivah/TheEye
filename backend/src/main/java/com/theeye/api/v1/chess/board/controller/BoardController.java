@@ -4,7 +4,6 @@ import com.theeye.api.v1.chess.analysis.service.AnalysisService;
 import com.theeye.api.v1.chess.board.mapper.MoveMapper;
 import com.theeye.api.v1.chess.board.model.domain.ResolvedMove;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
-import com.theeye.api.v1.chess.board.model.dto.ChessboardImageDTO;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
 import com.theeye.api.v1.chess.board.model.dto.NewPositionDTO;
 import com.theeye.api.v1.chess.board.service.MoveResolverService;

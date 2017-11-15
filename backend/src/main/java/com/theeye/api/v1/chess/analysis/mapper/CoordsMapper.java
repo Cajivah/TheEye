@@ -56,4 +56,31 @@ public class CoordsMapper {
                                       .tilesCornerPoints(toPointsDTO(tileCornerPoints))
                                       .build();
      }
+
+     public TileCorners[][] toTilesCoords(PointDTO[][] tilesCornerPoints) {
+          Point[][] points = toPoints(tilesCornerPoints);
+          return toTilesCoords(points);
+     }
+
+     public Point[][] toPoints(PointDTO[][] pointDTOs) {
+          int rows = pointDTOs.length;
+          Point[][] points = new Point[rows][];
+          for(int i = 0; i < rows; ++i) {
+               points[i] = toPoints(pointDTOs[i]);
+          }
+          return points;
+     }
+
+     public Point[] toPoints(PointDTO[] pointDTOs) {
+          int count = pointDTOs.length;
+          Point[] points = new Point[count];
+          for (int i = 0; i < count; ++i) {
+               points[i] = toPoint(pointDTOs[i]);
+          }
+          return points;
+     }
+
+     private Point toPoint(PointDTO pointDTO) {
+          return new Point(pointDTO.getX(), pointDTO.getY());
+     }
 }
