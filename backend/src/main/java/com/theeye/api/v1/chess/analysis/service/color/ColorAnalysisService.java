@@ -36,19 +36,19 @@ public class ColorAnalysisService {
 
      private Scalar getBlackOccupiedByWhiteAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.Black, COLUMNS_OCCUPIED_BY_WHITE);
+                  getTilesFromColumns(tilesCorners, TileColor.BLACK, COLUMNS_OCCUPIED_BY_WHITE);
           return null;
      }
 
      private Scalar getBlackOccupiedByBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.Black, COLUMNS_OCCUPIED_BY_BLACK);
+                  getTilesFromColumns(tilesCorners, TileColor.BLACK, COLUMNS_OCCUPIED_BY_BLACK);
           return null;
      }
 
      private Scalar getUnoccupiedBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.Black, COLUMNS_UNOCCUPIED);
+                  getTilesFromColumns(tilesCorners, TileColor.BLACK, COLUMNS_UNOCCUPIED);
           return null;
      }
 
@@ -65,21 +65,21 @@ public class ColorAnalysisService {
 
      private Scalar getWhiteOccupiedByWhiteAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.White, COLUMNS_OCCUPIED_BY_WHITE);
+                  getTilesFromColumns(tilesCorners, TileColor.WHITE, COLUMNS_OCCUPIED_BY_WHITE);
 
           return null;
      }
 
      private Scalar getWhiteOccupiedByBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.White, COLUMNS_OCCUPIED_BY_BLACK);
+                  getTilesFromColumns(tilesCorners, TileColor.WHITE, COLUMNS_OCCUPIED_BY_BLACK);
 
           return null;
      }
 
      private Scalar getWhiteUnoccupiedAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.White, COLUMNS_UNOCCUPIED);
+                  getTilesFromColumns(tilesCorners, TileColor.WHITE, COLUMNS_UNOCCUPIED);
           computeAverageColor(preparedImage, tiles);
           return null;
      }

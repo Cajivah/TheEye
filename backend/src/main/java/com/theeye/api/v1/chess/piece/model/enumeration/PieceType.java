@@ -12,19 +12,19 @@ import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
 @Getter
 public enum PieceType {
 
-     PAWN_WHITE(() -> Pawn.of(White)),
-     PAWN_BLACK(() -> Pawn.of(Black)),
-     ROOK_WHITE(() -> Rook.of(White)),
-     ROOK_BLACK(() -> Rook.of(Black)),
-     KNIGHT_WHITE(() -> Knight.of(White)),
-     KNIGHT_BLACK(() -> Knight.of(Black)),
-     BISHOP_WHITE(() -> Bishop.of(White)),
-     BISHOP_BLACK(() -> Bishop.of(Black)),
-     QUEEN_WHITE(() -> Queen.of(White)),
-     QUEEN_BLACK(() -> Queen.of(Black)),
-     KING_WHITE(() -> King.of(White)),
-     KING_BLACK(() -> King.of(Black)),
-     EMPTY(() -> Empty.of(None));
+     PAWN_WHITE(() -> Pawn.of(WHITE)),
+     PAWN_BLACK(() -> Pawn.of(BLACK)),
+     ROOK_WHITE(() -> Rook.of(WHITE)),
+     ROOK_BLACK(() -> Rook.of(BLACK)),
+     KNIGHT_WHITE(() -> Knight.of(WHITE)),
+     KNIGHT_BLACK(() -> Knight.of(BLACK)),
+     BISHOP_WHITE(() -> Bishop.of(WHITE)),
+     BISHOP_BLACK(() -> Bishop.of(BLACK)),
+     QUEEN_WHITE(() -> Queen.of(WHITE)),
+     QUEEN_BLACK(() -> Queen.of(BLACK)),
+     KING_WHITE(() -> King.of(WHITE)),
+     KING_BLACK(() -> King.of(BLACK)),
+     EMPTY(() -> Empty.of(NONE));
 
      private final Supplier<Piece> pieceSupplier;
 

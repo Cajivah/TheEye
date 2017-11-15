@@ -2,12 +2,15 @@ package com.theeye.api.v1.chess.analysis.util;
 
 import com.sun.javafx.geom.Vec2f;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
-import com.theeye.common.ComparisionUtil;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 
-import static com.theeye.common.ComparisionUtil.*;
+import static com.theeye.common.ComparisionUtil.getBigger;
+import static com.theeye.common.ComparisionUtil.getSmaller;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CoordUtil {
 
      public static int toOneDimension(int row, int col, int rowWidth) {

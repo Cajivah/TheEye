@@ -22,7 +22,7 @@ public class Bishop extends Piece {
 
      @Override
      public char getFenCode() {
-          return getOwner().equals(PlayerColor.White)
+          return getOwner().equals(PlayerColor.WHITE)
                   ? FenCodes.BISHOP_WHITE
                   : FenCodes.BISHOP_BLACK;
      }

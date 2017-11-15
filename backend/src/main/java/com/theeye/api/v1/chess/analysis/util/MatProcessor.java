@@ -14,7 +14,7 @@ import static org.opencv.core.CvType.CV_16S;
 public class MatProcessor {
 
      private static final int CANNY_LOW_THRESHOLD = 65;
-     private static final int CANNY_RATIO = 5;
+     private static final double CANNY_RATIO = 5.0;
      private static final int GAUSSIAN_WIDTH = 3;
      private static final int GAUSSIAN_HEIGHT = 3;
      private static final int SOBEL_KSIZE = 3;
@@ -36,20 +36,22 @@ public class MatProcessor {
      }
 
      @NotNull
-     public MatProcessor applyCannyEdgeDetection(int lowTreshold, int ratio) {
+     public MatProcessor applyCannyEdgeDetection(int lowTreshold, double ratio) {
           Imgproc.Canny(mat, mat, lowTreshold, lowTreshold * ratio);
           return this;
      }
 
      @NotNull
      public MatProcessor applySobelDerivatives() {
-          Mat grad_x = new Mat(), grad_y = new Mat();
-          Mat abs_grad_x = new Mat(), abs_grad_y = new Mat();
-          Imgproc.Sobel(mat, grad_x, SOBEL_DDEPTH, 1, 0, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
-          Imgproc.Sobel(mat, grad_y, SOBEL_DDEPTH, 0, 1, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
-          convertScaleAbs( grad_x, abs_grad_x );
-          convertScaleAbs( grad_y, abs_grad_y );
-          addWeighted( abs_grad_x, 0.5, abs_grad_y, 0.5, 0, mat);
+          Mat gradX = new Mat();
+          Mat gradY = new Mat();
+          Mat absoluteGradX = new Mat();
+          Mat absoluteGradY = new Mat();
+          Imgproc.Sobel(mat, gradX, SOBEL_DDEPTH, 1, 0, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
+          Imgproc.Sobel(mat, gradY, SOBEL_DDEPTH, 0, 1, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
+          convertScaleAbs( gradX, absoluteGradX );
+          convertScaleAbs( gradY, absoluteGradY );
+          addWeighted( absoluteGradX, 0.5, absoluteGradY, 0.5, 0, mat);
           return this;
      }
 

@@ -36,14 +36,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AnalysisServiceTest {
 
      private LineMapper lineMapper = new LineMapper();
-     private CoordsMapper coordsMapper = new CoordsMapper();
      private TileCornersService tileCornersService = new TileCornersService();
      private ColorAnalysisService colorAnalysisService = new ColorAnalysisService();
 
      private AnalysisService sut =
              new AnalysisService(
                      lineMapper,
-                     coordsMapper,
                      tileCornersService,
                      colorAnalysisService);
 

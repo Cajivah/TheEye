@@ -1,5 +1,9 @@
 package com.theeye.api.v1.chess.fen.common;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FenCodes {
 
      public static final String SECTION_DELIMITER = " ";

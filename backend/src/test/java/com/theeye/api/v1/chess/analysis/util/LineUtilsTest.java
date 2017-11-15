@@ -35,7 +35,7 @@ class LineUtilsTest {
                                                                                  .filterHorizontalLines()
                                                                                  .getLines();
                     assertEquals(4, filtered.size());
-                    assertEquals(4, filtered.get(0).c);
+                    assertEquals(4, filtered.get(0).getC());
                }
           }
 
@@ -55,7 +55,7 @@ class LineUtilsTest {
                                                                                  .filterVerticalLines()
                                                                                  .getLines();
                     assertEquals(1, filtered.size());
-                    assertEquals(0, filtered.get(0).c);
+                    assertEquals(0, filtered.get(0).getC());
                }
           }
      }

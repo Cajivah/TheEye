@@ -3,12 +3,16 @@ package com.theeye.api.v1.chess.fen.common;
 import com.google.common.collect.ImmutableMap;
 import com.theeye.api.v1.chess.piece.exception.InvalidFenException;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FenCodeToPieceTypeMap {
-     public static Map<Character, PieceType> fenToPiece =
+
+     public static final Map<Character, PieceType> fenToPiece =
              ImmutableMap.<Character, PieceType>builder()
                      .put(FenCodes.NO_PIECE, PieceType.EMPTY)
                      .put(FenCodes.ROOK_BLACK, PieceType.ROOK_BLACK)

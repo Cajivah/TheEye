@@ -39,17 +39,14 @@ public class AnalysisService {
      public static final int TOP_LEFT_CORNER = 3;
 
      private final LineMapper lineMapper;
-     private final CoordsMapper coordsMapper;
      private final TileCornersService tileCornersService;
      private final ColorAnalysisService colorAnalysisService;
 
      @Autowired
      public AnalysisService(LineMapper lineMapper,
-                            CoordsMapper coordsMapper,
                             TileCornersService tileCornersService,
                             ColorAnalysisService colorAnalysisService) {
           this.lineMapper = lineMapper;
-          this.coordsMapper = coordsMapper;
           this.tileCornersService = tileCornersService;
           this.colorAnalysisService = colorAnalysisService;
      }

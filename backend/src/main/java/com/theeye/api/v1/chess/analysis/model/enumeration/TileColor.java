@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TileColor {
 
-     White(1),
-     Black(0)
+     WHITE(1),
+     BLACK(0)
      ;
 
      private int offset;

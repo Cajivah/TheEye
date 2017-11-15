@@ -35,9 +35,9 @@ class LineMapperTest {
                     Line2D line = new Line2D(x1, y1, x2, y2);
                     ParametrizedLine2D parametrizedLine2D = sut.toParametrizedLine(line);
                     assertAll("Correct parameters",
-                            () -> assertEquals(a, parametrizedLine2D.a, 0.1),
-                            () -> assertEquals(b, parametrizedLine2D.b, 0.1),
-                            () -> assertEquals(c, parametrizedLine2D.c, 0.1));
+                            () -> assertEquals(a, parametrizedLine2D.getA(), 0.1),
+                            () -> assertEquals(b, parametrizedLine2D.getB(), 0.1),
+                            () -> assertEquals(c, parametrizedLine2D.getC(), 0.1));
 
                }
           }

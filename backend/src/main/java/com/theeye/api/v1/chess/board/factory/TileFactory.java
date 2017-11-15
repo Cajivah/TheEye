@@ -4,9 +4,12 @@ package com.theeye.api.v1.chess.board.factory;
 import com.theeye.api.v1.chess.board.common.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.stream.IntStream;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TileFactory {
 
      public static Tile[][] createEmpty() {

@@ -22,7 +22,7 @@ public class Pawn extends Piece {
 
      @Override
      public char getFenCode() {
-          return getOwner().equals(PlayerColor.White)
+          return getOwner().equals(PlayerColor.WHITE)
                   ? FenCodes.PAWN_WHITE
                   : FenCodes.PAWN_BLACK;
      }

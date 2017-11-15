@@ -2,12 +2,15 @@ package com.theeye.api.v1.chess.analysis.util;
 
 import com.sun.javafx.geom.Vec2f;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.opencv.core.Point;
 
 import static com.theeye.api.v1.chess.analysis.util.CoordUtil.pointMovedByVector;
 import static com.theeye.api.v1.chess.analysis.util.CoordUtil.getScaledVectorOf;
 import static com.theeye.api.v1.chess.analysis.util.CoordUtil.toVector;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TileScaler {
 
      public static TileCorners computeScaledTile(TileCorners tile, double sideScale) {
