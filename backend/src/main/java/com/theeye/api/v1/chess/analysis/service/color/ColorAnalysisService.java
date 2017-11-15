@@ -6,6 +6,7 @@ import com.theeye.api.v1.chess.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.enumeration.TileColor;
 import com.theeye.api.v1.chess.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.analysis.util.TileScaler;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
@@ -37,19 +38,19 @@ public class ColorAnalysisService {
      private Scalar getBlackOccupiedByWhiteAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
                   getTilesFromColumns(tilesCorners, TileColor.BLACK, COLUMNS_OCCUPIED_BY_WHITE);
-          return null;
+          return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getBlackOccupiedByBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
                   getTilesFromColumns(tilesCorners, TileColor.BLACK, COLUMNS_OCCUPIED_BY_BLACK);
-          return null;
+          return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getUnoccupiedBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
                   getTilesFromColumns(tilesCorners, TileColor.BLACK, COLUMNS_UNOCCUPIED);
-          return null;
+          return computeAverageColor(preparedImage, tiles);
      }
 
      public TileReferenceColors getWhiteTilesAverages(Mat preparedImage, TileCorners[][] tilesCorners) {
@@ -67,21 +68,20 @@ public class ColorAnalysisService {
           List<TileCorners> tiles =
                   getTilesFromColumns(tilesCorners, TileColor.WHITE, COLUMNS_OCCUPIED_BY_WHITE);
 
-          return null;
+          return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getWhiteOccupiedByBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
                   getTilesFromColumns(tilesCorners, TileColor.WHITE, COLUMNS_OCCUPIED_BY_BLACK);
 
-          return null;
+          return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getWhiteUnoccupiedAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
                   getTilesFromColumns(tilesCorners, TileColor.WHITE, COLUMNS_UNOCCUPIED);
-          computeAverageColor(preparedImage, tiles);
-          return null;
+          return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar computeAverageColor(Mat image, List<TileCorners> tiles) {
@@ -92,7 +92,7 @@ public class ColorAnalysisService {
      }
 
      private Scalar getAverage(Mat roi) {
-          return null;
+          return Core.mean(roi);
      }
 
      public Mat getRoiSubmat(Mat src, TileCorners tile) {
