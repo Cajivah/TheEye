@@ -28,7 +28,7 @@ public class BoardTestFactory {
 
           return Board.builder()
                       .tiles(tiles)
-                      .activeColour(PlayerColor.WHITE)
+                      .activeColor(PlayerColor.WHITE)
                       .castling(createAllTrue())
                       .enPassant("-")
                       .halfmoveClock(0)

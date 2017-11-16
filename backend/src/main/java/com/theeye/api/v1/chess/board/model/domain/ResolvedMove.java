@@ -1,6 +1,6 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
-import com.theeye.api.v1.chess.board.model.enumeration.ResolvingStatus;
+import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
 import lombok.Data;
 
 import java.util.List;
@@ -9,5 +9,5 @@ import java.util.List;
 public class ResolvedMove {
 
      private Board board;
-     private List<ResolvingStatus> resolvingStatus;
+     private List<MoveType> moveTypes;
 }

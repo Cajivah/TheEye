@@ -15,7 +15,7 @@ public class FenEncoder {
           String fenDescription =
                   encodePositions(board.getTiles()) +
                           FenCodes.SECTION_DELIMITER +
-                          encodeActiveColour(board.getActiveColour()) +
+                          encodeActiveColor(board.getActiveColor()) +
                           FenCodes.SECTION_DELIMITER +
                           encodeCastling(board.getCastling()) +
                           FenCodes.SECTION_DELIMITER +
@@ -60,10 +60,10 @@ public class FenEncoder {
           return fenBuilder.toString();
      }
 
-     private String encodeActiveColour(PlayerColor activeColour) {
-          if (activeColour.equals(PlayerColor.WHITE)) {
+     private String encodeActiveColor(PlayerColor activeColor) {
+          if (activeColor.equals(PlayerColor.WHITE)) {
                return FenCodes.WHITE_ACTIVE;
-          } else if (activeColour.equals(PlayerColor.BLACK)) {
+          } else if (activeColor.equals(PlayerColor.BLACK)) {
                return FenCodes.BLACK_ACTIVE;
           } else {
                return FenCodes.EMPTY;

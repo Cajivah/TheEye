@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class FenParser {
 
-     public PlayerColor parseActiveColour(String fenSection) {
+     public PlayerColor parseActiveColor(String fenSection) {
           String sanitized = fenSection.trim();
           switch (sanitized) {
                case FenCodes.WHITE_ACTIVE:

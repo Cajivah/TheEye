@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Board {
 
      private Tile[][] tiles;
-     private PlayerColor activeColour;
+     private PlayerColor activeColor;
      private CastlingStatus castling;
      private String enPassant;
      private int halfmoveClock = 0;
