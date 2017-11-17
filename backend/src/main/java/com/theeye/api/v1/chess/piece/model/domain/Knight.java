@@ -2,6 +2,7 @@ package com.theeye.api.v1.chess.piece.model.domain;
 
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.fen.common.FenCodes;
+import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 
 public class Knight extends Piece {
 
@@ -25,6 +26,13 @@ public class Knight extends Piece {
           return getOwner().equals(PlayerColor.WHITE)
                   ? FenCodes.KNIGHT_WHITE
                   : FenCodes.KNIGHT_BLACK;
+     }
+
+     @Override
+     public PieceType getPieceType() {
+          return getOwner().equals(PlayerColor.WHITE)
+                  ? PieceType.KNIGHT_WHITE
+                  : PieceType.KNIGHT_BLACK;
      }
 
 }

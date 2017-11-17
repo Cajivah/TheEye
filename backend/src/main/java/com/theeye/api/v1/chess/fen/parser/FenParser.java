@@ -1,8 +1,9 @@
 package com.theeye.api.v1.chess.fen.parser;
 
-import com.theeye.api.v1.chess.board.common.BoardConsts;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
+import com.theeye.api.v1.chess.board.model.domain.PlayersCastlingStatuses;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 import com.theeye.api.v1.chess.fen.common.FenCodeToPieceTypeMap;
 import com.theeye.api.v1.chess.fen.common.FenCodes;
@@ -19,7 +20,7 @@ import java.util.List;
 @Component
 public class FenParser {
 
-     public PlayerColor parseActiveColour(String fenSection) {
+     public PlayerColor parseActiveColor(String fenSection) {
           String sanitized = fenSection.trim();
           switch (sanitized) {
                case FenCodes.WHITE_ACTIVE:
@@ -31,14 +32,24 @@ public class FenParser {
           }
      }
 
-     public CastlingStatus parseCastling(String fenSection) {
+     public PlayersCastlingStatuses parseCastling(String fenSection) {
           String sanitized = fenSection.trim();
-          return CastlingStatus.builder()
-                               .kingSideWhiteValid(sanitized.contains(String.valueOf(FenCodes.KING_WHITE)))
-                               .queenSideWhiteValid(sanitized.contains(String.valueOf(FenCodes.QUEEN_WHITE)))
-                               .kingSideBlackValid(sanitized.contains(String.valueOf(FenCodes.KING_BLACK)))
-                               .queenSideBlackValid(sanitized.contains(String.valueOf(FenCodes.QUEEN_BLACK)))
-                               .build();
+          CastlingStatus whiteCastlingStatus =
+                  CastlingStatus.builder()
+                                .kingSideCastle(sanitized.contains(String.valueOf(FenCodes.KING_WHITE)))
+                                .queenSideCastle(sanitized.contains(String.valueOf(FenCodes.QUEEN_WHITE)))
+                                .build();
+
+          CastlingStatus blackCastlingStatus =
+                  CastlingStatus.builder()
+                                .kingSideCastle(sanitized.contains(String.valueOf(FenCodes.KING_BLACK)))
+                                .queenSideCastle(sanitized.contains(String.valueOf(FenCodes.QUEEN_BLACK)))
+                                .build();
+
+          return PlayersCastlingStatuses.builder()
+                                        .white(whiteCastlingStatus)
+                                        .black(blackCastlingStatus)
+                                        .build();
      }
 
      public String parseEnPassant(String fenSection) {

@@ -9,8 +9,13 @@ import lombok.*;
 @Getter
 public class CastlingStatus {
 
-     private boolean queenSideWhiteValid = true;
-     private boolean kingSideWhiteValid = true;
-     private boolean queenSideBlackValid = true;
-     private boolean kingSideBlackValid = true;
+     @Builder.Default
+     private boolean queenSideCastle = true;
+
+     @Builder.Default
+     private boolean kingSideCastle = true;
+
+     public boolean canCastle() {
+          return kingSideCastle || queenSideCastle;
+     }
 }

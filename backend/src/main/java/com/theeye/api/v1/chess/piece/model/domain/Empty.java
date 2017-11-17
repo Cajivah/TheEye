@@ -1,6 +1,7 @@
 package com.theeye.api.v1.chess.piece.model.domain;
 
 import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 
 public class Empty extends Piece {
 
@@ -20,5 +21,10 @@ public class Empty extends Piece {
      @Override
      public char getFenCode() {
           return '1';
+     }
+
+     @Override
+     public PieceType getPieceType() {
+          return PieceType.EMPTY;
      }
 }

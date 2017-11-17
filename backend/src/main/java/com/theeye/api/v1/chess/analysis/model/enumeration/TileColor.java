@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum TileColor {
 
      WHITE(1),
-     BLACK(0)
-     ;
+     BLACK(0);
 
      private int offset;
 }

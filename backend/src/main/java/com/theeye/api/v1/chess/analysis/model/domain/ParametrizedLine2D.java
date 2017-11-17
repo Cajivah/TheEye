@@ -30,8 +30,8 @@ public class ParametrizedLine2D extends Line2D {
           double wx = this.b * line.c - this.c * line.b;
           double wy = this.c * line.a - this.a * line.c;
 
-          double x = wx/w;
-          double y = wy/w;
+          double x = wx / w;
+          double y = wy / w;
 
           return new Point(x, y);
      }

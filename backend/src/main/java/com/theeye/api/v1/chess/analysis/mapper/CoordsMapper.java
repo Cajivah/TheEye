@@ -1,9 +1,9 @@
 package com.theeye.api.v1.chess.analysis.mapper;
 
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
-import com.theeye.api.v1.chess.analysis.model.dto.ChessBoardFeaturesDTO;
+import com.theeye.api.v1.chess.analysis.model.dto.ChessboardPositionFeaturesDTO;
 import com.theeye.api.v1.chess.analysis.model.dto.PointDTO;
-import com.theeye.api.v1.chess.board.common.BoardConsts;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import org.mapstruct.Mapper;
 import org.opencv.core.Point;
 
@@ -12,12 +12,12 @@ public class CoordsMapper {
 
      public TileCorners[][] toTilesCoords(Point[][] corners) {
           TileCorners[][] tileCorners = new TileCorners[BoardConsts.ROWS][BoardConsts.COLUMNS];
-          for(int i = 0; i < BoardConsts.ROWS; ++i) {
+          for (int i = 0; i < BoardConsts.ROWS; ++i) {
                for (int j = 0; j < BoardConsts.COLUMNS; ++j) {
                     tileCorners[i][j] = TileCorners.builder()
-                                                   .topRight(corners[i][j+1])
-                                                   .bottomRight(corners[i+1][j+1])
-                                                   .bottomLeft(corners[i+1][j])
+                                                   .topRight(corners[i][j + 1])
+                                                   .bottomRight(corners[i + 1][j + 1])
+                                                   .bottomLeft(corners[i + 1][j])
                                                    .topLeft(corners[i][j])
                                                    .build();
                }
@@ -27,8 +27,8 @@ public class CoordsMapper {
 
      public PointDTO toPointDTO(Point point) {
           return PointDTO.builder()
-                         .x((int)point.x)
-                         .y((int)point.y)
+                         .x((int) point.x)
+                         .y((int) point.y)
                          .build();
      }
 
@@ -44,17 +44,17 @@ public class CoordsMapper {
      public PointDTO[][] toPointsDTO(Point[][] points) {
           int rows = points.length;
           PointDTO[][] pointDTOs = new PointDTO[rows][];
-          for(int i = 0; i < rows; ++i) {
-                pointDTOs[i] = toPointsDTO(points[i]);
+          for (int i = 0; i < rows; ++i) {
+               pointDTOs[i] = toPointsDTO(points[i]);
           }
           return pointDTOs;
      }
 
-     public ChessBoardFeaturesDTO toChessboardFeaturesDTO(Point[] roiCorners, Point[][] tileCornerPoints) {
-          return ChessBoardFeaturesDTO.builder()
-                                      .chessboardCorners(toPointsDTO(roiCorners))
-                                      .tilesCornerPoints(toPointsDTO(tileCornerPoints))
-                                      .build();
+     public ChessboardPositionFeaturesDTO toChessboardFeaturesDTO(Point[] roiCorners, Point[][] tileCornerPoints) {
+          return ChessboardPositionFeaturesDTO.builder()
+                                              .chessboardCorners(toPointsDTO(roiCorners))
+                                              .tilesCornerPoints(toPointsDTO(tileCornerPoints))
+                                              .build();
      }
 
      public TileCorners[][] toTilesCoords(PointDTO[][] tilesCornerPoints) {
@@ -65,7 +65,7 @@ public class CoordsMapper {
      public Point[][] toPoints(PointDTO[][] pointDTOs) {
           int rows = pointDTOs.length;
           Point[][] points = new Point[rows][];
-          for(int i = 0; i < rows; ++i) {
+          for (int i = 0; i < rows; ++i) {
                points[i] = toPoints(pointDTOs[i]);
           }
           return points;

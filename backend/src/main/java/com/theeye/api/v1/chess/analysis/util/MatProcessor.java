@@ -47,17 +47,17 @@ public class MatProcessor {
           Mat gradY = new Mat();
           Mat absoluteGradX = new Mat();
           Mat absoluteGradY = new Mat();
-          Imgproc.Sobel(mat, gradX, SOBEL_DDEPTH, 1, 0, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
-          Imgproc.Sobel(mat, gradY, SOBEL_DDEPTH, 0, 1, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT );
-          convertScaleAbs( gradX, absoluteGradX );
-          convertScaleAbs( gradY, absoluteGradY );
-          addWeighted( absoluteGradX, 0.5, absoluteGradY, 0.5, 0, mat);
+          Imgproc.Sobel(mat, gradX, SOBEL_DDEPTH, 1, 0, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT);
+          Imgproc.Sobel(mat, gradY, SOBEL_DDEPTH, 0, 1, SOBEL_KSIZE, SOBEL_SCALE, SOBEL_DELTA, BORDER_DEFAULT);
+          convertScaleAbs(gradX, absoluteGradX);
+          convertScaleAbs(gradY, absoluteGradY);
+          addWeighted(absoluteGradX, 0.5, absoluteGradY, 0.5, 0, mat);
           return this;
      }
 
      @NotNull
      public MatProcessor applyGaussianBlur() {
-          Imgproc.GaussianBlur(mat, mat, new Size(GAUSSIAN_WIDTH,GAUSSIAN_HEIGHT), 0, 0, BORDER_DEFAULT );
+          Imgproc.GaussianBlur(mat, mat, new Size(GAUSSIAN_WIDTH, GAUSSIAN_HEIGHT), 0, 0, BORDER_DEFAULT);
           return this;
      }
 

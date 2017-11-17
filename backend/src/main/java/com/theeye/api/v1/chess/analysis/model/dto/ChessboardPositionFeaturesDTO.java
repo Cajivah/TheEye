@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class ChessBoardFeaturesDTO {
+public class ChessboardPositionFeaturesDTO {
 
      PointDTO[] chessboardCorners;
      PointDTO[][] tilesCornerPoints;

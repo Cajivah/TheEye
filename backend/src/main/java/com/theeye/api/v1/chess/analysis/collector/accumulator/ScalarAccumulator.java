@@ -33,10 +33,10 @@ public class ScalarAccumulator {
 
      public Scalar toAverage() {
           return count == 0
-                  ? new Scalar(0,0,0)
+                  ? new Scalar(0, 0, 0)
                   : new Scalar(
-                  this.scalar.val[0]/count,
-                  this.scalar.val[1]/count,
-                  this.scalar.val[2]/count);
+                  this.scalar.val[0] / count,
+                  this.scalar.val[1] / count,
+                  this.scalar.val[2] / count);
      }
 }

@@ -20,7 +20,7 @@ public class FenDecoder {
           String[] fenSections = fen.getFenDescription().split(FenCodes.SECTION_DELIMITER);
           return Board.builder()
                       .tiles(fenParser.parsePositions(fenSections[FenCodes.POSITIONS_INDEX]))
-                      .activeColour(fenParser.parseActiveColour(fenSections[FenCodes.ACTIVE_COLOUR_INDEX]))
+                      .activeColor(fenParser.parseActiveColor(fenSections[FenCodes.ACTIVE_COLOUR_INDEX]))
                       .castling(fenParser.parseCastling(fenSections[FenCodes.CASTLING_INDEX]))
                       .enPassant(fenParser.parseEnPassant(fenSections[FenCodes.EN_PASSANT_INDEX]))
                       .halfmoveClock(fenParser.parseHalfmoveClock(fenSections[FenCodes.HALFMOVE_INDEX]))

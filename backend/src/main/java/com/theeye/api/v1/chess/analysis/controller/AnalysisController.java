@@ -5,7 +5,7 @@ import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.ImageMapper;
 import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
-import com.theeye.api.v1.chess.analysis.model.dto.ChessBoardFeaturesDTO;
+import com.theeye.api.v1.chess.analysis.model.dto.ChessboardPositionFeaturesDTO;
 import com.theeye.api.v1.chess.analysis.model.dto.PreprocessedChessboardImageDTO;
 import com.theeye.api.v1.chess.analysis.model.dto.ReferenceColorsDTO;
 import com.theeye.api.v1.chess.analysis.service.AnalysisService;
@@ -45,7 +45,7 @@ public class AnalysisController {
      }
 
      @PostMapping("/features")
-     public ChessBoardFeaturesDTO findChessboardCorners(
+     public ChessboardPositionFeaturesDTO findChessboardCorners(
              @RequestBody @Validated ChessboardImageDTO emptyChessboard)
              throws IOException {
           Mat mat = imageMapper.toMat(emptyChessboard.getBase64Image());

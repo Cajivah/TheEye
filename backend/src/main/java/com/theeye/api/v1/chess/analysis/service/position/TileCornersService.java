@@ -41,7 +41,7 @@ public class TileCornersService {
      }
 
      private void fillMissingRowExcludingCorners(Point[][] corners, int previousRow, int focusedRow, int missingRow) {
-          for(int i = 1; i < HORIZONTAL_INTERSECTIONS - 1; ++i) {
+          for (int i = 1; i < HORIZONTAL_INTERSECTIONS - 1; ++i) {
                Point focusedPoint = corners[focusedRow][i];
                Point nextPointDown = corners[previousRow][i];
                Vec2f vector = toVector(nextPointDown, focusedPoint);
@@ -58,7 +58,7 @@ public class TileCornersService {
      }
 
      private void fillMissingColumnIncludingCorners(Point[][] corners, int previousColumn, int focusedColumn, int missingColumn) {
-          for(int i = 0; i < VERTICAL_INTERSECTIONS; ++i) {
+          for (int i = 0; i < VERTICAL_INTERSECTIONS; ++i) {
                Point focusedPoint = corners[i][focusedColumn];
                Point nextPointDown = corners[i][previousColumn];
                Vec2f vector = toVector(nextPointDown, focusedPoint);
@@ -70,7 +70,7 @@ public class TileCornersService {
           Point[] innerCorners = matOfInnerCorners.toArray();
           for (int i = 0; i < CORNERS_PATTERN_HEIGHT; ++i) {
                for (int j = 0; j < CORNERS_PATTERN_WIDTH; ++j) {
-                    fullMat[i+1][j+1] = innerCorners[toOneDimension(i, j, CORNERS_PATTERN_WIDTH)];
+                    fullMat[i + 1][j + 1] = innerCorners[toOneDimension(i, j, CORNERS_PATTERN_WIDTH)];
                }
           }
      }

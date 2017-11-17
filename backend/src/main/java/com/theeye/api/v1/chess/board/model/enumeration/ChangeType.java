@@ -1,0 +1,10 @@
+package com.theeye.api.v1.chess.board.model.enumeration;
+
+public enum ChangeType {
+
+     UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE,
+     OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED,
+     OCCUPIED_BY_OPPONENT_TO_UNOCCUPIED,
+     OCCUPIED_BY_OPPONENT_TO_OCCUPIED_BY_ACTIVE_PLAYER,
+     UNKNOWN
+}
