@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.fen.parser;
 
-import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
 import com.theeye.api.v1.chess.board.model.domain.PlayersCastlingStatuses;
 import com.theeye.api.v1.chess.board.model.domain.Tile;

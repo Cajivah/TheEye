@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.board.utils;
 
-import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Coords;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;

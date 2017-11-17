@@ -1,16 +1,13 @@
 package com.theeye.api.v1.chess.board.processor;
 
 import com.theeye.api.v1.chess.board.common.MoveAnalysisUtil;
-import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.ChangeType;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static com.theeye.api.v1.chess.board.model.enumeration.ChangeType.*;
@@ -22,13 +19,13 @@ public class MoveResolver {
           MoveType moveType;
           Map<ChangeType, Integer> changeTypeCount = MoveAnalysisUtil.countChangeTypes(changes);
 
-          if(isRegularMove(changeTypeCount)) {
+          if (isRegularMove(changeTypeCount)) {
                moveType = MoveType.REGULAR;
-          } else if(isTakeMove(changeTypeCount)) {
+          } else if (isTakeMove(changeTypeCount)) {
                moveType = MoveType.TAKE;
-          } else if(isCastling(changeTypeCount)) {
+          } else if (isCastling(changeTypeCount)) {
                moveType = findCastlingSide(changes);
-          } else if(isEnPassant(changeTypeCount)) {
+          } else if (isEnPassant(changeTypeCount)) {
                moveType = MoveType.EN_PASSANT;
           } else {
                moveType = MoveType.UNKNOWN;

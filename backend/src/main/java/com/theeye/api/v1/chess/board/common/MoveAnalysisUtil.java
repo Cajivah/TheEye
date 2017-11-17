@@ -5,8 +5,10 @@ import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.ChangeType;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static com.theeye.api.v1.chess.board.common.PlayerColor.BLACK;
 import static com.theeye.api.v1.chess.board.common.PlayerColor.WHITE;
@@ -68,7 +70,7 @@ public class MoveAnalysisUtil {
 
      private static void incrementCount(Map<ChangeType, Integer> changeTypeCount, ChangeType changeType) {
           Optional<Integer> count = Optional.ofNullable(changeTypeCount.get(changeType));
-          if(count.isPresent()) {
+          if (count.isPresent()) {
                changeTypeCount.replace(changeType, count.get() + 1);
           } else {
                changeTypeCount.put(changeType, 0);

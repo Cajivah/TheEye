@@ -6,7 +6,6 @@ import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
 import com.theeye.api.v1.chess.fen.common.FenCodes;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class BoardDetailsUpdater {
 
      public String getEnPassantStatus(MoveType moveType, List<TileChange> tileChanges) {
           Coords coords = null;
-          if(moveType.equals(MoveType.EN_PASSANT)) {
+          if (moveType.equals(MoveType.EN_PASSANT)) {
                coords = findEnPassantDetails(tileChanges);
           }
           return coords != null ? coords.toInvertedChessboardString() : FenCodes.EMPTY;
@@ -33,7 +32,7 @@ public class BoardDetailsUpdater {
           Optional<TileChange> opponentChange = tileChanges.stream()
                                                            .filter(UNOCCUPIED_BY_OPPONENT)
                                                            .findFirst();
-          if(opponentChange.isPresent()) {
+          if (opponentChange.isPresent()) {
                TileChange change = opponentChange.get();
                return findEnPassantCoords(change);
           }
@@ -55,7 +54,7 @@ public class BoardDetailsUpdater {
 
      public int incrementHalfmoveClock(Board lastState, List<TileChange> tileChanges, MoveType moveType) {
           int halfmoveClock = lastState.getHalfmoveClock();
-          switch(moveType) {
+          switch (moveType) {
                case REGULAR:
                     return incrementIfNotAPawnMove(halfmoveClock, tileChanges);
                case TAKE:
@@ -90,7 +89,7 @@ public class BoardDetailsUpdater {
 
      public int incrementFullmoveCounter(Board lastState) {
           int fullmoveNumber = lastState.getFullmoveNumber();
-          if(lastState.getActiveColor().equals(WHITE)) {
+          if (lastState.getActiveColor().equals(WHITE)) {
                return ++fullmoveNumber;
           } else {
                return fullmoveNumber;
@@ -106,7 +105,7 @@ public class BoardDetailsUpdater {
                   ? castling.getWhite()
                   : castling.getBlack();
 
-          if(!castlingStatus.canCastle()) {
+          if (!castlingStatus.canCastle()) {
                return castling;
           } else {
                CastlingStatus newCastlingStatus = findNewCastlingStatus(castlingStatus, moveType, activePlayer, tileChanges);
@@ -121,13 +120,13 @@ public class BoardDetailsUpdater {
           boolean canCastleKingSide = castlingStatus.isKingSideCastle();
           boolean canCastleQueenSide = castlingStatus.isQueenSideCastle();
 
-          if(WAS_CASTLING.test(moveType) || movedKing(tileChanges)) {
+          if (WAS_CASTLING.test(moveType) || movedKing(tileChanges)) {
                canCastleKingSide = false;
                canCastleQueenSide = false;
-          } else if(WAS_REGULAR_OR_TAKE.test(moveType)) {
-               if(movedKingSideRook(tileChanges, activePlayer)) {
+          } else if (WAS_REGULAR_OR_TAKE.test(moveType)) {
+               if (movedKingSideRook(tileChanges, activePlayer)) {
                     canCastleKingSide = false;
-               } else if(movedQueenSideRook(tileChanges, activePlayer)) {
+               } else if (movedQueenSideRook(tileChanges, activePlayer)) {
                     canCastleQueenSide = false;
                }
           }
@@ -144,7 +143,7 @@ public class BoardDetailsUpdater {
           CastlingStatus newStatusWhite;
           CastlingStatus newStatusBlack;
 
-          if(activePlayer.equals(WHITE)) {
+          if (activePlayer.equals(WHITE)) {
                newStatusWhite = newCastlingStatus;
                newStatusBlack = castling.getBlack();
           } else {

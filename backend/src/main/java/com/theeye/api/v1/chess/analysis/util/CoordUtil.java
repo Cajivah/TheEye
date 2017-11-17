@@ -19,7 +19,7 @@ public class CoordUtil {
      }
 
      public static Vec2f toVector(Point start, Point end) {
-          return new Vec2f((float)(end.x-start.x), (float)(end.y-start.y));
+          return new Vec2f((float) (end.x - start.x), (float) (end.y - start.y));
      }
 
      public static Point pointMovedByVector(Point point, Vec2f vector) {
@@ -29,7 +29,7 @@ public class CoordUtil {
      public static Vec2f getScaledVectorOf(Vec2f vector, double scale) {
           double newVectorX = vector.x * scale;
           double newVectorY = vector.y * scale;
-          return new Vec2f((float)newVectorX, (float)newVectorY);
+          return new Vec2f((float) newVectorX, (float) newVectorY);
      }
 
      public static Rect innerRect(TileCorners corners) {
@@ -57,7 +57,7 @@ public class CoordUtil {
           double[] tileColors = tileColor.val;
           double[] referenceColors = reference.val;
           double distance = 0;
-          for(int i = 0; i < dimensionsCount; ++i) {
+          for (int i = 0; i < dimensionsCount; ++i) {
                double colorA = tileColors[i];
                double colorB = referenceColors[i];
                distance += Math.pow(colorA - colorB, 2);

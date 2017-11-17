@@ -67,7 +67,7 @@ public class AnalysisService {
                   new Size(CORNERS_PATTERN_WIDTH, CORNERS_PATTERN_HEIGHT),
                   innerCorners,
                   CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_FILTER_QUADS);
-          if(!patternFound) {
+          if (!patternFound) {
                throw new PatternNotFoundException();
           }
           return innerCorners;
@@ -157,7 +157,7 @@ public class AnalysisService {
 
      private Occupancy[][] determineOccupancy(Scalar[][] tilesColors, ReferenceColors referenceColors) {
           Occupancy[][] occupancies = new Occupancy[BoardConsts.ROWS][BoardConsts.COLUMNS];
-          for(int row = 0; row < BoardConsts.ROWS; ++row) {
+          for (int row = 0; row < BoardConsts.ROWS; ++row) {
                Occupancy[] occupancyRow = occupancies[row];
                Scalar[] tilesColorRow = tilesColors[row];
                determineOccupancyForRow(referenceColors, row, occupancyRow, tilesColorRow);
@@ -166,7 +166,7 @@ public class AnalysisService {
      }
 
      private void determineOccupancyForRow(ReferenceColors referenceColors, int i, Occupancy[] occupancyRow, Scalar[] tilesColorRow) {
-          for(int j = 0; j < BoardConsts.COLUMNS; ++j) {
+          for (int j = 0; j < BoardConsts.COLUMNS; ++j) {
                Scalar tileColor = tilesColorRow[j];
                boolean isTileBackgroundBlack = (((i + j) % 2) == 0);
                TileReferenceColors reference =
@@ -183,9 +183,9 @@ public class AnalysisService {
           double occupiedByBlackDistance = findDistance3D(tileColor, reference.getOccupiedByBlack());
           double unoccupiedDistance = findDistance3D(tileColor, reference.getUnoccupied());
           Occupancy occupancy;
-          if(unoccupiedDistance < occupiedByBlackDistance && unoccupiedDistance < unoccupiedDistance) {
+          if (unoccupiedDistance < occupiedByBlackDistance && unoccupiedDistance < unoccupiedDistance) {
                occupancy = Occupancy.UNOCCUPIED;
-          } else if(occupiedByWhiteDistance < occupiedByBlackDistance) {
+          } else if (occupiedByWhiteDistance < occupiedByBlackDistance) {
                occupancy = Occupancy.OCCUPIED_BY_WHITE;
           } else {
                occupancy = Occupancy.OCCUPIED_BY_BLACK;

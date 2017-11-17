@@ -30,13 +30,13 @@ public class BoardService {
 
      public Board doMove(Board lastState, List<TileChange> tileChanges, MoveType moveType) {
           Tile[][] newTiles;
-          switch(moveType) {
+          switch (moveType) {
                case REGULAR:
                case TAKE:
                     newTiles = doRegularMove(lastState, tileChanges);
                     break;
                case CASTLE_QUEEN:
-                    newTiles =  doCastleQueenSide(lastState, tileChanges);
+                    newTiles = doCastleQueenSide(lastState, tileChanges);
                     break;
                case CASTLE_KING:
                     newTiles = doCastleKingSide(lastState, tileChanges);
@@ -130,9 +130,9 @@ public class BoardService {
 
      private void repositionRookWhenCastling(Tile[][] newState, List<Piece> pickedUp, int row, int column) {
           Piece rook = pickedUp.stream()
-                                   .filter(IS_ROOK_PIECE)
-                                   .findFirst()
-                                   .orElseThrow(MoveDetectionException::new);
+                               .filter(IS_ROOK_PIECE)
+                               .findFirst()
+                               .orElseThrow(MoveDetectionException::new);
 
           Coords rookDestination = Coords.builder()
                                          .row(column)

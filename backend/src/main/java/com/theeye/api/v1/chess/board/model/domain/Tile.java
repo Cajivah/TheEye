@@ -26,9 +26,9 @@ public class Tile {
      }
 
      public Occupancy getOccupancy() {
-          if(!isOccupied()) {
+          if (!isOccupied()) {
                return Occupancy.UNOCCUPIED;
-          } else if(piece.getOwner().equals(PlayerColor.WHITE)) {
+          } else if (piece.getOwner().equals(PlayerColor.WHITE)) {
                return Occupancy.OCCUPIED_BY_WHITE;
           } else {
                return Occupancy.OCCUPIED_BY_BLACK;

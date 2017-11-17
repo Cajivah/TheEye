@@ -17,13 +17,13 @@ import org.mapstruct.Mapping;
                 BoardMapper.class,
                 CoordsMapper.class,
                 ColorMapper.class
-          }
-        )
+        }
+)
 public abstract class MoveMapper {
 
      @Mapping(target = "lastBoard", source = "lastPosition")
-     @Mapping(target = "chessboardCorners", source="positions.chessboardCorners")
-     @Mapping(target = "tilesCorners", source="positions.tilesCornerPoints")
+     @Mapping(target = "chessboardCorners", source = "positions.chessboardCorners")
+     @Mapping(target = "tilesCorners", source = "positions.tilesCornerPoints")
      public abstract UnresolvedMove toUnresolvedMove(MoveToResolveDTO moveToResolveDTO);
 
      @Mapping(target = "fen", source = "board")

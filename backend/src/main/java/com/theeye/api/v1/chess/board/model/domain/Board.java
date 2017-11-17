@@ -16,8 +16,10 @@ public class Board {
      private PlayerColor activeColor;
      private PlayersCastlingStatuses castling;
      private String enPassant;
-     @Builder.Default private int halfmoveClock = 0;
-     @Builder.Default private int fullmoveNumber = 0;
+     @Builder.Default
+     private int halfmoveClock = 0;
+     @Builder.Default
+     private int fullmoveNumber = 0;
 
      public Tile getTileAt(int row, int col) {
           return tiles[row][col];

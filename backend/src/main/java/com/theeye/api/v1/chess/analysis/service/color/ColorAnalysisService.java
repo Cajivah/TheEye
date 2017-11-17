@@ -7,7 +7,10 @@ import com.theeye.api.v1.chess.analysis.model.enumeration.TileColor;
 import com.theeye.api.v1.chess.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.analysis.util.TileScaler;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
-import org.opencv.core.*;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -15,9 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.theeye.api.v1.chess.analysis.model.consts.InitialColorReferenceIndexes.COLUMNS_OCCUPIED_BY_BLACK;
-import static com.theeye.api.v1.chess.analysis.model.consts.InitialColorReferenceIndexes.COLUMNS_OCCUPIED_BY_WHITE;
-import static com.theeye.api.v1.chess.analysis.model.consts.InitialColorReferenceIndexes.COLUMNS_UNOCCUPIED;
+import static com.theeye.api.v1.chess.analysis.model.consts.InitialColorReferenceIndexes.*;
 
 @Service
 public class ColorAnalysisService {
@@ -108,7 +109,7 @@ public class ColorAnalysisService {
           return TileScaler.computeScaledTile(tile, sideScale);
      }
 
-     private List<TileCorners> getTilesFromColumns(TileCorners[][] tiles, TileColor tileColor, int...cols) {
+     private List<TileCorners> getTilesFromColumns(TileCorners[][] tiles, TileColor tileColor, int... cols) {
           return Arrays.stream(cols)
                        .boxed()
                        .flatMap(col -> getTilesFromColumn(tiles, tileColor, col).stream())
@@ -119,7 +120,7 @@ public class ColorAnalysisService {
           TileCorners[] column = tiles[col];
           List<TileCorners> tilesList = new LinkedList<>();
           int firstIndex = (tileColor.getOffset() + col % 2) % 2;
-          for (int i = firstIndex; i < column.length; i+=2) {
+          for (int i = firstIndex; i < column.length; i += 2) {
                tilesList.add(column[i]);
           }
           return tilesList;
@@ -127,10 +128,10 @@ public class ColorAnalysisService {
 
      public Scalar[][] getTilesColorsInPlay(Mat image, TileCorners[][] tilesCorners) {
           Scalar[][] tilesColors = new Scalar[BoardConsts.ROWS][BoardConsts.COLUMNS];
-          for(int i = 0; i < BoardConsts.ROWS; ++i) {
+          for (int i = 0; i < BoardConsts.ROWS; ++i) {
                TileCorners[] tilesRow = tilesCorners[i];
                Scalar[] colorsRow = tilesColors[i];
-               for(int j = 0; j < BoardConsts.COLUMNS; ++j) {
+               for (int j = 0; j < BoardConsts.COLUMNS; ++j) {
                     TileCorners tileCorners = tilesRow[j];
                     Scalar colors = computeAverageColor(image, tileCorners);
                     colorsRow[j] = colors;
