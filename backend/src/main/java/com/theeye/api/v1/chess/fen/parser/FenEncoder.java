@@ -3,6 +3,7 @@ package com.theeye.api.v1.chess.fen.parser;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
+import com.theeye.api.v1.chess.board.model.domain.PlayersCastlingStatuses;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 import com.theeye.api.v1.chess.fen.common.FenCodes;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
@@ -70,18 +71,18 @@ public class FenEncoder {
           }
      }
 
-     private String encodeCastling(CastlingStatus castling) {
+     private String encodeCastling(PlayersCastlingStatuses castling) {
           StringBuilder castlingDescription = new StringBuilder();
-          if (castling.isKingSideWhiteValid()) {
+          if (castling.getWhite().isKingSideCastle()) {
                castlingDescription.append(FenCodes.KING_WHITE);
           }
-          if (castling.isQueenSideWhiteValid()) {
+          if (castling.getWhite().isQueenSideCastle()) {
                castlingDescription.append(FenCodes.QUEEN_WHITE);
           }
-          if (castling.isKingSideBlackValid()) {
+          if (castling.getBlack().isKingSideCastle()) {
                castlingDescription.append(FenCodes.KING_BLACK);
           }
-          if (castling.isQueenSideBlackValid()) {
+          if (castling.getBlack().isQueenSideCastle()) {
                castlingDescription.append(FenCodes.QUEEN_BLACK);
           }
           return castlingDescription.length() == 0

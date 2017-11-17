@@ -3,7 +3,7 @@ package com.theeye.api.v1.chess.analysis.mapper;
 import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
 import com.theeye.api.v1.chess.analysis.model.dto.ChessboardPositionFeaturesDTO;
 import com.theeye.api.v1.chess.analysis.model.dto.PointDTO;
-import com.theeye.api.v1.chess.board.common.BoardConsts;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import org.mapstruct.Mapper;
 import org.opencv.core.Point;
 

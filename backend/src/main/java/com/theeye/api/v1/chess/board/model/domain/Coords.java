@@ -9,4 +9,9 @@ public class Coords {
 
      private int row;
      private int column;
+
+     public String toInvertedChessboardString() {
+          char boardColumnLetter = (char) ('a' + row);
+          return boardColumnLetter + String.valueOf(column + 1);
+     }
 }

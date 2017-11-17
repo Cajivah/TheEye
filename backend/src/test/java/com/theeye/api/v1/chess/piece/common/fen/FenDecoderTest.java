@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.piece.common.fen;
 
 import com.theeye.api.factory.BoardTestFactory;
-import com.theeye.api.v1.chess.board.common.BoardConsts;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.Tile;

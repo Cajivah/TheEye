@@ -1,6 +1,7 @@
 package com.theeye.api.v1.chess.piece.model.domain;
 
 import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 import lombok.Data;
 
 @Data
@@ -15,4 +16,6 @@ public abstract class Piece {
      public abstract String toPGN();
 
      public abstract char getFenCode();
+
+     public abstract PieceType getPieceType();
 }

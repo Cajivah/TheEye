@@ -4,18 +4,20 @@ import com.theeye.api.v1.chess.board.common.PlayerColor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor(staticName = "of")
 @Builder
 @Getter
+@Setter
 public class Board {
 
      private Tile[][] tiles;
      private PlayerColor activeColor;
-     private CastlingStatus castling;
+     private PlayersCastlingStatuses castling;
      private String enPassant;
-     private int halfmoveClock = 0;
-     private int fullmoveNumber = 1;
+     @Builder.Default private int halfmoveClock = 0;
+     @Builder.Default private int fullmoveNumber = 0;
 
      public Tile getTileAt(int row, int col) {
           return tiles[row][col];

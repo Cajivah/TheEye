@@ -6,8 +6,7 @@ import com.theeye.api.v1.chess.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.analysis.model.enumeration.TileColor;
 import com.theeye.api.v1.chess.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.analysis.util.TileScaler;
-import com.theeye.api.v1.chess.board.common.BoardConsts;
-import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import org.opencv.core.*;
 import org.springframework.stereotype.Service;
 
