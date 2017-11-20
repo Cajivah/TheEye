@@ -1,5 +1,7 @@
 package com.theeye.api.v1.chess.board.utils;
 
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
+import com.theeye.api.v1.chess.board.model.domain.Coords;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 
 public class BoardUtils {
@@ -16,5 +18,9 @@ public class BoardUtils {
                newTiles[i] = newTilesRow;
           }
           return newTiles;
+     }
+
+     public static boolean coordsValid(Coords coords) {
+          return coords.getRow() < BoardConsts.ROWS && coords.getColumn() < BoardConsts.COLUMNS;
      }
 }

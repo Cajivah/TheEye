@@ -4,13 +4,10 @@ import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 import com.theeye.api.v1.chess.piece.model.domain.*;
-import org.junit.Test;
 
 import java.util.stream.IntStream;
 
-import static com.theeye.api.v1.chess.board.common.PlayerColor.BLACK;
-import static com.theeye.api.v1.chess.board.common.PlayerColor.NONE;
-import static com.theeye.api.v1.chess.board.common.PlayerColor.WHITE;
+import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
 
 public class TileTestFactory {
 

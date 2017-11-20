@@ -65,7 +65,7 @@ public class BoardService {
                           moveType,
                           lastState.getActiveColor(),
                           tileChanges);
-          String enPassant = boardDetailsUpdater.getEnPassantStatus(moveType, tileChanges);
+          String enPassant = boardDetailsUpdater.getEnPassantStatus(lastState, moveType, tileChanges);
           return Board.builder()
                       .tiles(newTiles)
                       .fullmoveNumber(newFullmoveCounter)
@@ -75,7 +75,6 @@ public class BoardService {
                       .enPassant(enPassant)
                       .build();
      }
-
 
      private Tile[][] doRegularMove(Board lastState, List<TileChange> tileChanges) {
           Tile[][] newState = BoardUtils.shallowCopyTiles(lastState.getTiles());

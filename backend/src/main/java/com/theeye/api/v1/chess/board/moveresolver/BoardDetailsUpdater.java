@@ -21,15 +21,15 @@ import static com.theeye.api.v1.chess.board.utils.TileChangeAnalysisUtils.*;
 @Component
 public class BoardDetailsUpdater {
 
-     public String getEnPassantStatus(MoveType moveType, List<TileChange> tileChanges) {
+     public String getEnPassantStatus(Board lastBoard, MoveType moveType, List<TileChange> tileChanges) {
           Coords coords = null;
           if (moveType.equals(MoveType.REGULAR)) {
-               coords = findEnPassantDetails(tileChanges);
+               coords = findEnPassantDetails(lastBoard, tileChanges);
           }
           return coords != null ? coords.toInvertedChessboardString() : FenCodes.EMPTY;
      }
 
-     private Coords findEnPassantDetails(List<TileChange> tileChanges) {
+     private Coords findEnPassantDetails(Board lastBoard, List<TileChange> tileChanges) {
           Optional<TileChange> unoccupiedByActive = tileChanges.stream()
                                                            .filter(UNOCCUPIED_BY_ACTIVE)
                                                            .findFirst();
@@ -37,29 +37,44 @@ public class BoardDetailsUpdater {
           Optional<TileChange> occupiedByActive = tileChanges.stream()
                                                              .filter(OCCUPIED_BY_ACTIVE)
                                                              .findFirst();
+
           if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
                TileChange changeToOccupied = occupiedByActive.get();
                TileChange changeToUnoccupied = unoccupiedByActive.get();
-               return findEnPassantCoords(changeToOccupied, changeToUnoccupied);
+               return findEnPassantCoords(lastBoard, changeToOccupied, changeToUnoccupied);
           }
           return null;
      }
 
      @Nullable
-     private Coords findEnPassantCoords(TileChange changeToOccupied, TileChange changeToUnoccupied) {
+     private Coords findEnPassantCoords(Board lastBoard, TileChange changeToOccupied, TileChange changeToUnoccupied) {
           Coords coordsOccupied = changeToOccupied.getCoords();
           Coords coordsUnoccupied = changeToUnoccupied.getCoords();
           if(!wasPawnMove(changeToUnoccupied) || !wasLongMove(coordsUnoccupied, coordsOccupied)) {
                return null;
           }
           PlayerColor active = changeToUnoccupied.getLastPiece().getOwner();
-          int previousRow = active.equals(WHITE)
-                  ? coordsOccupied.getRow() - 1
-                  : coordsOccupied.getRow() + 1;
-          return Coords.builder()
-                       .row(previousRow)
-                       .column(coordsOccupied.getColumn())
-                       .build();
+          if(hasOpponentPawnAroundInTheRow(lastBoard, coordsOccupied, active)) {
+               int previousRow = active.equals(WHITE)
+                       ? coordsOccupied.getRow() - 1
+                       : coordsOccupied.getRow() + 1;
+               return Coords.builder()
+                            .row(previousRow)
+                            .column(coordsOccupied.getColumn())
+                            .build();
+          }
+          return null;
+     }
+
+     private boolean hasOpponentPawnAroundInTheRow(Board lastBoard, Coords coords, PlayerColor active) {
+          PieceType opponentsPawn = active.equals(WHITE)
+                  ? PieceType.PAWN_BLACK
+                  : PieceType.PAWN_WHITE;
+          Coords leftTile = new Coords(coords.getRow(), coords.getColumn() - 1);
+          Coords rightTile = new Coords(coords.getRow(), coords.getColumn() + 1);
+
+          return lastBoard.hasPieceOnCoords(leftTile, opponentsPawn)
+                  || lastBoard.hasPieceOnCoords(rightTile, opponentsPawn);
      }
 
      private boolean wasLongMove(Coords coordsUnoccupied, Coords coordsOccupied) {
@@ -70,10 +85,6 @@ public class BoardDetailsUpdater {
      private boolean wasPawnMove(TileChange change) {
           PieceType pieceType = change.getLastPiece().getPieceType();
           return pieceType.equals(PieceType.PAWN_BLACK) || pieceType.equals(PieceType.PAWN_WHITE);
-     }
-
-     private boolean onTheSameColumn(Coords coords1, Coords coords2) {
-          return coords1.getColumn() == coords2.getColumn();
      }
 
      public int incrementHalfmoveClock(Board lastState, List<TileChange> tileChanges, MoveType moveType) {

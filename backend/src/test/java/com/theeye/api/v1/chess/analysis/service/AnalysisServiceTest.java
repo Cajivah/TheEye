@@ -1,6 +1,5 @@
 package com.theeye.api.v1.chess.analysis.service;
 
-import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;

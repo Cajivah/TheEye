@@ -23,7 +23,7 @@ public class BoardTestFactory {
                   .tiles(TileTestFactory.createAfter1e4())
                   .activeColor(PlayerColor.BLACK)
                   .castling(createAllTrue())
-                  .enPassant("e3")
+                  .enPassant("-")
                   .halfmoveClock(0)
                   .fullmoveNumber(1)
                   .build();
