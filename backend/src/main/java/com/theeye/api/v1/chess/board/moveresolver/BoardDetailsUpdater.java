@@ -6,6 +6,7 @@ import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
 import com.theeye.api.v1.chess.fen.common.FenCodes;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,34 +23,57 @@ public class BoardDetailsUpdater {
 
      public String getEnPassantStatus(MoveType moveType, List<TileChange> tileChanges) {
           Coords coords = null;
-          if (moveType.equals(MoveType.EN_PASSANT)) {
+          if (moveType.equals(MoveType.REGULAR)) {
                coords = findEnPassantDetails(tileChanges);
           }
           return coords != null ? coords.toInvertedChessboardString() : FenCodes.EMPTY;
      }
 
      private Coords findEnPassantDetails(List<TileChange> tileChanges) {
-          Optional<TileChange> opponentChange = tileChanges.stream()
-                                                           .filter(UNOCCUPIED_BY_OPPONENT)
+          Optional<TileChange> unoccupiedByActive = tileChanges.stream()
+                                                           .filter(UNOCCUPIED_BY_ACTIVE)
                                                            .findFirst();
-          if (opponentChange.isPresent()) {
-               TileChange change = opponentChange.get();
-               return findEnPassantCoords(change);
+
+          Optional<TileChange> occupiedByActive = tileChanges.stream()
+                                                             .filter(OCCUPIED_BY_ACTIVE)
+                                                             .findFirst();
+          if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
+               TileChange changeToOccupied = occupiedByActive.get();
+               TileChange changeToUnoccupied = unoccupiedByActive.get();
+               return findEnPassantCoords(changeToOccupied, changeToUnoccupied);
           }
           return null;
      }
 
-     private Coords findEnPassantCoords(TileChange change) {
-          Coords coords = change.getCoords();
-          PlayerColor opponentColor = change.getLastPiece().getOwner();
-          int column = coords.getColumn();
-          int previousColumn = opponentColor.equals(WHITE)
-                  ? column + 1
-                  : column - 1;
+     @Nullable
+     private Coords findEnPassantCoords(TileChange changeToOccupied, TileChange changeToUnoccupied) {
+          Coords coordsOccupied = changeToOccupied.getCoords();
+          Coords coordsUnoccupied = changeToUnoccupied.getCoords();
+          if(!wasPawnMove(changeToUnoccupied) || !wasLongMove(coordsUnoccupied, coordsOccupied)) {
+               return null;
+          }
+          PlayerColor active = changeToUnoccupied.getLastPiece().getOwner();
+          int previousRow = active.equals(WHITE)
+                  ? coordsOccupied.getRow() - 1
+                  : coordsOccupied.getRow() + 1;
           return Coords.builder()
-                       .row(coords.getRow())
-                       .column(previousColumn)
+                       .row(previousRow)
+                       .column(coordsOccupied.getColumn())
                        .build();
+     }
+
+     private boolean wasLongMove(Coords coordsUnoccupied, Coords coordsOccupied) {
+          return coordsUnoccupied.getColumn() == coordsOccupied.getColumn()
+                  && (coordsOccupied.getRow() - coordsUnoccupied.getRow()) == 2;
+     }
+
+     private boolean wasPawnMove(TileChange change) {
+          PieceType pieceType = change.getLastPiece().getPieceType();
+          return pieceType.equals(PieceType.PAWN_BLACK) || pieceType.equals(PieceType.PAWN_WHITE);
+     }
+
+     private boolean onTheSameColumn(Coords coords1, Coords coords2) {
+          return coords1.getColumn() == coords2.getColumn();
      }
 
      public int incrementHalfmoveClock(Board lastState, List<TileChange> tileChanges, MoveType moveType) {
@@ -89,7 +113,7 @@ public class BoardDetailsUpdater {
 
      public int incrementFullmoveCounter(Board lastState) {
           int fullmoveNumber = lastState.getFullmoveNumber();
-          if (lastState.getActiveColor().equals(WHITE)) {
+          if (lastState.getActiveColor().equals(BLACK)) {
                return ++fullmoveNumber;
           } else {
                return fullmoveNumber;

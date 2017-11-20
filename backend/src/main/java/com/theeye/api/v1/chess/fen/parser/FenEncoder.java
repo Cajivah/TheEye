@@ -90,7 +90,9 @@ public class FenEncoder {
      }
 
      private String encodeEnPassant(String enPassant) {
-          return enPassant;
+          return enPassant == null
+                  ? FenCodes.EMPTY
+                  : enPassant;
      }
 
      private String encodeHalfmoveClock(Integer halfmoveClock) {

@@ -13,7 +13,7 @@ public class Coords {
      private int column;
 
      public String toInvertedChessboardString() {
-          char boardColumnLetter = (char) ('a' + row);
-          return boardColumnLetter + String.valueOf(column + 1);
+          char boardColumnLetter = (char) ('a' + column);
+          return boardColumnLetter + String.valueOf(row + 1);
      }
 }

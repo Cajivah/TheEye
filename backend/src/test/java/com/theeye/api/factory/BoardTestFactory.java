@@ -17,4 +17,15 @@ public class BoardTestFactory {
                       .fullmoveNumber(1)
                       .build();
      }
+
+     public static Board createAfter1e4() {
+          return Board.builder()
+                  .tiles(TileTestFactory.createAfter1e4())
+                  .activeColor(PlayerColor.BLACK)
+                  .castling(createAllTrue())
+                  .enPassant("e3")
+                  .halfmoveClock(0)
+                  .fullmoveNumber(1)
+                  .build();
+     }
 }

@@ -18,6 +18,12 @@ public class BoardPredicates {
              change -> change.getChangeType().equals(ChangeType.OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED)
                      || change.getChangeType().equals(ChangeType.UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE);
 
+     public static final Predicate<TileChange> UNOCCUPIED_BY_ACTIVE =
+             change -> change.getChangeType().equals(ChangeType.OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED);
+
+     public static final Predicate<TileChange> OCCUPIED_BY_ACTIVE =
+             change -> change.getChangeType().equals(ChangeType.UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE);
+
      public static final Predicate<TileChange> UNOCCUPIED_BY_OPPONENT =
              change -> change.getChangeType().equals(ChangeType.OCCUPIED_BY_OPPONENT_TO_UNOCCUPIED);
 
