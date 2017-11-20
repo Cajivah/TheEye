@@ -1,4 +1,4 @@
-package com.theeye.api.v1.chess.board.processor;
+package com.theeye.api.v1.chess.board.moveresolver;
 
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 import static com.theeye.api.v1.chess.board.common.PlayerColor.BLACK;
 import static com.theeye.api.v1.chess.board.common.PlayerColor.WHITE;
 import static com.theeye.api.v1.chess.board.utils.BoardPredicates.*;
-import static com.theeye.api.v1.chess.board.utils.TileChangeAnalysis.*;
+import static com.theeye.api.v1.chess.board.utils.TileChangeAnalysisUtils.*;
 
 @Component
 public class BoardDetailsUpdater {

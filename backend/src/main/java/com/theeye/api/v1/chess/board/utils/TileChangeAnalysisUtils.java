@@ -11,7 +11,7 @@ import java.util.List;
 import static com.theeye.api.v1.chess.board.utils.BoardPredicates.CHANGED_TO_UNOCCUPIED;
 import static com.theeye.api.v1.chess.board.utils.BoardPredicates.IS_KING;
 
-public class TileChangeAnalysis {
+public class TileChangeAnalysisUtils {
 
      public static boolean movedKing(List<TileChange> tileChanges) {
           return tileChanges.stream()

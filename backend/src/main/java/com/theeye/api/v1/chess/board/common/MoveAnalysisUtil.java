@@ -73,7 +73,7 @@ public class MoveAnalysisUtil {
           if (count.isPresent()) {
                changeTypeCount.replace(changeType, count.get() + 1);
           } else {
-               changeTypeCount.put(changeType, 0);
+               changeTypeCount.put(changeType, 1);
           }
      }
 }

@@ -17,7 +17,7 @@ public class ResolvingValidator {
      private List<TileChange> changes;
 
      public static ResolvingValidator of(List<TileChange> changes) {
-          return new ResolvingValidator(changes, true);
+          return new ResolvingValidator( true, changes);
      }
 
      public ResolvingValidator validateChangesCount() {

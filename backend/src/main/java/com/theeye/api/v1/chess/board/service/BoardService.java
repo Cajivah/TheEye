@@ -5,7 +5,7 @@ import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
 import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
-import com.theeye.api.v1.chess.board.processor.BoardDetailsUpdater;
+import com.theeye.api.v1.chess.board.moveresolver.BoardDetailsUpdater;
 import com.theeye.api.v1.chess.board.utils.BoardUtils;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 import org.springframework.beans.factory.annotation.Autowired;
