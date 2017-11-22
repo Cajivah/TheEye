@@ -79,7 +79,7 @@ public class BoardDetailsUpdater {
 
      private boolean wasLongMove(Coords coordsUnoccupied, Coords coordsOccupied) {
           return coordsUnoccupied.getColumn() == coordsOccupied.getColumn()
-                  && (coordsOccupied.getRow() - coordsUnoccupied.getRow()) == 2;
+                  && (Math.abs(coordsOccupied.getRow() - coordsUnoccupied.getRow()) == 2);
      }
 
      private boolean wasPawnMove(TileChange change) {

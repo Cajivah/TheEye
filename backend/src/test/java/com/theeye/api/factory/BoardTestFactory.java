@@ -51,4 +51,38 @@ public class BoardTestFactory {
                       .fullmoveNumber(4)
                       .build();
      }
+
+     public static Board createForBeforeEnPassantPossibleSetup1() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createForBeforeEnPassantPossibleSetup1())
+                      .activeColor(PlayerColor.BLACK)
+                      .castling(createAllTrue())
+                      .enPassant("-")
+                      .halfmoveClock(0)
+                      .fullmoveNumber(7)
+                      .build();
+     }
+
+
+     public static Board createForAfterEnPassantPossibleSetup1() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createForAfterEnPassantPossibleSetup1())
+                      .activeColor(PlayerColor.WHITE)
+                      .castling(createAllTrue())
+                      .enPassant("b6")
+                      .halfmoveClock(0)
+                      .fullmoveNumber(8)
+                      .build();
+     }
+
+     public static Board createForAfterEnPassantSetup1() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createForAfterEnPassantSetup1())
+                      .activeColor(PlayerColor.BLACK)
+                      .castling(createAllTrue())
+                      .enPassant("-")
+                      .halfmoveClock(0)
+                      .fullmoveNumber(8)
+                      .build();
+     }
 }

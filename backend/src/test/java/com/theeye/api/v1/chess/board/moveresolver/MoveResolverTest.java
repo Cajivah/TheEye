@@ -61,6 +61,20 @@ class MoveResolverTest {
                     );
                }
 
+               @Test
+               @DisplayName("Should return list of changes after en passant move")
+               void findChangesAfterEnPassantSetup1() {
+                    tiles = TileTestFactory.createForAfterEnPassantPossibleSetup1();
+                    occupancies = OccupancyTestFactory.createOccupancyAfterEnPassantSetup1();
+
+                    List<TileChange> changedTiles = sut.findChangedTiles(tiles, occupancies, PlayerColor.WHITE);
+                    List<TileChange> expectedChanges = ChangesTestFactory.createChangesAfterEnPassantSetup1();
+                    assertAll("Assert that correct changes found",
+                            () -> assertEquals(3, changedTiles.size()),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(0))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(1)))
+                    );
+               }
 
           }
      }
@@ -89,6 +103,14 @@ class MoveResolverTest {
                     tileChanges = ChangesTestFactory.createChangesAfterTakeSetup1();
                     MoveType moveType = sut.findMoveType(tileChanges);
                     assertEquals(MoveType.TAKE, moveType);
+               }
+
+               @Test
+               @DisplayName("Should classify en passant move")
+               void findEnPassantMoveType() {
+                    tileChanges = ChangesTestFactory.createChangesAfterEnPassantSetup1();
+                    MoveType moveType = sut.findMoveType(tileChanges);
+                    assertEquals(MoveType.EN_PASSANT, moveType);
                }
           }
      }

@@ -5,7 +5,9 @@ import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.ChangeType;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.theeye.api.v1.chess.board.common.PlayerColor.BLACK;

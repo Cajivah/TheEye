@@ -97,4 +97,16 @@ public class TileTestFactory {
      public static Tile[][] createForBeforeTakeSetup1() {
           return fenDecoder.decode(Fen.of(FenTestFactory.fenBeforeTakeSetup1)).getTiles();
      }
+
+     public static Tile[][] createForAfterEnPassantPossibleSetup1() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenAfterEnPassantPossibleSetup1)).getTiles();
+     }
+
+     public static Tile[][] createForBeforeEnPassantPossibleSetup1() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenBeforeEnPassantPossibleSetup1)).getTiles();
+     }
+
+     public static Tile[][] createForAfterEnPassantSetup1() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenAfterEnPassantSetup1)).getTiles();
+     }
 }

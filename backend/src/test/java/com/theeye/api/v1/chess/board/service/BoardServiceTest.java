@@ -68,6 +68,44 @@ class BoardServiceTest {
                             () -> assertEquals(expected.getCastling(), board.getCastling())
                     );
                }
+
+               @Test
+               @DisplayName("Should commit en passant move and update fen")
+               void doEnPassantMove() {
+                    lastBoard = BoardTestFactory.createForAfterEnPassantPossibleSetup1();
+                    changes = ChangesTestFactory.createChangesAfterEnPassantSetup1();
+
+                    Board board = sut.doMove(lastBoard, changes, MoveType.EN_PASSANT);
+
+                    Board expected = BoardTestFactory.createForAfterEnPassantSetup1();
+                    assertAll(
+                            () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
+                            () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),
+                            () -> assertEquals(expected.getEnPassant(), board.getEnPassant()),
+                            () -> assertEquals(expected.getFullmoveNumber(), board.getFullmoveNumber()),
+                            () -> assertEquals(expected.getHalfmoveClock(), board.getHalfmoveClock()),
+                            () -> assertEquals(expected.getCastling(), board.getCastling())
+                    );
+               }
+
+               @Test
+               @DisplayName("Should commit en passant move and update fen with en passant coords")
+               void doPreEnPassantMove() {
+                    lastBoard = BoardTestFactory.createForBeforeEnPassantPossibleSetup1();
+                    changes = ChangesTestFactory.createChangesAfterEnPassantPossibleSetup1();
+
+                    Board board = sut.doMove(lastBoard, changes, MoveType.REGULAR);
+
+                    Board expected = BoardTestFactory.createForAfterEnPassantPossibleSetup1();
+                    assertAll(
+                            () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
+                            () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),
+                            () -> assertEquals(expected.getEnPassant(), board.getEnPassant()),
+                            () -> assertEquals(expected.getFullmoveNumber(), board.getFullmoveNumber()),
+                            () -> assertEquals(expected.getHalfmoveClock(), board.getHalfmoveClock()),
+                            () -> assertEquals(expected.getCastling(), board.getCastling())
+                    );
+               }
           }
      }
 }
