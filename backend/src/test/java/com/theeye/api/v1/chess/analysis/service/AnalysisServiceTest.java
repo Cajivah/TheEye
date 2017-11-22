@@ -3,6 +3,7 @@ package com.theeye.api.v1.chess.analysis.service;
 import com.theeye.api.v1.chess.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.analysis.service.position.TileCornersService;
+import com.theeye.api.v1.chess.analysis.util.MatProcessor;
 import extension.NativeLibraryExtension;
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
@@ -96,11 +97,17 @@ class AnalysisServiceTest {
 
      @Test
      void floatingTest() throws IOException {
-          Mat lines = sut.detectLines(this.mat);
-          Point[] corners = sut.findCorners(mat, lines);
-          Mat trimmed = sut.trimToCorners(this.mat, corners);
-
-          saveToFile(trimmed, "TrimToRoi");
+          Mat canny = MatProcessor.ofClone(this.mat)
+                                  .applyGaussianBlur()
+                                  .applyCannyEdgeDetection()
+                                  .getMat();
+          Mat lines = new Mat();
+          Imgproc.HoughLinesP(canny, lines, 1, Math.PI / 180, 40, 80, 15);
+          for(int i = 0; i < lines.rows(); i++) {
+               double[] val = lines.get(i, 0);
+               Imgproc.line(mat, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2);
+          }
+          saveToFile(mat, "lines");
      }
 
      @Test

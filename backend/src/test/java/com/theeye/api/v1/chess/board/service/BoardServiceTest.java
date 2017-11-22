@@ -32,14 +32,33 @@ class BoardServiceTest {
           class Regular {
 
                @Test
-               @DisplayName("Should commit and update fen")
-               void doMove() {
+               @DisplayName("Should commit regular move and update fen")
+               void doRegularMove() {
                     lastBoard = BoardTestFactory.createInitialBoard();
                     changes = ChangesTestFactory.createChangesAfter1e4();
 
                     Board board = sut.doMove(lastBoard, changes, MoveType.REGULAR);
 
                     Board expected = BoardTestFactory.createAfter1e4();
+                    assertAll(
+                            () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
+                            () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),
+                            () -> assertEquals(expected.getEnPassant(), board.getEnPassant()),
+                            () -> assertEquals(expected.getFullmoveNumber(), board.getFullmoveNumber()),
+                            () -> assertEquals(expected.getHalfmoveClock(), board.getHalfmoveClock()),
+                            () -> assertEquals(expected.getCastling(), board.getCastling())
+                    );
+               }
+
+               @Test
+               @DisplayName("Should commit taking move and update fen")
+               void doTakingMove() {
+                    lastBoard = BoardTestFactory.createForBeforeTakeSetup1();
+                    changes = ChangesTestFactory.createChangesAfterTakeSetup1();
+
+                    Board board = sut.doMove(lastBoard, changes, MoveType.REGULAR);
+
+                    Board expected = BoardTestFactory.createForAfterTakeSetup1();
                     assertAll(
                             () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
                             () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),

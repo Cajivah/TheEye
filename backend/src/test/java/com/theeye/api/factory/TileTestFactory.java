@@ -3,6 +3,9 @@ package com.theeye.api.factory;
 import com.theeye.api.v1.chess.board.common.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
+import com.theeye.api.v1.chess.fen.model.domain.Fen;
+import com.theeye.api.v1.chess.fen.parser.FenDecoder;
+import com.theeye.api.v1.chess.fen.parser.FenParser;
 import com.theeye.api.v1.chess.piece.model.domain.*;
 
 import java.util.stream.IntStream;
@@ -10,6 +13,9 @@ import java.util.stream.IntStream;
 import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
 
 public class TileTestFactory {
+
+     private static FenParser fenParser = new FenParser();
+     private static FenDecoder fenDecoder = new FenDecoder(fenParser);
 
      public static Tile[][] createInitial() {
           return new Tile[][]{
@@ -83,5 +89,12 @@ public class TileTestFactory {
                   createPawnRow(BLACK),
                   createFirstRow(BLACK)
           };
+     }
+
+     public static Tile[][] createForAfterTakeSetup1() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenAfterTakeSetup1)).getTiles();
+     }
+     public static Tile[][] createForBeforeTakeSetup1() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenBeforeTakeSetup1)).getTiles();
      }
 }

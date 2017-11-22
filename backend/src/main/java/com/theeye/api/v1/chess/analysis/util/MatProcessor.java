@@ -31,13 +31,17 @@ public class MatProcessor {
 
      @NotNull
      public MatProcessor applyCannyEdgeDetection() {
-          Imgproc.Canny(mat, mat, CANNY_LOW_THRESHOLD, CANNY_LOW_THRESHOLD * CANNY_RATIO);
+          Mat temp = new Mat();
+          Imgproc.Canny(mat, temp, CANNY_LOW_THRESHOLD, CANNY_LOW_THRESHOLD * CANNY_RATIO);
+          this.mat = temp;
           return this;
      }
 
      @NotNull
      public MatProcessor applyCannyEdgeDetection(int lowTreshold, double ratio) {
-          Imgproc.Canny(mat, mat, lowTreshold, lowTreshold * ratio);
+          Mat temp = new Mat();
+          Imgproc.Canny(mat, temp, lowTreshold, lowTreshold * ratio);
+          this.mat = temp;
           return this;
      }
 

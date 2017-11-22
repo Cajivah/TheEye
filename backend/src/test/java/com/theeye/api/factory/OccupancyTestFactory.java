@@ -34,4 +34,78 @@ public class OccupancyTestFactory {
                           .map(i -> occupancy)
                           .toArray(Occupancy[]::new);
      }
+
+     public static Occupancy[][] createOccupancyBeforeTakeSetup1() {
+          return new Occupancy[][]{
+                  new Occupancy[] {
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE,
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, UNOCCUPIED, OCCUPIED_BY_WHITE
+                  },
+                  new Occupancy[] {
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, UNOCCUPIED,
+                          UNOCCUPIED, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED,
+                          UNOCCUPIED, OCCUPIED_BY_WHITE, UNOCCUPIED, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, OCCUPIED_BY_WHITE,
+                          OCCUPIED_BY_WHITE, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED,
+                          OCCUPIED_BY_BLACK, UNOCCUPIED, OCCUPIED_BY_BLACK, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, OCCUPIED_BY_BLACK,
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, UNOCCUPIED,
+                          UNOCCUPIED, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK
+                  },
+                  new Occupancy[] {
+                          OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, UNOCCUPIED,
+                          OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK
+                  }
+          };
+     }
+
+     public static Occupancy[][] createOccupancyAfterTakeSetup1() {
+          return new Occupancy[][]{
+                  new Occupancy[] {
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE,
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, UNOCCUPIED, OCCUPIED_BY_WHITE
+                  },
+                  new Occupancy[] {
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, UNOCCUPIED,
+                          UNOCCUPIED, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED,
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, OCCUPIED_BY_WHITE,
+                          OCCUPIED_BY_WHITE, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED,
+                          OCCUPIED_BY_WHITE, UNOCCUPIED, OCCUPIED_BY_BLACK, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, OCCUPIED_BY_BLACK,
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
+                  },
+                  new Occupancy[] {
+                          OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, UNOCCUPIED,
+                          UNOCCUPIED, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK
+                  },
+                  new Occupancy[] {
+                          OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, UNOCCUPIED,
+                          OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK, OCCUPIED_BY_BLACK
+                  }
+          };
+     }
 }

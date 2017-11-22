@@ -25,13 +25,14 @@ public class MoveResolver {
      public MoveType findMoveType(List<TileChange> changes) {
           MoveType moveType;
           Map<ChangeType, Integer> changeTypeCount = MoveAnalysisUtil.countChangeTypes(changes);
-          if (isRegularMove(changeTypeCount)) {
+          int totalChangeCount = changes.size();
+          if (isRegularMove(changeTypeCount, totalChangeCount)) {
                moveType = MoveType.REGULAR;
-          } else if (isTakeMove(changeTypeCount)) {
+          } else if (isTakeMove(changeTypeCount, totalChangeCount)) {
                moveType = MoveType.TAKE;
-          } else if (isCastling(changeTypeCount)) {
+          } else if (isCastling(changeTypeCount, totalChangeCount)) {
                moveType = findCastlingSide(changes);
-          } else if (isEnPassant(changeTypeCount)) {
+          } else if (isEnPassant(changeTypeCount, totalChangeCount)) {
                moveType = MoveType.EN_PASSANT;
           } else {
                moveType = MoveType.UNKNOWN;
@@ -39,9 +40,9 @@ public class MoveResolver {
           return moveType;
      }
 
-     private boolean isEnPassant(Map<ChangeType, Integer> changeTypeListMap) {
+     private boolean isEnPassant(Map<ChangeType, Integer> changeTypeListMap, int totalChangeCount) {
           //todo add position validation
-          return changeTypeListMap.size() == 3 &&
+          return totalChangeCount == 3 &&
                   changeTypeListMap.get(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED) == 1 &&
                   changeTypeListMap.get(OCCUPIED_BY_OPPONENT_TO_UNOCCUPIED) == 1 &&
                   changeTypeListMap.get(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE) == 1;
@@ -63,20 +64,20 @@ public class MoveResolver {
           return kingSideCastling ? MoveType.CASTLE_KING : MoveType.CASTLE_QUEEN;
      }
 
-     private boolean isCastling(Map<ChangeType, Integer> changeTypeListMap) {
-          return changeTypeListMap.size() == 4 &&
+     private boolean isCastling(Map<ChangeType, Integer> changeTypeListMap, int totalChangeCount) {
+          return totalChangeCount == 4 &&
                   changeTypeListMap.get(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED) == 2 &&
                   changeTypeListMap.get(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE) == 2;
      }
 
-     private boolean isRegularMove(Map<ChangeType, Integer> changeTypeListMap) {
-          return changeTypeListMap.size() == 2 &&
+     private boolean isRegularMove(Map<ChangeType, Integer> changeTypeListMap, int totalChangeCount) {
+          return totalChangeCount ==  2 &&
                   changeTypeListMap.get(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED) == 1 &&
                   changeTypeListMap.get(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE) == 1;
      }
 
-     private boolean isTakeMove(Map<ChangeType, Integer> changeTypeListMap) {
-          return changeTypeListMap.size() == 2 &&
+     private boolean isTakeMove(Map<ChangeType, Integer> changeTypeListMap, int totalChangeCount) {
+          return totalChangeCount == 2 &&
                   changeTypeListMap.get(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED) == 1 &&
                   changeTypeListMap.get(OCCUPIED_BY_OPPONENT_TO_OCCUPIED_BY_ACTIVE_PLAYER) == 1;
      }

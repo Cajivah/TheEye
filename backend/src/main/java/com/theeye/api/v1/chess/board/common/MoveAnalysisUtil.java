@@ -5,10 +5,8 @@ import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.ChangeType;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.theeye.api.v1.chess.board.common.PlayerColor.BLACK;
 import static com.theeye.api.v1.chess.board.common.PlayerColor.WHITE;
@@ -63,17 +61,15 @@ public class MoveAnalysisUtil {
      }
 
      public static Map<ChangeType, Integer> countChangeTypes(List<TileChange> changes) {
-          final Map<ChangeType, Integer> changeTypeCount = new HashMap<>();
+          final Map<ChangeType, Integer> changeTypeCount =
+                  Arrays.stream(ChangeType.values())
+                        .collect(Collectors.toMap(type -> type, type -> 0));
           changes.forEach(change -> incrementCount(changeTypeCount, change.getChangeType()));
           return changeTypeCount;
      }
 
      private static void incrementCount(Map<ChangeType, Integer> changeTypeCount, ChangeType changeType) {
-          Optional<Integer> count = Optional.ofNullable(changeTypeCount.get(changeType));
-          if (count.isPresent()) {
-               changeTypeCount.replace(changeType, count.get() + 1);
-          } else {
-               changeTypeCount.put(changeType, 1);
-          }
+          Integer count = changeTypeCount.get(changeType);
+          changeTypeCount.replace(changeType, count + 1);
      }
 }

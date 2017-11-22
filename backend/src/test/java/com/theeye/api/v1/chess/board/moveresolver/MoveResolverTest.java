@@ -45,6 +45,23 @@ class MoveResolverTest {
                             () -> assertTrue(changedTiles.contains(expectedChanges.get(1)))
                     );
                }
+
+               @Test
+               @DisplayName("Should return list of changes after taking move")
+               void findChangesAfterTake1() {
+                    tiles = TileTestFactory.createForBeforeTakeSetup1();
+                    occupancies = OccupancyTestFactory.createOccupancyAfterTakeSetup1();
+
+                    List<TileChange> changedTiles = sut.findChangedTiles(tiles, occupancies, PlayerColor.WHITE);
+                    List<TileChange> expectedChanges = ChangesTestFactory.createChangesAfterTakeSetup1();
+                    assertAll("Assert that correct changes found",
+                            () -> assertEquals(2, changedTiles.size()),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(0))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(1)))
+                    );
+               }
+
+
           }
      }
 
@@ -60,10 +77,18 @@ class MoveResolverTest {
 
                @Test
                @DisplayName("Should classify regular move")
-               void findMoveType() {
+               void findRegularMoveType() {
                     tileChanges = ChangesTestFactory.createChangesAfter1e4();
                     MoveType moveType = sut.findMoveType(tileChanges);
                     assertEquals(MoveType.REGULAR, moveType);
+               }
+
+               @Test
+               @DisplayName("Should classify taking move")
+               void findTakingMoveType() {
+                    tileChanges = ChangesTestFactory.createChangesAfterTakeSetup1();
+                    MoveType moveType = sut.findMoveType(tileChanges);
+                    assertEquals(MoveType.TAKE, moveType);
                }
           }
      }

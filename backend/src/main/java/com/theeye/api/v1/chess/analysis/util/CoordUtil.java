@@ -33,18 +33,18 @@ public class CoordUtil {
      }
 
      public static Rect innerRect(TileCorners corners) {
-          Point leftTop =
+          Point leftTopPoint =
                   new Point(
                           getBigger(corners.getBottomLeft().x, corners.getTopLeft().x),
                           getBigger(corners.getTopLeft().y, corners.getTopRight().y)
                   );
 
-          Point rightBot =
+          Point rightBottomPoint =
                   new Point(
                           getSmaller(corners.getBottomRight().x, corners.getTopRight().x),
                           getSmaller(corners.getBottomLeft().y, corners.getBottomRight().y)
                   );
-          return new Rect(leftTop, rightBot);
+          return new Rect(leftTopPoint, rightBottomPoint);
      }
 
 

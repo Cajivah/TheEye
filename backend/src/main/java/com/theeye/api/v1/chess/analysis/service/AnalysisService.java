@@ -78,8 +78,6 @@ public class AnalysisService {
           Mat preprocessedImage =
                   MatProcessor.ofClone(image)
                               .applyGaussianBlur()
-                              .applyGreyscale()
-                              .applySobelDerivatives()
                               .applyCannyEdgeDetection()
                               .getMat();
 

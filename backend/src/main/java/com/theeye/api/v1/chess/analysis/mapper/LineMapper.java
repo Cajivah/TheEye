@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public class LineMapper {
+public class   LineMapper {
 
      public List<ParametrizedLine2D> toParametrizedLines(Mat lines) {
           LinkedList<ParametrizedLine2D> parametrizedLines = new LinkedList<>();
