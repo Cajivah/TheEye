@@ -1,0 +1,20 @@
+(+) analiza problemu, w której znajdą się analiza rozwiązań/osiągnięć w dziedzinie oraz propozycja własnych rozwiąń,
+
+() Krótki opis JNI, jeden akapit, odwołać się do JSR
+
+(+) Przed wyborem narzędzi i opisem implementacji dodać opis algorytmu niezależny od nich.
+() Dodatkowo przypadek użycia i opis wykorzystania po zakończenia poprzedniej części jako dwa bloki
+
+() Zdjęcia jako wyniki eksperymentów po opisie implementacji
+
+() Struktura prijektu - organizacja projektu, czyli narzędzia, zależności, wersjonowanie i repozytorium, narzędzie do budowania
+
+() diagramy pakietów zamiast diagramów klas
+
+(+) Pomniejszym mockup i dopasować.
+
+() podzielić to na części o algorytmie i szęści webowej
+
+() Słaba agregacja zamiast twardych na diagramie wymagań
+
+() Zamknąć część o algorytmie, sprawdzić, poprawić i powiadomić
