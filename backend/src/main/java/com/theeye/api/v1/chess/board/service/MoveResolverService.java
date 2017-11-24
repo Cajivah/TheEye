@@ -1,14 +1,13 @@
 package com.theeye.api.v1.chess.board.service;
 
-import com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy;
-import com.theeye.api.v1.chess.analysis.service.AnalysisService;
-import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
-import com.theeye.api.v1.chess.board.moveresolver.MoveResolver;
+import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
+import com.theeye.api.v1.chess.image.analysis.service.AnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,14 @@ public class MoveResolverService {
 
      private final AnalysisService analysisService;
      private final BoardService boardService;
-     private final MoveResolver moveResolver;
+     private final MoveTypeService moveTypeService;
 
      @Autowired
      public MoveResolverService(AnalysisService analysisService,
-                                MoveResolver moveResolver,
+                                MoveTypeService moveTypeService,
                                 BoardService boardService) {
           this.analysisService = analysisService;
-          this.moveResolver = moveResolver;
+          this.moveTypeService = moveTypeService;
           this.boardService = boardService;
      }
 
@@ -38,8 +37,8 @@ public class MoveResolverService {
 
      public Board determineNewState(Board lastState, Occupancy[][] newOccupancy) {
           PlayerColor activeColor = lastState.getActiveColor();
-          List<TileChange> changedTiles = moveResolver.findChangedTiles(lastState.getTiles(), newOccupancy, activeColor);
-          MoveType moveType = moveResolver.findMoveType(changedTiles);
+          List<TileChange> changedTiles = moveTypeService.findChangedTiles(lastState.getTiles(), newOccupancy, activeColor);
+          MoveType moveType = moveTypeService.findMoveType(changedTiles);
           if (moveType.equals(MoveType.UNKNOWN)) {
                throw new MoveDetectionException();
           }

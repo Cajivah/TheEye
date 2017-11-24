@@ -1,6 +1,6 @@
 package com.theeye.api.factory;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 
 import static com.theeye.api.factory.CastlingStatusTestFactory.createAllTrue;

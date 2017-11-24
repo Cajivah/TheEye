@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
-import com.theeye.api.v1.chess.analysis.model.domain.ReferenceColors;
-import com.theeye.api.v1.chess.analysis.model.domain.TileCorners;
+import com.theeye.api.v1.chess.image.analysis.model.domain.ReferenceColors;
+import com.theeye.api.v1.chess.image.analysis.model.domain.TileCorners;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,11 +1,9 @@
 package com.theeye.api.factory;
 
-import com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
+import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 
 import java.util.stream.IntStream;
-
-import static com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy.*;
 
 public class OccupancyTestFactory {
 

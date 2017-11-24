@@ -1,5 +1,6 @@
 package com.theeye.common;
 
+import com.theeye.api.v1.common.util.Base64Util;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

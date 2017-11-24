@@ -5,7 +5,6 @@ import com.theeye.api.factory.ChangesTestFactory;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
-import com.theeye.api.v1.chess.board.moveresolver.BoardDetailsUpdater;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardServiceTest {
 
-     BoardDetailsUpdater boardDetailsUpdater = new BoardDetailsUpdater();
+     BoardDetailsUpdaterService boardDetailsUpdaterService = new BoardDetailsUpdaterService();
 
-     BoardService sut = new BoardService(boardDetailsUpdater);
+     BoardService sut = new BoardService(boardDetailsUpdaterService);
 
      @Nested
      @DisplayName("Given move to commit")

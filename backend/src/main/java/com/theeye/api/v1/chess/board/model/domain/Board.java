@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
-import com.theeye.api.v1.chess.board.utils.BoardUtils;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
+import com.theeye.api.v1.chess.board.util.BoardUtils;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

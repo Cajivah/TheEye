@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.fen.parser;
 
 import com.theeye.api.v1.chess.board.model.domain.Board;
-import com.theeye.api.v1.chess.fen.common.FenCodes;
+import com.theeye.api.v1.chess.fen.model.consts.FenCodes;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

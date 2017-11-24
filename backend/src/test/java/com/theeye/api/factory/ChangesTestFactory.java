@@ -1,8 +1,8 @@
 package com.theeye.api.factory;
 
-import com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.board.model.domain.Coords;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
+import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.piece.model.domain.Empty;
 import com.theeye.api.v1.chess.piece.model.domain.Knight;
 import com.theeye.api.v1.chess.piece.model.domain.Pawn;
@@ -10,7 +10,7 @@ import org.assertj.core.util.Lists;
 
 import java.util.List;
 
-import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.*;
 import static com.theeye.api.v1.chess.board.model.enumeration.ChangeType.*;
 
 public class ChangesTestFactory {

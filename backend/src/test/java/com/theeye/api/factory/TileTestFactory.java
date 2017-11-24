@@ -1,6 +1,6 @@
 package com.theeye.api.factory;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
@@ -10,7 +10,7 @@ import com.theeye.api.v1.chess.piece.model.domain.*;
 
 import java.util.stream.IntStream;
 
-import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.*;
 
 public class TileTestFactory {
 

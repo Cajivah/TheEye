@@ -1,12 +1,11 @@
 package com.theeye.api.v1.chess.board.service;
 
-import com.theeye.api.v1.chess.analysis.model.enumeration.Occupancy;
-import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
 import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
-import com.theeye.api.v1.chess.board.moveresolver.BoardDetailsUpdater;
-import com.theeye.api.v1.chess.board.utils.BoardUtils;
+import com.theeye.api.v1.chess.board.util.BoardUtils;
+import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +13,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.theeye.api.v1.chess.board.common.PlayerColor.WHITE;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.WHITE;
 import static com.theeye.api.v1.chess.board.model.consts.CastlingConsts.*;
-import static com.theeye.api.v1.chess.board.utils.BoardPredicates.*;
+import static com.theeye.api.v1.chess.board.util.BoardPredicates.*;
 
 @Service
 public class BoardService {
 
-     private final BoardDetailsUpdater boardDetailsUpdater;
+     private final BoardDetailsUpdaterService boardDetailsUpdaterService;
 
      @Autowired
-     public BoardService(BoardDetailsUpdater boardDetailsUpdater) {
-          this.boardDetailsUpdater = boardDetailsUpdater;
+     public BoardService(BoardDetailsUpdaterService boardDetailsUpdaterService) {
+          this.boardDetailsUpdaterService = boardDetailsUpdaterService;
      }
 
      public Board doMove(Board lastState, List<TileChange> tileChanges, MoveType moveType) {
@@ -56,16 +55,16 @@ public class BoardService {
                                              Board lastState,
                                              List<TileChange> tileChanges,
                                              MoveType moveType) {
-          int newFullmoveCounter = boardDetailsUpdater.incrementFullmoveCounter(lastState);
-          PlayerColor nextActivePlayer = boardDetailsUpdater.getNextActivePlayer(lastState);
-          int newHalfmoveCounter = boardDetailsUpdater.incrementHalfmoveClock(lastState, tileChanges, moveType);
+          int newFullmoveCounter = boardDetailsUpdaterService.incrementFullmoveCounter(lastState);
+          PlayerColor nextActivePlayer = boardDetailsUpdaterService.getNextActivePlayer(lastState);
+          int newHalfmoveCounter = boardDetailsUpdaterService.incrementHalfmoveClock(lastState, tileChanges, moveType);
           PlayersCastlingStatuses newCastlingStatus =
-                  boardDetailsUpdater.getNewCastlingStatus(
+                  boardDetailsUpdaterService.getNewCastlingStatus(
                           lastState.getCastling(),
                           moveType,
                           lastState.getActiveColor(),
                           tileChanges);
-          String enPassant = boardDetailsUpdater.getEnPassantStatus(lastState, moveType, tileChanges);
+          String enPassant = boardDetailsUpdaterService.getEnPassantStatus(lastState, moveType, tileChanges);
           return Board.builder()
                       .tiles(newTiles)
                       .fullmoveNumber(newFullmoveCounter)

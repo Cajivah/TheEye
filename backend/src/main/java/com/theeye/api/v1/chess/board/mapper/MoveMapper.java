@@ -1,12 +1,12 @@
 package com.theeye.api.v1.chess.board.mapper;
 
-import com.theeye.api.v1.chess.analysis.mapper.ColorMapper;
-import com.theeye.api.v1.chess.analysis.mapper.CoordsMapper;
-import com.theeye.api.v1.chess.analysis.mapper.ImageMapper;
 import com.theeye.api.v1.chess.board.model.domain.ResolvedMove;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
 import com.theeye.api.v1.chess.board.model.dto.NewPositionDTO;
+import com.theeye.api.v1.chess.image.analysis.mapper.ColorMapper;
+import com.theeye.api.v1.chess.image.analysis.mapper.CoordsMapper;
+import com.theeye.api.v1.chess.image.analysis.mapper.ImageMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
