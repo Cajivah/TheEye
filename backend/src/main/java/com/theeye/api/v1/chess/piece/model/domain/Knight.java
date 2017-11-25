@@ -1,7 +1,7 @@
 package com.theeye.api.v1.chess.piece.model.domain;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
-import com.theeye.api.v1.chess.fen.common.FenCodes;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
+import com.theeye.api.v1.chess.fen.model.consts.FenCodes;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 
 public class Knight extends Piece {

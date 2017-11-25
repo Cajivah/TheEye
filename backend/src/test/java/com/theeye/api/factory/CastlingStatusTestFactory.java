@@ -32,4 +32,11 @@ public class CastlingStatusTestFactory {
                                .queenSideCastle(false)
                                .build();
      }
+
+     public static PlayersCastlingStatuses createOnlyBlackAllTrue() {
+          return PlayersCastlingStatuses.builder()
+                                        .white(createAllFalseCastlingStatus())
+                                        .black(createAllTrueCastlingStatus())
+                                        .build();
+     }
 }

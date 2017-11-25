@@ -1,7 +1,7 @@
 package com.theeye.api.factory;
 
 import com.sun.javafx.geom.Line2D;
-import com.theeye.api.v1.chess.analysis.model.domain.ParametrizedLine2D;
+import com.theeye.api.v1.chess.image.analysis.model.domain.ParametrizedLine2D;
 import org.assertj.core.util.Lists;
 
 import java.util.List;

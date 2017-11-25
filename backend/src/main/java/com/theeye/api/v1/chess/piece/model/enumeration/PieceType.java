@@ -6,7 +6,7 @@ import lombok.Getter;
 
 import java.util.function.Supplier;
 
-import static com.theeye.api.v1.chess.board.common.PlayerColor.*;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.*;
 
 @AllArgsConstructor
 @Getter

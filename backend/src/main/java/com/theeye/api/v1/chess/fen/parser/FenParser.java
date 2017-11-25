@@ -1,15 +1,15 @@
 package com.theeye.api.v1.chess.fen.parser;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
 import com.theeye.api.v1.chess.board.model.domain.PlayersCastlingStatuses;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
-import com.theeye.api.v1.chess.fen.common.FenCodeToPieceTypeMap;
-import com.theeye.api.v1.chess.fen.common.FenCodes;
+import com.theeye.api.v1.chess.fen.model.consts.FenCodeToPieceTypeMap;
+import com.theeye.api.v1.chess.fen.model.consts.FenCodes;
 import com.theeye.api.v1.chess.piece.model.domain.Empty;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
-import com.theeye.common.StringUtil;
+import com.theeye.api.v1.common.util.StringUtil;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Component;
 

@@ -25,8 +25,8 @@ class CoordsTest {
                     @ParameterizedTest(name = "For {0}, {1} should give {2}")
                     @CsvSource({
                             "0, 0, a1",
-                            "1, 3, b4",
-                            "3, 1, d2",
+                            "1, 3, d2",
+                            "3, 1, b4",
                             "7, 7, h8"
                     })
                     void toInvertedChessboardString(int row, int col, String result) {

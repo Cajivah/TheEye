@@ -1,6 +1,8 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
-import com.theeye.api.v1.chess.board.common.PlayerColor;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
+import com.theeye.api.v1.chess.board.util.BoardUtils;
+import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +37,13 @@ public class Board {
 
      public void setTileAt(Coords coords, Tile tile) {
           tiles[coords.getRow()][coords.getRow()] = tile;
+     }
+
+     public boolean hasPieceOnCoords(Coords coords, PieceType pieceType) {
+          if(BoardUtils.coordsValid(coords)) {
+               return getTileAt(coords).getPiece().getPieceType().equals(pieceType);
+          }
+          return false;
      }
 }
 
