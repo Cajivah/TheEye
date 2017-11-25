@@ -119,8 +119,8 @@ public class BoardService {
                                .orElseThrow(MoveDetectionException::new);
 
           Coords kingDestination = Coords.builder()
-                                         .row(column)
-                                         .column(row)
+                                         .row(row)
+                                         .column(column)
                                          .build();
 
           placePiece(newState, kingDestination, king);
@@ -133,8 +133,8 @@ public class BoardService {
                                .orElseThrow(MoveDetectionException::new);
 
           Coords rookDestination = Coords.builder()
-                                         .row(column)
-                                         .column(row)
+                                         .row(row)
+                                         .column(column)
                                          .build();
 
           placePiece(newState, rookDestination, rook);

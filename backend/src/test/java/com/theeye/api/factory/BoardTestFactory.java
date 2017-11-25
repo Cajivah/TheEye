@@ -1,8 +1,11 @@
 package com.theeye.api.factory;
 
+import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
 import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 
+import static com.theeye.api.factory.CastlingStatusTestFactory.*;
+import static com.theeye.api.factory.CastlingStatusTestFactory.createAllFalse;
 import static com.theeye.api.factory.CastlingStatusTestFactory.createAllTrue;
 
 public class BoardTestFactory {
@@ -83,6 +86,50 @@ public class BoardTestFactory {
                       .enPassant("-")
                       .halfmoveClock(0)
                       .fullmoveNumber(8)
+                      .build();
+     }
+
+     public static Board createBeforeKingSideCastling() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createBeforeKingSideCastle())
+                      .activeColor(PlayerColor.WHITE)
+                      .castling(createAllTrue())
+                      .enPassant("-")
+                      .halfmoveClock(4)
+                      .fullmoveNumber(4)
+                      .build();
+     }
+
+     public static Board createAfterKingSideCastling() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createAfterKingSideCastle())
+                      .activeColor(PlayerColor.BLACK)
+                      .castling(createOnlyBlackAllTrue())
+                      .enPassant("-")
+                      .halfmoveClock(5)
+                      .fullmoveNumber(4)
+                      .build();
+     }
+
+     public static Board createBeforeQueenSideCastling() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createBeforeQueenSideCastle())
+                      .activeColor(PlayerColor.WHITE)
+                      .castling(createAllTrue())
+                      .enPassant("-")
+                      .halfmoveClock(0)
+                      .fullmoveNumber(6)
+                      .build();
+     }
+
+     public static Board createAfterQueenSideCastling() {
+          return Board.builder()
+                      .tiles(TileTestFactory.createAfterQueenSideCastle())
+                      .activeColor(PlayerColor.BLACK)
+                      .castling(createOnlyBlackAllTrue())
+                      .enPassant("-")
+                      .halfmoveClock(1)
+                      .fullmoveNumber(6)
                       .build();
      }
 }

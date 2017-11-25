@@ -93,9 +93,47 @@ class BoardServiceTest {
                     lastBoard = BoardTestFactory.createForBeforeEnPassantPossibleSetup1();
                     changes = ChangesTestFactory.createChangesAfterEnPassantPossibleSetup1();
 
-                    Board board = sut.doMove(lastBoard, changes, MoveType.REGULAR);
+                    Board board = sut.doMove(lastBoard, changes, MoveType.EN_PASSANT);
 
                     Board expected = BoardTestFactory.createForAfterEnPassantPossibleSetup1();
+                    assertAll(
+                            () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
+                            () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),
+                            () -> assertEquals(expected.getEnPassant(), board.getEnPassant()),
+                            () -> assertEquals(expected.getFullmoveNumber(), board.getFullmoveNumber()),
+                            () -> assertEquals(expected.getHalfmoveClock(), board.getHalfmoveClock()),
+                            () -> assertEquals(expected.getCastling(), board.getCastling())
+                    );
+               }
+
+               @Test
+               @DisplayName("Should commit king side castling move and update fen")
+               void doKingSideCastlingMove() {
+                    lastBoard = BoardTestFactory.createBeforeKingSideCastling();
+                    changes = ChangesTestFactory.createChangesAfterKingSideCastling();
+
+                    Board board = sut.doMove(lastBoard, changes, MoveType.CASTLE_KING);
+
+                    Board expected = BoardTestFactory.createAfterKingSideCastling();
+                    assertAll(
+                            () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
+                            () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),
+                            () -> assertEquals(expected.getEnPassant(), board.getEnPassant()),
+                            () -> assertEquals(expected.getFullmoveNumber(), board.getFullmoveNumber()),
+                            () -> assertEquals(expected.getHalfmoveClock(), board.getHalfmoveClock()),
+                            () -> assertEquals(expected.getCastling(), board.getCastling())
+                    );
+               }
+
+               @Test
+               @DisplayName("Should commit queen side castling move and update fen")
+               void doQueenSideCastlingMove() {
+                    lastBoard = BoardTestFactory.createBeforeQueenSideCastling();
+                    changes = ChangesTestFactory.createChangesAfterQueenSideCastling();
+
+                    Board board = sut.doMove(lastBoard, changes, MoveType.CASTLE_QUEEN);
+
+                    Board expected = BoardTestFactory.createAfterQueenSideCastling();
                     assertAll(
                             () -> assertArrayEquals(expected.getTiles(), board.getTiles()),
                             () -> assertEquals(expected.getActiveColor(), board.getActiveColor()),

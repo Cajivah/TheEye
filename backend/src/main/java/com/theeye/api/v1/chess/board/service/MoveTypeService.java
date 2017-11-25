@@ -57,8 +57,8 @@ public class MoveTypeService {
                          .filter(change -> change.getChangeType().equals(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE))
                          .collect(Collectors.toList());
           for (TileChange tileChange : newlyOccupied) {
-               int row = tileChange.getCoords().getRow();
-               kingSideCastling = row == kingSideCastlingKingRow || row == kingSideCastlingRookRow;
+               int row = tileChange.getCoords().getColumn();
+               kingSideCastling = (row == kingSideCastlingKingRow || row == kingSideCastlingRookRow);
           }
 
           return kingSideCastling ? MoveType.CASTLE_KING : MoveType.CASTLE_QUEEN;

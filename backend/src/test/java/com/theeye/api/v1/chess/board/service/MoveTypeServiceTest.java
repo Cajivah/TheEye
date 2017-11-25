@@ -72,7 +72,42 @@ class MoveTypeServiceTest {
                     assertAll("Assert that correct changes found",
                             () -> assertEquals(3, changedTiles.size()),
                             () -> assertTrue(changedTiles.contains(expectedChanges.get(0))),
-                            () -> assertTrue(changedTiles.contains(expectedChanges.get(1)))
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(1))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(2)))
+                    );
+               }
+
+               @Test
+               @DisplayName("Should return list of changes after king side castling move")
+               void findChangesAfterKingSideCastling() {
+                    tiles = TileTestFactory.createBeforeKingSideCastle();
+                    occupancies = OccupancyTestFactory.createAfterKingSideCastling();
+
+                    List<TileChange> changedTiles = sut.findChangedTiles(tiles, occupancies, PlayerColor.WHITE);
+                    List<TileChange> expectedChanges = ChangesTestFactory.createChangesAfterKingSideCastling();
+                    assertAll("Assert that correct changes found",
+                            () -> assertEquals(4, changedTiles.size()),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(0))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(1))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(2))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(3)))
+                    );
+               }
+
+               @Test
+               @DisplayName("Should return list of changes after queen side castling move")
+               void findChangesAfterQueenSideCastle() {
+                    tiles = TileTestFactory.createBeforeQueenSideCastle();
+                    occupancies = OccupancyTestFactory.createAfterQueenSideCastling();
+
+                    List<TileChange> changedTiles = sut.findChangedTiles(tiles, occupancies, PlayerColor.WHITE);
+                    List<TileChange> expectedChanges = ChangesTestFactory.createChangesAfterQueenSideCastling();
+                    assertAll("Assert that correct changes found",
+                            () -> assertEquals(4, changedTiles.size()),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(0))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(1))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(2))),
+                            () -> assertTrue(changedTiles.contains(expectedChanges.get(3)))
                     );
                }
           }
@@ -110,6 +145,22 @@ class MoveTypeServiceTest {
                     tileChanges = ChangesTestFactory.createChangesAfterEnPassantSetup1();
                     MoveType moveType = sut.findMoveType(tileChanges);
                     assertEquals(MoveType.EN_PASSANT, moveType);
+               }
+
+               @Test
+               @DisplayName("Should classify en king side castle move")
+               void findKingSideCastleMoveType() {
+                    tileChanges = ChangesTestFactory.createChangesAfterKingSideCastling();
+                    MoveType moveType = sut.findMoveType(tileChanges);
+                    assertEquals(MoveType.CASTLE_KING, moveType);
+               }
+
+               @Test
+               @DisplayName("Should classify queen side castle move move")
+               void findQueenSideCastleMoveType() {
+                    tileChanges = ChangesTestFactory.createChangesAfterQueenSideCastling();
+                    MoveType moveType = sut.findMoveType(tileChanges);
+                    assertEquals(MoveType.CASTLE_QUEEN, moveType);
                }
           }
      }

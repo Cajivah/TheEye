@@ -3,9 +3,7 @@ package com.theeye.api.factory;
 import com.theeye.api.v1.chess.board.model.domain.Coords;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
-import com.theeye.api.v1.chess.piece.model.domain.Empty;
-import com.theeye.api.v1.chess.piece.model.domain.Knight;
-import com.theeye.api.v1.chess.piece.model.domain.Pawn;
+import com.theeye.api.v1.chess.piece.model.domain.*;
 import org.assertj.core.util.Lists;
 
 import java.util.List;
@@ -92,5 +90,69 @@ public class ChangesTestFactory {
                                               .build();
 
           return Lists.newArrayList(pawnUnoccupied, pawnOccupied);
+     }
+
+     public static List<TileChange> createChangesAfterKingSideCastling() {
+          TileChange rookUnoccupied = TileChange.builder()
+                                                .changeType(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED)
+                                                .lastPiece(Rook.of(WHITE))
+                                                .newOccupancy(Occupancy.UNOCCUPIED)
+                                                .coords(new Coords(0, 7))
+                                                .build();
+
+          TileChange rookOccupied = TileChange.builder()
+                                              .changeType(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE)
+                                              .lastPiece(Empty.of(NONE))
+                                              .newOccupancy(Occupancy.OCCUPIED_BY_WHITE)
+                                              .coords(new Coords(0, 5))
+                                              .build();
+
+          TileChange kingUnoccupied = TileChange.builder()
+                                                .changeType(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED)
+                                                .lastPiece(King.of(WHITE))
+                                                .newOccupancy(Occupancy.UNOCCUPIED)
+                                                .coords(new Coords(0, 4))
+                                                .build();
+
+          TileChange kingOccupied = TileChange.builder()
+                                              .changeType(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE)
+                                              .lastPiece(Empty.of(NONE))
+                                              .newOccupancy(Occupancy.OCCUPIED_BY_WHITE)
+                                              .coords(new Coords(0, 6))
+                                              .build();
+
+          return Lists.newArrayList(rookUnoccupied, rookOccupied, kingUnoccupied, kingOccupied);
+     }
+
+     public static List<TileChange> createChangesAfterQueenSideCastling() {
+          TileChange rookUnoccupied = TileChange.builder()
+                                                .changeType(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED)
+                                                .lastPiece(Rook.of(WHITE))
+                                                .newOccupancy(Occupancy.UNOCCUPIED)
+                                                .coords(new Coords(0, 0))
+                                                .build();
+
+          TileChange rookOccupied = TileChange.builder()
+                                              .changeType(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE)
+                                              .lastPiece(Empty.of(NONE))
+                                              .newOccupancy(Occupancy.OCCUPIED_BY_WHITE)
+                                              .coords(new Coords(0, 3))
+                                              .build();
+
+          TileChange queenUnoccupied = TileChange.builder()
+                                                .changeType(OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED)
+                                                .lastPiece(King.of(WHITE))
+                                                .newOccupancy(Occupancy.UNOCCUPIED)
+                                                .coords(new Coords(0, 4))
+                                                .build();
+
+          TileChange queenOccupied = TileChange.builder()
+                                              .changeType(UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE)
+                                              .lastPiece(Empty.of(NONE))
+                                              .newOccupancy(Occupancy.OCCUPIED_BY_WHITE)
+                                              .coords(new Coords(0, 2))
+                                              .build();
+
+          return Lists.newArrayList(rookUnoccupied, rookOccupied, queenUnoccupied, queenOccupied);
      }
 }

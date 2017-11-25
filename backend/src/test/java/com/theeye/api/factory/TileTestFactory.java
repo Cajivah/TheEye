@@ -109,4 +109,20 @@ public class TileTestFactory {
      public static Tile[][] createForAfterEnPassantSetup1() {
           return fenDecoder.decode(Fen.of(FenTestFactory.fenAfterEnPassantSetup1)).getTiles();
      }
+
+     public static Tile[][] createBeforeKingSideCastle() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenBeforeKingSideCastling)).getTiles();
+     }
+
+     public static Tile[][] createAfterKingSideCastle() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenAfterKingSideCastling)).getTiles();
+     }
+
+     public static Tile[][] createBeforeQueenSideCastle() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenBeforeQueenSideCastling)).getTiles();
+     }
+
+     public static Tile[][] createAfterQueenSideCastle() {
+          return fenDecoder.decode(Fen.of(FenTestFactory.fenAfterQueenSideCastling)).getTiles();
+     }
 }
