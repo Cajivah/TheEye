@@ -1,12 +1,8 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: create
-  datasource:
-    url: jdbc:postgresql://localhost:35432/postgres-theeye
-    username: theeye
-    password: theeye-password
-    driver-class-name: org.postgresql.Driver
 security:
   basic:
     enabled: false
+
+stockfish:
+  path: "/home/kuba/Code/java/TheEye/backend/src/main/resources/stockfish_8_x64"
+  depth: 20
+  time: 1000

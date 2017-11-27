@@ -4,7 +4,6 @@ import com.theeye.api.v1.chess.board.mapper.BoardMapper;
 import com.theeye.api.v1.chess.board.mapper.MoveMapper;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
-import com.theeye.api.v1.chess.board.model.dto.EvaluationScoreDTO;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
 import com.theeye.api.v1.chess.board.service.MoveResolverService;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
@@ -36,10 +35,5 @@ public class BoardController {
           UnresolvedMove unresolvedMove = moveMapper.toUnresolvedMove(moveToResolve);
           Board newState = moveResolverService.resolveMove(unresolvedMove);
           return boardMapper.toFEN(newState);
-     }
-
-     @PostMapping("/evaluation")
-     public EvaluationScoreDTO evaluatePosition(@RequestBody Fen fen) {
-          return null;
      }
 }
