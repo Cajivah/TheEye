@@ -26,4 +26,13 @@ public class EngineService {
           stockfish.stopEngine();
           return evalScore;
      }
+
+     public String findBestMove(Fen fen) {
+          Stockfish stockfish = new Stockfish();
+          boolean b = stockfish.startEngine(stockfishProperties.getPath());
+          String bestMove=
+                  stockfish.getBestMove(fen.getFenDescription(), stockfishProperties.getTime());
+          stockfish.stopEngine();
+          return bestMove;
+     }
 }

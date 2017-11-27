@@ -1,6 +1,7 @@
 package com.theeye.api.v1.chess.engine.controller;
 
 import com.theeye.api.v1.chess.engine.mapper.EngineMapper;
+import com.theeye.api.v1.chess.engine.model.dto.BestMoveDTO;
 import com.theeye.api.v1.chess.engine.model.dto.EvaluationScoreDTO;
 import com.theeye.api.v1.chess.engine.service.EngineService;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
@@ -30,4 +31,11 @@ public class EngineController {
           float evalScore = engineService.evaluatePositionScore(fen);
           return engineMapper.toEvaluationScoreDTO(evalScore);
      }
+
+     @PostMapping("/move")
+     public BestMoveDTO findBestMove(@RequestBody Fen fen) {
+          String bestMove = engineService.findBestMove(fen);
+          return  engineMapper.toBestMoveDTO(bestMove);
+     }
+
 }

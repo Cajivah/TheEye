@@ -94,7 +94,7 @@ public class Stockfish {
      public String getBestMove(String fen, int waitTime) {
           sendCommand("position fen " + fen);
           sendCommand("go movetime " + waitTime);
-          return getOutput(waitTime + 20).split("bestmove ")[1].split(" ")[0];
+          return getOutput(waitTime + 100).split("bestmove ")[1].split(" ")[0];
      }
 
      /**
@@ -150,7 +150,7 @@ public class Stockfish {
           sendCommand("go movetime " + waitTime);
 
           float evalScore = 0.0f;
-          String[] dump = getOutput(waitTime + 20).split("\n");
+          String[] dump = getOutput(waitTime + 100).split("\n");
           for (int i = dump.length - 1; i >= 0; i--) {
                if (dump[i].startsWith("info depth ")) {
                     try {
