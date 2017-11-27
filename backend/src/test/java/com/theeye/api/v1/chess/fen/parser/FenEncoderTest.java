@@ -15,23 +15,20 @@ class FenEncoderTest {
      FenEncoder sut = new FenEncoder();
 
      @Nested
-     @DisplayName("Given correct board")
-     class GivenBoard {
+     @DisplayName("Converting board to fen.")
+     class FenToBoard {
 
           @Nested
-          @DisplayName("When encoding")
+          @DisplayName("With correct board.")
           class Encode {
 
                @Test
-               @DisplayName("Should give correct initial fen")
+               @DisplayName("Should give correct initial fen.")
                void encodeInitial() {
                     Board initialBoard = BoardTestFactory.createInitialBoard();
                     Fen encoded = sut.encode(initialBoard);
                     assertEquals(BoardConsts.STARTING_SET_UP_FEN, encoded.getFenDescription());
                }
-
           }
-
      }
-
 }
