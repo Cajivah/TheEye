@@ -56,6 +56,8 @@ junitPlatformTest {
 
 }
 
+compileJava.dependsOn(processResources)
+
 group = 'com.theeye'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -67,6 +69,7 @@ repositories {
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile "org.springframework.boot:spring-boot-configuration-processor"
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
     compile group: 'com.google.guava', name: 'guava', version: '23.0'
     compile group: 'io.vavr', name: 'vavr', version: '0.9.1'
