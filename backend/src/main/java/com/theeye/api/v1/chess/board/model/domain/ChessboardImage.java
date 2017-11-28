@@ -12,6 +12,6 @@ public class ChessboardImage {
 
      private Mat image;
      private boolean warped = false;
-     private boolean greyscaled = false;
      private boolean rotated = false;
+     private boolean cropped = false;
 }

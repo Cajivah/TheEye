@@ -14,6 +14,6 @@ public class ChessboardImageDTO {
      @NotEmpty
      private String base64Image;
      private boolean warped = false;
-     private boolean greyscaled = false;
      private boolean rotated = false;
+     private boolean cropped = false;
 }
