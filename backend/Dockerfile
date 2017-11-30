@@ -55,7 +55,7 @@ EXPOSE 8080
 
 # build app
 RUN ./gradlew wrapper \
-	&& ./gradlew clean build \
+	&& ./gradlew clean build -PnativeLibPath=" /theeye/opencv/opencv-3.3.1/build/lib" \
 	&& ./gradlew bootrepackage 
 
 ENTRYPOINT java -Djava.library.path=/theeye/opencv/opencv-3.3.1/build/lib -jar build/libs/theeye.jar

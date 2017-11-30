@@ -56,17 +56,27 @@ idea {
 }
 
 bootRun {
-    jvmArgs = ["-Djava.library.path=/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib"]
+    if (project.hasProperty('nativeLibPath')) {
+        systemProperty 'java.library.path', (project.nativeLibPath.split("\\s+"))[0]
+    } else {
+        systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    }
 }
 
 test {
-    systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
-
+    if (project.hasProperty('nativeLibPath')) {
+        systemProperty 'java.library.path', (project.nativeLibPath.split("\\s+"))[0]
+    } else {
+        systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    }
 }
 
 junitPlatformTest {
-    systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
-
+    if (project.hasProperty('nativeLibPath')) {
+        systemProperty 'java.library.path', (project.nativeLibPath.split("\\s+"))[0]
+    } else {
+        systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    }
 }
 
 task wrapper(type: Wrapper) {
