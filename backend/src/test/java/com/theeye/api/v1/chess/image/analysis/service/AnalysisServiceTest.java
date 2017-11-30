@@ -12,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.opencv.calib3d.Calib3d;
@@ -123,6 +124,7 @@ class AnalysisServiceTest {
      }
 
      @Test
+     @Disabled
      void test() throws IOException {
           Mat lines = sut.detectLines(this.mat);
           Point[] corners = sut.findCorners(mat, lines);
