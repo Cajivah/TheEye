@@ -49,13 +49,14 @@ RUN mkdir opencv \
 	&& mkdir build \
 	&& cd build \
 	&& cmake -DBUILD_SHARED_LIBS=OFF .. \
-	&& make -j8
+	&& make -j8 \
+	&& ls && pwd
 
 EXPOSE 8080
 
 # build app
 RUN ./gradlew wrapper \
-	&& ./gradlew clean build -PnativeLibPath=" /theeye/opencv/opencv-3.3.1/build/lib" \
+	&& ./gradlew clean compilejava jar \
 	&& ./gradlew bootrepackage 
 
 ENTRYPOINT java -Djava.library.path=/theeye/opencv/opencv-3.3.1/build/lib -jar build/libs/theeye.jar

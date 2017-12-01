@@ -90,7 +90,6 @@ class BoardServiceTest {
 
                @Test
                @DisplayName("Should commit en passant move and update fen with en passant coords")
-               @Disabled
                void doPreEnPassantMove() {
                     lastBoard = BoardTestFactory.createForBeforeEnPassantPossibleSetup1();
                     changes = ChangesTestFactory.createChangesAfterEnPassantPossibleSetup1();

@@ -51,11 +51,6 @@ class AnalysisServiceTest {
                      lineMapper,
                      tileCornersService,
                      colorAnalysisService);
-
-     static {
-          System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-     }
-
      Mat mat;
 
      List<String> filenames = Lists.newArrayList(

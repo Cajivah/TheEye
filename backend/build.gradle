@@ -33,6 +33,11 @@ version = '1.0.0-SNAPSHOT'
 jar.baseName = 'theeye-backend'
 jar.archiveName = "theeye.jar"
 
+ext {
+    nativesPath = '/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+
+}
+
 sourceCompatibility = 1.8
 
 idea {
@@ -84,6 +89,14 @@ task wrapper(type: Wrapper) {
 }
 
 compileJava.dependsOn(processResources)
+
+task switchToProd {
+    nativesPath = '/theeye/opencv/opencv-3.3.1/build/lib'
+}
+
+task switchToLocal {
+    nativesPath = '/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+}
 
 group = 'com.theeye'
 version = '0.0.1-SNAPSHOT'
