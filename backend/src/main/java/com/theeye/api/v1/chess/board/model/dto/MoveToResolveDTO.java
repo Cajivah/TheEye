@@ -10,7 +10,7 @@ import lombok.Value;
 @Builder
 public class MoveToResolveDTO {
 
-     private ChessboardImageDTO chessboardImage;
+     private ChessboardImageDTO image;
      private ChessboardPositionFeaturesDTO positions;
      private ReferenceColorsDTO referenceColors;
      private Fen lastPosition;

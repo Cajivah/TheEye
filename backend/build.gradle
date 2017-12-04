@@ -16,11 +16,29 @@ plugins {
     id "com.github.hierynomus.license" version "0.14.0"
 }
 
+license {
+    header rootProject.file('LICENSE')
+    strictCheck false
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: "application"
 apply plugin: 'org.springframework.boot'
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'org.sonarqube'
+
+group = 'com'
+version = '1.0.0-SNAPSHOT'
+jar.baseName = 'theeye-backend'
+jar.archiveName = "theeye.jar"
+
+ext {
+    nativesPath = '/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+
+}
+
+sourceCompatibility = 1.8
 
 idea {
     module {
@@ -43,20 +61,42 @@ idea {
 }
 
 bootRun {
-    jvmArgs = ["-Djava.library.path=/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib"]
+    if (project.hasProperty('nativeLibPath')) {
+        systemProperty 'java.library.path', (project.nativeLibPath.split("\\s+"))[0]
+    } else {
+        systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    }
 }
 
 test {
-    systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
-
+    if (project.hasProperty('nativeLibPath')) {
+        systemProperty 'java.library.path', (project.nativeLibPath.split("\\s+"))[0]
+    } else {
+        systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    }
 }
 
 junitPlatformTest {
-    systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    if (project.hasProperty('nativeLibPath')) {
+        systemProperty 'java.library.path', (project.nativeLibPath.split("\\s+"))[0]
+    } else {
+        systemProperty 'java.library.path','/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+    }
+}
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3.1'
 }
 
 compileJava.dependsOn(processResources)
+
+task switchToProd {
+    nativesPath = '/theeye/opencv/opencv-3.3.1/build/lib'
+}
+
+task switchToLocal {
+    nativesPath = '/home/kuba/Applications/Tools/opencv/opencv-3.3.1/build/lib'
+}
 
 group = 'com.theeye'
 version = '0.0.1-SNAPSHOT'
@@ -67,7 +107,6 @@ repositories {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile "org.springframework.boot:spring-boot-configuration-processor"
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
@@ -81,10 +120,9 @@ dependencies {
     compile group: 'org.apiguardian', name: 'apiguardian-api', version: '1.0.0'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
-
+    
     compile files('libs/opencv-331.jar')
 
-    testCompile 'org.springframework.security:spring-security-test'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
@@ -92,3 +130,20 @@ dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.0.2'
 }
 
+
+jar {
+    from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
+    manifest {
+        attributes 'Implementation-Title': 'Theeye Backend',
+                'Implementation-Version': version,
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version'),
+                'Main-Class': 'com.theeye.Application'
+    }
+}

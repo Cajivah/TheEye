@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
 public class Stockfish {
 
@@ -72,11 +73,8 @@ public class Stockfish {
           sendCommand(SET_FEN_CMD + fen);
           sendCommand(DRAW_BOARD_CMD);
 
-          String[] rows = getOutput(0).split(ENDLINE);
-
-          for (int i = 1; i < 18; i++) {
-               System.out.println(rows[i]);
-          }
+          Arrays.stream(getOutput(0).split(ENDLINE))
+                .forEach(System.out::println);
      }
 
      public float getEvalScore(String fen, int waitTime) throws IOException, InterruptedException {
