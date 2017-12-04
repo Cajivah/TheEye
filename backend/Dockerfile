@@ -12,7 +12,12 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get update \
 	&& echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
 	&& apt-get install -y oracle-java8-installer \
-	&& apt-get clean
+	&& apt-get install -y oracle-java8-set-default \
+	&& apt-get clean \
+ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+RUN ls /usr/lib/jvm/
+RUN ls /usr/lib/jvm/java-8-oracle/
+RUN print $JAVA_HOME
 
 # Bitmap utils
 RUN apt-get install -y libjpeg8-dev libjasper-dev libpng12-dev libtiff5-dev
@@ -50,8 +55,9 @@ RUN mkdir opencv \
 	&& cd build \
 	&& cmake -DBUILD_SHARED_LIBS=OFF .. \
 	&& make -j8 \
-	&& ls && pwd
+	&& ls && pwd && cd lib && ls
 
+RUN ln /theeye/opencv/opencv-3.3.1/build/lib/libopencv_java331.so /lib/
 EXPOSE 8080
 
 # build app
@@ -59,4 +65,4 @@ RUN ./gradlew wrapper \
 	&& ./gradlew clean compilejava jar \
 	&& ./gradlew bootrepackage 
 
-ENTRYPOINT java -Djava.library.path=/theeye/opencv/opencv-3.3.1/build/lib -jar build/libs/theeye.jar
+ENTRYPOINT java -jar build/libs/theeye.jar
