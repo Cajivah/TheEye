@@ -1,12 +1,16 @@
 package com.theeye.api.v1.chess.image.analysis.service;
 
 import com.sun.javafx.geom.Point2D;
+import com.theeye.api.v1.chess.image.analysis.mapper.CoordsMapper;
 import com.theeye.api.v1.chess.image.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.image.analysis.model.domain.ParametrizedLine2D;
+import com.theeye.api.v1.chess.image.analysis.model.domain.TileCorners;
 import com.theeye.api.v1.chess.image.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.image.analysis.service.position.TileCornersService;
+import com.theeye.api.v1.chess.image.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.image.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.image.analysis.util.ParametrizedLineProcessor;
+import com.theeye.api.v1.chess.image.analysis.util.TileScaler;
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ThesisVisualisations {
 
 
+     private CoordsMapper coordsMapper = new CoordsMapper();
      private LineMapper lineMapper = new LineMapper();
      private TileCornersService tileCornersService = new TileCornersService();
      private ColorAnalysisService colorAnalysisService = new ColorAnalysisService();
@@ -56,21 +61,16 @@ public class ThesisVisualisations {
      Mat mat;
 
      List<String> filenames = Lists.newArrayList(
-             "startingSetUp/big_blackwhite_brown_webcam.jpg", //0
-             "startingSetUp/printed_blackwhite_brown_webcam.jpg", //1
-             "startingSetUp/printed_blackwhite_brown_webcam2.jpg", //2
-             "startingSetUp/printed_blackwhite_brown_webcam3.jpg", //3
-             "startingSetUp/printed_blackwhite_empty_webcam.jpg", //4
-             "startingSetUp/printed_blackwhite_empty_webcam_white-back.jpg", //5
-             "startingSetUp/big_blackwhite_brown_webcam.jpg", //6
-             "startingSetUp/big_blackwhite_empty_webcam.jpg",  //7
-             "startingSetUp/big_blackwhite_brown_webcam_downscaled2.jpg",//8
-             "startingSetUp/big_blackwhite_brown_webcam2.jpg"  //9
+             "startingSetUp/1.jpg",
+             "startingSetUp/2.jpg",
+             "startingSetUp/3.jpg",
+             "startingSetUp/4.jpg",
+             "startingSetUp/5.jpg"
      );
 
      @BeforeEach
      public void setUp() throws IOException {
-          Resource resource = new ClassPathResource(filenames.get(9));
+          Resource resource = new ClassPathResource(filenames.get(1));
           byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
           BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
           ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -167,4 +167,61 @@ public class ThesisVisualisations {
 
           save(this.mat, "boundsAndCorners");
      }
+
+     @Test
+     void innerRoi() throws IOException {
+          Mat lines = sut.detectLines(this.mat);
+          Point[] corners = sut.findCorners(mat, lines);
+          Mat trimmed = sut.trimToCorners(this.mat, corners);
+          Point[][] points = sut.detectAllTilesCornerPoints(trimmed);
+          TileCorners[][] tileCorners = coordsMapper.toTilesCoords(points);
+          Resource resource = new ClassPathResource(filenames.get(1));
+          byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
+          BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          ImageIO.write(bi, "jpg", baos);
+          byte[] bytes = baos.toByteArray();
+          mat = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+          Mat trimmedFinal = sut.trimToCorners(this.mat, corners);
+          for (int i = 0; i < 8; i++) {
+               for (int j = 0; j < 8; j++) {
+                    TileCorners roiCorners = limitRoi(tileCorners[i][j], 0.25);
+                    Rect rect = CoordUtil.innerRect(roiCorners);
+                    Imgproc.rectangle(trimmedFinal, new Point(rect.x, rect.y), new Point(rect.x+rect.width, rect.y+rect.height), new Scalar(0, 0, 255), 2);
+               }
+          }
+          save(trimmedFinal, "color-roi");
+     }
+     public TileCorners limitRoi(TileCorners tile, double areaScale) {
+          double sideScale = Math.pow(areaScale, 0.5);
+          return TileScaler.computeScaledTile(tile, sideScale);
+     }
+
+     @Test
+     void move() throws IOException {
+          Mat lines = sut.detectLines(this.mat);
+          Point[] corners = sut.findCorners(mat, lines);
+          Mat trimmed = sut.trimToCorners(this.mat, corners);
+          Point[][] points = sut.detectAllTilesCornerPoints(trimmed);
+          TileCorners[][] tileCorners = coordsMapper.toTilesCoords(points);
+          Resource resource = new ClassPathResource(filenames.get(2));
+          byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
+          BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          ImageIO.write(bi, "jpg", baos);
+          byte[] bytes = baos.toByteArray();
+          mat = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+          Mat trimmedFinal = sut.trimToCorners(this.mat, corners);
+
+                    TileCorners roiCorners = limitRoi(tileCorners[4][1], 0.25);
+                    Rect rect = CoordUtil.innerRect(roiCorners);
+                    Imgproc.rectangle(trimmedFinal, new Point(rect.x, rect.y), new Point(rect.x+rect.width, rect.y+rect.height), new Scalar(0, 0, 255), 2);
+
+          roiCorners = limitRoi(tileCorners[4][3], 0.25);
+          rect = CoordUtil.innerRect(roiCorners);
+          Imgproc.rectangle(trimmedFinal, new Point(rect.x, rect.y), new Point(rect.x+rect.width, rect.y+rect.height), new Scalar(0, 0, 255), 2);
+
+          save(trimmedFinal, "move");
+     }
+
 }

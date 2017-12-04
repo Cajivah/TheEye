@@ -134,8 +134,14 @@ public class AnalysisService {
           return image.submat(frame);
      }
 
-     public Mat doPreprocessing(Mat src, Point[] chessboardCorners) {
-          return trimToCorners(src, chessboardCorners);
+     public Mat doPreprocessing(Mat src) {
+          return rotate(src);
+     }
+
+     private Mat rotate(Mat src) {
+          Core.transpose(src, src);
+          Core.flip(src, src, 1);
+          return src;
      }
 
      public ReferenceColors getReferenceColors(Mat preparedImage, TileCorners[][] tilesCorners) {
@@ -147,7 +153,7 @@ public class AnalysisService {
 
      public Occupancy[][] getChessboardOccupancy(UnresolvedMove unresolvedMove) {
           Mat image = unresolvedMove.getChessboardImage().getImage();
-          Mat trimmedImage = doPreprocessing(image, unresolvedMove.getChessboardCorners());
+          Mat trimmedImage = doPreprocessing(image);
           Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(trimmedImage, unresolvedMove.getTilesCorners());
           return determineOccupancy(tilesColors, unresolvedMove.getReferenceColors());
      }

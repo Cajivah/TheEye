@@ -54,11 +54,11 @@ public class AnalysisController {
              @RequestBody @Validated ChessboardImageDTO emptyChessboard) {
           Mat mat = Try.of(() -> imageMapper.toMat(emptyChessboard.getBase64Image()))
                        .getOrElseThrow(PatternNotFoundException::new);
-          Mat lines = analysisService.detectLines(mat);
-          Point[] roiCorners = analysisService.findCorners(mat, lines);
-          Mat trimmed = analysisService.trimToCorners(mat, roiCorners);
-          save(trimmed, "debug");
-          Point[][] points = analysisService.detectAllTilesCornerPoints(mat);
+          Mat rotated = analysisService.doPreprocessing(mat);
+          Mat lines = analysisService.detectLines(rotated);
+          Point[] roiCorners = analysisService.findCorners(rotated, lines);
+          Mat trimmed = analysisService.trimToCorners(rotated, roiCorners);
+          Point[][] points = analysisService.detectAllTilesCornerPoints(trimmed);
           return coordsMapper.toChessboardFeaturesDTO(roiCorners, points);
      }
 
@@ -67,13 +67,14 @@ public class AnalysisController {
              @RequestBody @Validated PreprocessedChessboardImageDTO preprocessedChessboardImage) throws IOException {
 
           Mat image = imageMapper.toMat(preprocessedChessboardImage.getImage().getBase64Image());
-          Point[] chessboardCorners = coordsMapper.toPoints(preprocessedChessboardImage.getChessboardCorners());
-
-          Mat preparedImage = analysisService.doPreprocessing(image, chessboardCorners);
+          Mat rotated = analysisService.doPreprocessing(image);
+          Point[] roiCorners = coordsMapper.toPoints(preprocessedChessboardImage.getChessboardCorners());
+          Mat trimmed = analysisService.trimToCorners(rotated, roiCorners);
 
           TileCorners[][] tilesCorners =
                   coordsMapper.toTilesCoords(preprocessedChessboardImage.getTilesCornerPoints());
-          ReferenceColors referenceColors = analysisService.getReferenceColors(preparedImage, tilesCorners);
+
+          ReferenceColors referenceColors = analysisService.getReferenceColors(trimmed, tilesCorners);
           return colorMapper.toReferenceColorsDTO(referenceColors);
      }
 }
