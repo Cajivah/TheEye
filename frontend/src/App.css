@@ -11,6 +11,7 @@
   background-color: #222;
   height: 150px;
   padding: 20px;
+  margin-bottom: 50px;
   color: white;
 }
 
@@ -26,3 +27,138 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+div.chessdiagram-holder {
+  width:450px;
+  padding-right: 30px;
+  padding-top: 40px;
+  border: 1px solid #b2b2b2;
+  border-radius: 5px;
+}
+
+div.advantage-gauge {
+  background: #a9a9a9;
+  border-radius: 5px 5px 0 0;
+  height: 49.3%;
+}
+
+button.btn-following {
+  margin-left: 20px;
+}
+
+div.zero-gauge-marker{
+  position:absolute;
+  top: 0;
+  height: 2px;
+  background: darkred;
+}
+
+div.advantage-gauge-holder {
+  background: #eaeaea;
+  height: 100%;
+  border-radius: 5px;
+  width : 14px;
+  position: absolute;
+  top: 0;
+  left: -20px;
+}
+
+div.top-margin {
+  margin-top:20px;
+}
+
+div.webcam-holder {
+  height: 189px;
+  width: 252px;
+  margin-left: 20px;
+  /*border:1px solid #b2b2b2;*/
+  /*border-radius: 5px;*/
+  /*padding-right: 1px;*/
+}
+
+button.top-nav-button {
+
+}
+
+div.fen-text {
+  position: absolute;
+  width: 450px;
+  height: 30px;
+  background: #eaeaea;
+  color: #7f7f7f;
+  border-radius: 5px;
+  align-content: left;
+
+}
+
+span.fen-span {
+  padding-top: 6px;
+  padding-left: 5px;
+  text-align: left;
+  float: left;
+  font-size: 12px;
+}
+
+button.btn-green {
+  border-radius: 5px;
+  background: #84a980;
+  color: #ffffff;
+}
+
+button.btn-green:hover {
+  background: #b7ccb4;
+  color: white;
+}
+
+button.btn-grey {
+  border-radius: 5px;
+  color: #7f7f7f;
+  background: #dddddd;
+}
+
+div.moves-holder {
+  position:absolute;
+  top:222px;
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+table.moves-table {
+  background: #e2e2e2;
+  color: #000000;
+  border-radius: 5px;
+}
+
+thead.moves-table-head {
+  background: #84a980;
+  color: white;
+  border-radius: 5px;
+  font-weight: lighter;
+}
+
+table.moves-table tr {
+  border-radius: 5px;
+}
+
+table.moves-table tbody {
+  height: 195px;
+  overflow:scroll;
+}
+
+table.moves-table th, td {
+  width: 84px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+thead.moves-table-head th {
+  font-weight: normal;
+}
+
+.middle-border {
+  border: 2px solid #ffffff;
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+
+/* #566d51  */

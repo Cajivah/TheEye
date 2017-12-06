@@ -15,14 +15,13 @@ class ChessBoard extends Component {
 
     render() {
         return (
-            <div>
                 <Chessdiagram flip={false}
-                              fen={this.position}
+                              fen={'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1'}
                               allowMoves={true}
-                              lightSquareColor={'#F0D9B5'}
-                              darkSquareColor={'#B58863'}
+                              lightSquareColor={'#ffffff'}
+                              darkSquareColor={'#5f5f5f'}
                               onMovePiece={ChessBoard.logMove}/>
-            </div>
+
         );
     }
 }
