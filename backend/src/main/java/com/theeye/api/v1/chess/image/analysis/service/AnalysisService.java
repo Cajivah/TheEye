@@ -42,6 +42,8 @@ public class AnalysisService {
      public static final int BOTTOM_LEFT_CORNER = 2;
      public static final int TOP_LEFT_CORNER = 3;
 
+     public static final int X_AXIS_FLIP_CODE = 0;
+
      private final LineMapper lineMapper;
      private final TileCornersService tileCornersService;
      private final ColorAnalysisService colorAnalysisService;
@@ -140,9 +142,10 @@ public class AnalysisService {
      }
 
      private Mat rotate(Mat src) {
-          Core.transpose(src, src);
-          Core.flip(src, src, 0);
-          return src;
+          Mat rotated = new Mat();
+          Core.transpose(src, rotated);
+          Core.flip(rotated, rotated, X_AXIS_FLIP_CODE);
+          return rotated;
      }
 
      public ReferenceColors getReferenceColors(Mat preparedImage, TileCorners[][] tilesCorners) {
