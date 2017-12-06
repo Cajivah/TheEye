@@ -19,14 +19,14 @@ public class TileTestFactory {
 
      public static Tile[][] createInitial() {
           return new Tile[][]{
-                  createFirstRow(WHITE),
-                  createPawnRow(WHITE),
-                  createEmptyRow(),
-                  createEmptyRow(),
-                  createEmptyRow(),
-                  createEmptyRow(),
+                  createFirstRow(BLACK),
                   createPawnRow(BLACK),
-                  createFirstRow(BLACK)
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  createPawnRow(WHITE),
+                  createFirstRow(WHITE),
           };
      }
 

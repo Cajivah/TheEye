@@ -30,9 +30,9 @@ public class FenEncoder {
 
      private String encodePositions(Tile[][] tiles) {
           StringBuilder positions = new StringBuilder();
-          int initialIndex = tiles.length - 1;
-          for (int i = initialIndex; i >= 0; --i) {
-               positions.append(i == initialIndex ? "" : FenCodes.ROW_DELIMITER)
+          int rowCount = tiles.length;
+          for (int i = 0; i < rowCount; ++i) {
+               positions.append(i == 0 ? "" : FenCodes.ROW_DELIMITER)
                         .append(encodeRow(tiles[i]));
           }
           return positions.toString();

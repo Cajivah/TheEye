@@ -72,7 +72,6 @@ public class FenParser {
 
      public Tile[][] parsePositions(String fenSection) {
           String[] split = fenSection.split(String.valueOf(FenCodes.ROW_DELIMITER));
-          ArrayUtils.reverse(split);
           return Arrays.stream(split)
                        .map(String::toCharArray)
                        .map(this::parseFenRow)

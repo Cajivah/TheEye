@@ -14,6 +14,7 @@ import com.theeye.api.v1.chess.image.analysis.service.color.ColorAnalysisService
 import com.theeye.api.v1.chess.image.analysis.service.position.TileCornersService;
 import com.theeye.api.v1.chess.image.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.image.analysis.util.ParametrizedLineProcessor;
+import com.theeye.api.v1.common.util.SaveToFile;
 import org.jetbrains.annotations.NotNull;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
@@ -140,7 +141,7 @@ public class AnalysisService {
 
      private Mat rotate(Mat src) {
           Core.transpose(src, src);
-          Core.flip(src, src, 1);
+          Core.flip(src, src, 0);
           return src;
      }
 
@@ -153,8 +154,9 @@ public class AnalysisService {
 
      public Occupancy[][] getChessboardOccupancy(UnresolvedMove unresolvedMove) {
           Mat image = unresolvedMove.getChessboardImage().getImage();
-          Mat trimmedImage = doPreprocessing(image);
-          Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(trimmedImage, unresolvedMove.getTilesCorners());
+          Mat trimmed = trimToCorners(image, unresolvedMove.getChessboardCorners());
+          Mat preprocessed = doPreprocessing(trimmed);
+          Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(preprocessed, unresolvedMove.getTilesCorners());
           return determineOccupancy(tilesColors, unresolvedMove.getReferenceColors());
      }
 
@@ -171,7 +173,7 @@ public class AnalysisService {
      private void determineOccupancyForRow(ReferenceColors referenceColors, int i, Occupancy[] occupancyRow, Scalar[] tilesColorRow) {
           for (int j = 0; j < BoardConsts.COLUMNS; ++j) {
                Scalar tileColor = tilesColorRow[j];
-               boolean isTileBackgroundBlack = (((i + j) % 2) == 0);
+               boolean isTileBackgroundBlack = (((i + j) % 2) == 1);
                TileReferenceColors reference =
                        isTileBackgroundBlack
                                ? referenceColors.getBlackTiles()

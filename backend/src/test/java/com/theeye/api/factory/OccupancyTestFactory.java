@@ -15,13 +15,13 @@ public class OccupancyTestFactory {
           return new Occupancy[][]{
                   createRowOccupiedBy(OCCUPIED_BY_WHITE),
                   new Occupancy[] {
-                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE,
-                          UNOCCUPIED, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, UNOCCUPIED,
+                          OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE, OCCUPIED_BY_WHITE
                   },
                   createRowOccupiedBy(UNOCCUPIED),
                   new Occupancy[] {
-                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED,
-                          OCCUPIED_BY_WHITE, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, OCCUPIED_BY_WHITE,
+                          UNOCCUPIED, UNOCCUPIED, UNOCCUPIED, UNOCCUPIED
                   },
                   createRowOccupiedBy(UNOCCUPIED),
                   createRowOccupiedBy(UNOCCUPIED),
