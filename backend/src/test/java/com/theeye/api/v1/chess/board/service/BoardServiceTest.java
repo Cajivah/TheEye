@@ -93,7 +93,7 @@ class BoardServiceTest {
                     lastBoard = BoardTestFactory.createForBeforeEnPassantPossibleSetup1();
                     changes = ChangesTestFactory.createChangesAfterEnPassantPossibleSetup1();
 
-                    Board board = sut.doMove(lastBoard, changes, MoveType.EN_PASSANT);
+                    Board board = sut.doMove(lastBoard, changes, MoveType.REGULAR);
 
                     Board expected = BoardTestFactory.createForAfterEnPassantPossibleSetup1();
                     assertAll(
