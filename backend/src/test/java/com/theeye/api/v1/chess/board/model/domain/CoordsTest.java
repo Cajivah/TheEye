@@ -25,17 +25,17 @@ class CoordsTest {
                     @DisplayName("Should return ")
                     @ParameterizedTest(name = "For {0}, {1} should give {2}")
                     @CsvSource({
-                            "0, 0, a1",
-                            "1, 3, d2",
-                            "3, 1, b4",
-                            "7, 7, h8"
+                            "0, 0, a8",
+                            "1, 3, d7",
+                            "3, 1, b5",
+                            "7, 7, h1"
                     })
                     void toInvertedChessboardString(int row, int col, String result) {
                          Coords coords = Coords.builder()
                                                .row(row)
                                                .column(col)
                                                .build();
-                         assertThat(result).isEqualTo(coords.toInvertedChessboardString());
+                         assertThat(coords.toInvertedChessboardString()).isEqualTo(result);
                     }
                }
           }
