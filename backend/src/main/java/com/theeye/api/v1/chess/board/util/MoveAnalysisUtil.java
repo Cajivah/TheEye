@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.BLACK;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.NONE;
 import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.WHITE;
 import static com.theeye.api.v1.chess.board.model.enumeration.ChangeType.*;
 
@@ -20,20 +21,23 @@ public class MoveAnalysisUtil {
      public static ChangeType findChangeType(PlayerColor activePlayer,
                                              Occupancy newOccupancy,
                                              Piece lastPiece) {
+
+
+          return analyzeChange(activePlayer, newOccupancy, lastPiece);
+     }
+
+     private static ChangeType analyzeChange(PlayerColor activePlayer,
+                                             Occupancy newOccupancy,
+                                             Piece lastPiece) {
+
           Occupancy activePlayerOccupancy = activePlayer.equals(WHITE)
                   ? Occupancy.OCCUPIED_BY_WHITE
                   : Occupancy.OCCUPIED_BY_BLACK;
 
-          return analyzeChange(activePlayerOccupancy, newOccupancy, lastPiece);
-     }
-
-     private static ChangeType analyzeChange(Occupancy activePlayerOccupancy,
-                                             Occupancy newOccupancy,
-                                             Piece lastPiece) {
           if (becameOccupiedByActive(activePlayerOccupancy, newOccupancy)) {
                return analyzeBecameOccupiedByActive(lastPiece);
           } else if (becameUnoccupied(newOccupancy)) {
-               return analyzeBecameUnoccupied(lastPiece);
+               return analyzeBecameUnoccupied(activePlayer, lastPiece);
           } else {
                return UNKNOWN;
           }
@@ -47,8 +51,8 @@ public class MoveAnalysisUtil {
           return newOccupancy.equals(Occupancy.UNOCCUPIED);
      }
 
-     private static ChangeType analyzeBecameUnoccupied(Piece lastPiece) {
-          if (lastPiece.getOwner().equals(WHITE)) {
+     private static ChangeType analyzeBecameUnoccupied(PlayerColor activePlayer, Piece lastPiece) {
+          if (lastPiece.getOwner().equals(activePlayer)) {
                return OCCUPIED_BY_ACTIVE_TO_UNOCCUPIED;
           } else {
                return OCCUPIED_BY_OPPONENT_TO_UNOCCUPIED;
@@ -56,10 +60,10 @@ public class MoveAnalysisUtil {
      }
 
      private static ChangeType analyzeBecameOccupiedByActive(Piece lastPiece) {
-          if (lastPiece.getOwner().equals(BLACK)) {
-               return OCCUPIED_BY_OPPONENT_TO_OCCUPIED_BY_ACTIVE_PLAYER;
-          } else {
+          if (lastPiece.getOwner().equals(NONE)) {
                return UNOCCUPIED_TO_OCCUPIED_BY_ACTIVE;
+          } else {
+               return OCCUPIED_BY_OPPONENT_TO_OCCUPIED_BY_ACTIVE_PLAYER;
           }
      }
 

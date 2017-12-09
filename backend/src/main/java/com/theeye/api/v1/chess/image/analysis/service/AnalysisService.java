@@ -150,8 +150,8 @@ public class AnalysisService {
 
      public ReferenceColors getReferenceColors(Mat preparedImage, TileCorners[][] tilesCorners) {
           return ReferenceColors.builder()
-                                .whiteTiles(colorAnalysisService.getBlackTilesAverages(preparedImage, tilesCorners))
-                                .blackTiles(colorAnalysisService.getWhiteTilesAverages(preparedImage, tilesCorners))
+                                .whiteTiles(colorAnalysisService.getWhiteTilesAverages(preparedImage, tilesCorners))
+                                .blackTiles(colorAnalysisService.getBlackTilesAverages(preparedImage, tilesCorners))
                                 .build();
      }
 

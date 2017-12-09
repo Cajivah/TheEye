@@ -14,8 +14,6 @@ import com.theeye.api.v1.chess.image.analysis.service.AnalysisService;
 import io.vavr.control.Try;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.Arrays;
-
-import static com.theeye.api.v1.common.util.SaveToFile.save;
 
 
 @RestController
@@ -78,6 +73,7 @@ public class AnalysisController {
 
           TileCorners[][] tilesCorners =
                   coordsMapper.toTilesCoords(preprocessedChessboardImage.getTilesCornerPoints());
+
           ReferenceColors referenceColors = analysisService.getReferenceColors(rotated, tilesCorners);
           return colorMapper.toReferenceColorsDTO(referenceColors);
      }

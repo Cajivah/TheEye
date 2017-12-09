@@ -53,7 +53,9 @@ public class CoordsMapper {
 
      public ChessboardPositionFeaturesDTO toChessboardFeaturesDTO(Point[] roiCorners, Point[][] tileCornerPoints) {
 
-          reverseInnerCorners(tileCornerPoints);
+          if(tileCornerPoints[0][0].y > tileCornerPoints[1][0].y) {
+               reverseInnerCorners(tileCornerPoints);
+          }
           return ChessboardPositionFeaturesDTO.builder()
                                               .chessboardCorners(toPointsDTO(roiCorners))
                                               .tilesCornerPoints(toPointsDTO(tileCornerPoints))

@@ -21,6 +21,9 @@ public class BoardUtils {
      }
 
      public static boolean coordsValid(Coords coords) {
-          return coords.getRow() < BoardConsts.ROWS && coords.getColumn() < BoardConsts.COLUMNS;
+          return coords.getRow() < BoardConsts.ROWS
+                  && coords.getColumn() < BoardConsts.COLUMNS
+                  && coords.getRow() >= 0
+                  && coords.getColumn() >= 0;
      }
 }
