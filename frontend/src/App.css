@@ -162,3 +162,8 @@ thead.moves-table-head th {
 }
 
 /* #566d51  */
+
+div.promotion-popup {
+  width: 500px;
+  height: 300px
+}
