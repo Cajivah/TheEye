@@ -4,6 +4,7 @@ import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.image.analysis.model.domain.TileCorners;
 import com.theeye.api.v1.chess.image.analysis.model.dto.ChessboardPositionFeaturesDTO;
 import com.theeye.api.v1.chess.image.analysis.model.dto.PointDTO;
+import org.apache.commons.lang3.ArrayUtils;
 import org.mapstruct.Mapper;
 import org.opencv.core.Point;
 
@@ -51,10 +52,21 @@ public class CoordsMapper {
      }
 
      public ChessboardPositionFeaturesDTO toChessboardFeaturesDTO(Point[] roiCorners, Point[][] tileCornerPoints) {
+
+          if(tileCornerPoints[0][0].y > tileCornerPoints[1][0].y) {
+               reverseInnerCorners(tileCornerPoints);
+          }
           return ChessboardPositionFeaturesDTO.builder()
                                               .chessboardCorners(toPointsDTO(roiCorners))
                                               .tilesCornerPoints(toPointsDTO(tileCornerPoints))
                                               .build();
+     }
+
+     private void reverseInnerCorners(Point[][] tileCornerPoints) {
+          ArrayUtils.reverse(tileCornerPoints);
+          for (Point[] points : tileCornerPoints) {
+               ArrayUtils.reverse(points);
+          }
      }
 
      public TileCorners[][] toTilesCoords(PointDTO[][] tilesCornerPoints) {

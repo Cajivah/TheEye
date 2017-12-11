@@ -56,8 +56,8 @@ public class BoardDetailsUpdaterService {
           PlayerColor active = changeToUnoccupied.getLastPiece().getOwner();
           if(hasOpponentPawnAroundInTheRow(lastBoard, coordsOccupied, active)) {
                int previousRow = active.equals(WHITE)
-                       ? coordsOccupied.getRow() - 1
-                       : coordsOccupied.getRow() + 1;
+                       ? coordsOccupied.getRow() + 1
+                       : coordsOccupied.getRow() - 1;
                return Coords.builder()
                             .row(previousRow)
                             .column(coordsOccupied.getColumn())

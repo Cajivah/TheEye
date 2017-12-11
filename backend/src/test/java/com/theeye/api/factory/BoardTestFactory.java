@@ -72,7 +72,7 @@ public class BoardTestFactory {
                       .tiles(TileTestFactory.createForAfterEnPassantPossibleSetup1())
                       .activeColor(PlayerColor.WHITE)
                       .castling(createAllTrue())
-                      .enPassant("-")
+                      .enPassant("b6")
                       .halfmoveClock(0)
                       .fullmoveNumber(8)
                       .build();

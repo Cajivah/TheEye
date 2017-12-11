@@ -14,6 +14,7 @@ import com.theeye.api.v1.chess.image.analysis.service.color.ColorAnalysisService
 import com.theeye.api.v1.chess.image.analysis.service.position.TileCornersService;
 import com.theeye.api.v1.chess.image.analysis.util.MatProcessor;
 import com.theeye.api.v1.chess.image.analysis.util.ParametrizedLineProcessor;
+import com.theeye.api.v1.common.util.SaveToFile;
 import org.jetbrains.annotations.NotNull;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
@@ -40,6 +41,8 @@ public class AnalysisService {
      public static final int BOTTOM_RIGHT_CORNER = 1;
      public static final int BOTTOM_LEFT_CORNER = 2;
      public static final int TOP_LEFT_CORNER = 3;
+
+     public static final int X_AXIS_FLIP_CODE = 0;
 
      private final LineMapper lineMapper;
      private final TileCornersService tileCornersService;
@@ -139,22 +142,24 @@ public class AnalysisService {
      }
 
      private Mat rotate(Mat src) {
-          Core.transpose(src, src);
-          Core.flip(src, src, 1);
-          return src;
+          Mat rotated = new Mat();
+          Core.transpose(src, rotated);
+          Core.flip(rotated, rotated, X_AXIS_FLIP_CODE);
+          return rotated;
      }
 
      public ReferenceColors getReferenceColors(Mat preparedImage, TileCorners[][] tilesCorners) {
           return ReferenceColors.builder()
-                                .whiteTiles(colorAnalysisService.getBlackTilesAverages(preparedImage, tilesCorners))
-                                .blackTiles(colorAnalysisService.getWhiteTilesAverages(preparedImage, tilesCorners))
+                                .whiteTiles(colorAnalysisService.getWhiteTilesAverages(preparedImage, tilesCorners))
+                                .blackTiles(colorAnalysisService.getBlackTilesAverages(preparedImage, tilesCorners))
                                 .build();
      }
 
      public Occupancy[][] getChessboardOccupancy(UnresolvedMove unresolvedMove) {
           Mat image = unresolvedMove.getChessboardImage().getImage();
-          Mat trimmedImage = doPreprocessing(image);
-          Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(trimmedImage, unresolvedMove.getTilesCorners());
+          Mat trimmed = trimToCorners(image, unresolvedMove.getChessboardCorners());
+          Mat preprocessed = doPreprocessing(trimmed);
+          Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(preprocessed, unresolvedMove.getTilesCorners());
           return determineOccupancy(tilesColors, unresolvedMove.getReferenceColors());
      }
 
@@ -171,7 +176,7 @@ public class AnalysisService {
      private void determineOccupancyForRow(ReferenceColors referenceColors, int i, Occupancy[] occupancyRow, Scalar[] tilesColorRow) {
           for (int j = 0; j < BoardConsts.COLUMNS; ++j) {
                Scalar tileColor = tilesColorRow[j];
-               boolean isTileBackgroundBlack = (((i + j) % 2) == 0);
+               boolean isTileBackgroundBlack = (((i + j) % 2) == 1);
                TileReferenceColors reference =
                        isTileBackgroundBlack
                                ? referenceColors.getBlackTiles()

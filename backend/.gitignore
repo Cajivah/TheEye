@@ -62,3 +62,6 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/gradle,intellij
 
 /src/main/resources/stockfish_8_x64
+
+## test images
+src/test/resources/img

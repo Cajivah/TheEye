@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-import static com.theeye.api.v1.common.util.SaveToFile.save;
-
 
 @RestController
 @RequestMapping("/api/v1/chess/analysis")
@@ -54,11 +52,11 @@ public class AnalysisController {
              @RequestBody @Validated ChessboardImageDTO emptyChessboard) {
           Mat mat = Try.of(() -> imageMapper.toMat(emptyChessboard.getBase64Image()))
                        .getOrElseThrow(PatternNotFoundException::new);
-          Mat rotated = analysisService.doPreprocessing(mat);
-          Mat lines = analysisService.detectLines(rotated);
-          Point[] roiCorners = analysisService.findCorners(rotated, lines);
-          Mat trimmed = analysisService.trimToCorners(rotated, roiCorners);
-          Point[][] points = analysisService.detectAllTilesCornerPoints(trimmed);
+          Mat lines = analysisService.detectLines(mat);
+          Point[] roiCorners = analysisService.findCorners(mat, lines);
+          Mat trimmed = analysisService.trimToCorners(mat, roiCorners);
+          Mat rotated = analysisService.doPreprocessing(trimmed);
+          Point[][] points = analysisService.detectAllTilesCornerPoints(rotated);
           return coordsMapper.toChessboardFeaturesDTO(roiCorners, points);
      }
 
@@ -67,14 +65,16 @@ public class AnalysisController {
              @RequestBody @Validated PreprocessedChessboardImageDTO preprocessedChessboardImage) throws IOException {
 
           Mat image = imageMapper.toMat(preprocessedChessboardImage.getImage().getBase64Image());
-          Mat rotated = analysisService.doPreprocessing(image);
           Point[] roiCorners = coordsMapper.toPoints(preprocessedChessboardImage.getChessboardCorners());
-          Mat trimmed = analysisService.trimToCorners(rotated, roiCorners);
+          Mat trimmed = analysisService.trimToCorners(image, roiCorners);
+
+
+          Mat rotated = analysisService.doPreprocessing(trimmed);
 
           TileCorners[][] tilesCorners =
                   coordsMapper.toTilesCoords(preprocessedChessboardImage.getTilesCornerPoints());
 
-          ReferenceColors referenceColors = analysisService.getReferenceColors(trimmed, tilesCorners);
+          ReferenceColors referenceColors = analysisService.getReferenceColors(rotated, tilesCorners);
           return colorMapper.toReferenceColorsDTO(referenceColors);
      }
 }

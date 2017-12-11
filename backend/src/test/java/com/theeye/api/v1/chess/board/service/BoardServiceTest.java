@@ -5,7 +5,6 @@ import com.theeye.api.factory.ChangesTestFactory;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -94,7 +93,7 @@ class BoardServiceTest {
                     lastBoard = BoardTestFactory.createForBeforeEnPassantPossibleSetup1();
                     changes = ChangesTestFactory.createChangesAfterEnPassantPossibleSetup1();
 
-                    Board board = sut.doMove(lastBoard, changes, MoveType.EN_PASSANT);
+                    Board board = sut.doMove(lastBoard, changes, MoveType.REGULAR);
 
                     Board expected = BoardTestFactory.createForAfterEnPassantPossibleSetup1();
                     assertAll(

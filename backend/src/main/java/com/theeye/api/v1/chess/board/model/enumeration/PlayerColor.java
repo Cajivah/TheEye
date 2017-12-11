@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum PlayerColor {
 
-     WHITE(0, 1),
-     BLACK(7, 6),
+     WHITE(7, 6),
+     BLACK(0, 1),
      NONE(-1, -1);
 
      private int objectiveRow;

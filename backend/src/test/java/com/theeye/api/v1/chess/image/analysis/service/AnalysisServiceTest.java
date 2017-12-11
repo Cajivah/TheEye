@@ -1,8 +1,12 @@
 package com.theeye.api.v1.chess.image.analysis.service;
 
 import com.sun.javafx.geom.Point2D;
+import com.theeye.api.factory.OccupancyTestFactory;
+import com.theeye.api.factory.UnresolvedMoveTestFactory;
+import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import com.theeye.api.v1.chess.image.analysis.mapper.LineMapper;
 import com.theeye.api.v1.chess.image.analysis.model.domain.ParametrizedLine2D;
+import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.image.analysis.service.color.ColorAnalysisService;
 import com.theeye.api.v1.chess.image.analysis.service.position.TileCornersService;
 import com.theeye.api.v1.chess.image.analysis.util.MatProcessor;
@@ -36,6 +40,7 @@ import java.util.List;
 import static com.theeye.api.v1.chess.image.analysis.service.AnalysisService.CORNERS_PATTERN_HEIGHT;
 import static com.theeye.api.v1.chess.image.analysis.service.AnalysisService.CORNERS_PATTERN_WIDTH;
 import static com.theeye.api.v1.common.util.SaveToFile.save;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -185,5 +190,11 @@ class AnalysisServiceTest {
           save(mat, "CornersDetection");
      }
 
+     @Test
+     void getChessboardOccupancy() throws IOException {
+          UnresolvedMove after1e4 = UnresolvedMoveTestFactory.createAfter1e4();
+          Occupancy[][] chessboardOccupancy = sut.getChessboardOccupancy(after1e4);
+          assertArrayEquals(chessboardOccupancy, OccupancyTestFactory.createOccupancyAfter1e4());
+     }
 
 }

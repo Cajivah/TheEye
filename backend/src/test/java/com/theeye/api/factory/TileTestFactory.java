@@ -19,14 +19,14 @@ public class TileTestFactory {
 
      public static Tile[][] createInitial() {
           return new Tile[][]{
-                  createFirstRow(WHITE),
-                  createPawnRow(WHITE),
-                  createEmptyRow(),
-                  createEmptyRow(),
-                  createEmptyRow(),
-                  createEmptyRow(),
+                  createFirstRow(BLACK),
                   createPawnRow(BLACK),
-                  createFirstRow(BLACK)
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  createPawnRow(WHITE),
+                  createFirstRow(WHITE),
           };
      }
 
@@ -60,7 +60,22 @@ public class TileTestFactory {
 
      public static Tile[][] createAfter1e4() {
           return new Tile[][]{
-                  createFirstRow(WHITE),
+                  createFirstRow(BLACK),
+                  createPawnRow(BLACK),
+                  createEmptyRow(),
+                  createEmptyRow(),
+                  new Tile[]
+                  {
+                          Tile.of(Empty.of(NONE)),
+                          Tile.of(Empty.of(NONE)),
+                          Tile.of(Empty.of(NONE)),
+                          Tile.of(Empty.of(NONE)),
+                          Tile.of(Pawn.of(WHITE)),
+                          Tile.of(Empty.of(NONE)),
+                          Tile.of(Empty.of(NONE)),
+                          Tile.of(Empty.of(NONE))
+                  },
+                  createEmptyRow(),
                   new Tile[]
                           {
                                   Tile.of(Pawn.of(WHITE)),
@@ -72,22 +87,7 @@ public class TileTestFactory {
                                   Tile.of(Pawn.of(WHITE)),
                                   Tile.of(Pawn.of(WHITE))
                           },
-                  createEmptyRow(),
-                  new Tile[]
-                          {
-                                  Tile.of(Empty.of(NONE)),
-                                  Tile.of(Empty.of(NONE)),
-                                  Tile.of(Empty.of(NONE)),
-                                  Tile.of(Empty.of(NONE)),
-                                  Tile.of(Pawn.of(WHITE)),
-                                  Tile.of(Empty.of(NONE)),
-                                  Tile.of(Empty.of(NONE)),
-                                  Tile.of(Empty.of(NONE))
-                          },
-                  createEmptyRow(),
-                  createEmptyRow(),
-                  createPawnRow(BLACK),
-                  createFirstRow(BLACK)
+                  createFirstRow(WHITE),
           };
      }
 

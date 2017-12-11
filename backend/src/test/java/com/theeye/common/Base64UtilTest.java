@@ -11,7 +11,9 @@ import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Base64;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class Base64UtilTest {
@@ -43,9 +45,15 @@ class Base64UtilTest {
                @Test
                @DisplayName("Should return correct byte[]")
                void getImageBytes() {
-                    System.out.println(imageBase64);
                     byte[] encodedImageBytes = Base64Util.getImageBytes(imageBase64);
                     assertArrayEquals(imageBytes, encodedImageBytes);
+               }
+
+               @Test
+               @DisplayName("Should return correct base64")
+               void getBase64() {
+                    String base64 = Base64Util.getBase64(imageBytes);
+                    assertThat(base64).isEqualTo(imageBase64);
                }
           }
      }

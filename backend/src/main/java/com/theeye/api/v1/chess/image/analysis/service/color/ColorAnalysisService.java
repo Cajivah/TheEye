@@ -8,10 +8,9 @@ import com.theeye.api.v1.chess.image.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.image.analysis.model.enumeration.TileColor;
 import com.theeye.api.v1.chess.image.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.image.analysis.util.TileScaler;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
+import com.theeye.api.v1.common.util.SaveToFile;
+import org.opencv.core.*;
+import org.opencv.imgproc.Imgproc;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -35,19 +34,19 @@ public class ColorAnalysisService {
 
      private Scalar getBlackOccupiedByWhiteAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.BLACK, InitialColorReferenceIndexes.COLUMNS_OCCUPIED_BY_WHITE);
+                  getTilesFromRow(tilesCorners, TileColor.BLACK, InitialColorReferenceIndexes.ROWS_OCCUPIED_BY_WHITE);
           return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getBlackOccupiedByBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.BLACK, InitialColorReferenceIndexes.COLUMNS_OCCUPIED_BY_BLACK);
+                  getTilesFromRow(tilesCorners, TileColor.BLACK, InitialColorReferenceIndexes.ROWS_OCCUPIED_BY_BLACK);
           return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getUnoccupiedBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.BLACK, InitialColorReferenceIndexes.COLUMNS_UNOCCUPIED);
+                  getTilesFromRow(tilesCorners, TileColor.BLACK, InitialColorReferenceIndexes.ROWS_UNOCCUPIED);
           return computeAverageColor(preparedImage, tiles);
      }
 
@@ -64,21 +63,29 @@ public class ColorAnalysisService {
 
      private Scalar getWhiteOccupiedByWhiteAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.COLUMNS_OCCUPIED_BY_WHITE);
+                  getTilesFromRow(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.ROWS_OCCUPIED_BY_WHITE);
+
+          tiles.forEach(a -> Imgproc.rectangle(preparedImage, a.getTopLeft(),a.getBottomRight(), new Scalar(0, 0, 255), 2));
+          SaveToFile.save(preparedImage, "check");
+          for (TileCorners tile : tiles) {
+               TileCorners roiCorners = limitRoi(tile, 0.25);
+               Rect rect = CoordUtil.innerRect(roiCorners);
+               Imgproc.rectangle(preparedImage, new Point(rect.x, rect.y), new Point(rect.x+rect.width, rect.y+rect.height), new Scalar(0, 0, 255), 2);
+          }
 
           return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getWhiteOccupiedByBlackAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.COLUMNS_OCCUPIED_BY_BLACK);
+                  getTilesFromRow(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.ROWS_OCCUPIED_BY_BLACK);
 
           return computeAverageColor(preparedImage, tiles);
      }
 
      private Scalar getWhiteUnoccupiedAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
-                  getTilesFromColumns(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.COLUMNS_UNOCCUPIED);
+                  getTilesFromRow(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.ROWS_UNOCCUPIED);
           return computeAverageColor(preparedImage, tiles);
      }
 
@@ -108,19 +115,19 @@ public class ColorAnalysisService {
           return TileScaler.computeScaledTile(tile, sideScale);
      }
 
-     private List<TileCorners> getTilesFromColumns(TileCorners[][] tiles, TileColor tileColor, int... cols) {
-          return Arrays.stream(cols)
+     private List<TileCorners> getTilesFromRow(TileCorners[][] tiles, TileColor tileColor, int... rows) {
+          return Arrays.stream(rows)
                        .boxed()
-                       .flatMap(col -> getTilesFromColumn(tiles, tileColor, col).stream())
+                       .flatMap(row -> getTilesFromRow(tiles, tileColor, row).stream())
                        .collect(Collectors.toList());
      }
 
-     private List<TileCorners> getTilesFromColumn(TileCorners[][] tiles, TileColor tileColor, Integer col) {
-          TileCorners[] column = tiles[col];
+     private List<TileCorners> getTilesFromRow(TileCorners[][] tiles, TileColor tileColor, Integer row) {
+          TileCorners[] tilesRow = tiles[row];
           List<TileCorners> tilesList = new LinkedList<>();
-          int firstIndex = (tileColor.getOffset() + col % 2) % 2;
-          for (int i = firstIndex; i < column.length; i += 2) {
-               tilesList.add(column[i]);
+          int firstIndex = (tileColor.getOffset() + row % 2) % 2;
+          for (int i = firstIndex; i < tilesRow.length; i += 2) {
+               tilesList.add(tilesRow[i]);
           }
           return tilesList;
      }

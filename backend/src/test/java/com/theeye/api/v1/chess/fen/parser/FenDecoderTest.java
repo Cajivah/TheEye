@@ -55,34 +55,9 @@ class FenDecoderTest {
 
                     Tile[][] expected = new Tile[][]{
                             {
-                                    Tile.of(ROOK_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(ROOK_WHITE.create()),
-                                    Tile.of(KING_WHITE.create()), Tile.of(EMPTY.create())
-                            },
-                            {
-                                    Tile.of(PAWN_WHITE.create()), Tile.of(PAWN_WHITE.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(KNIGHT_WHITE.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(PAWN_WHITE.create()), Tile.of(PAWN_WHITE.create())
-                            },
-                            {
-                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(KNIGHT_WHITE.create()),
-                                    Tile.of(QUEEN_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(PAWN_WHITE.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create())
-                            },
-                            {
-                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(PAWN_WHITE.create()),
-                                    Tile.of(PAWN_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create())
-                            },
-                            {
-                                    Tile.of(EMPTY.create()), Tile.of(PAWN_BLACK.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(PAWN_BLACK.create()), Tile.of(EMPTY.create()),
-                            },
-                            {
-                                    Tile.of(BISHOP_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(PAWN_BLACK.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(PAWN_WHITE.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(PAWN_BLACK.create()), Tile.of(KNIGHT_BLACK.create()),
+                                    Tile.of(ROOK_BLACK.create()), Tile.of(KNIGHT_BLACK.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(QUEEN_BLACK.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(ROOK_BLACK.create()),
                             },
                             {
                                     Tile.of(PAWN_BLACK.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
@@ -90,9 +65,34 @@ class FenDecoderTest {
                                     Tile.of(BISHOP_BLACK.create()), Tile.of(PAWN_BLACK.create()),
                             },
                             {
-                                    Tile.of(ROOK_BLACK.create()), Tile.of(KNIGHT_BLACK.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(QUEEN_BLACK.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
-                                    Tile.of(EMPTY.create()), Tile.of(ROOK_BLACK.create()),
+                                    Tile.of(BISHOP_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(PAWN_BLACK.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(PAWN_WHITE.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(PAWN_BLACK.create()), Tile.of(KNIGHT_BLACK.create()),
+                            },
+                            {
+                                    Tile.of(EMPTY.create()), Tile.of(PAWN_BLACK.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(PAWN_BLACK.create()), Tile.of(EMPTY.create()),
+                            },
+                            {
+                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(PAWN_WHITE.create()),
+                                    Tile.of(PAWN_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create())
+                            },
+                            {
+                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(KNIGHT_WHITE.create()),
+                                    Tile.of(QUEEN_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(PAWN_WHITE.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create())
+                            },
+                            {
+                                    Tile.of(PAWN_WHITE.create()), Tile.of(PAWN_WHITE.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(KNIGHT_WHITE.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(PAWN_WHITE.create()), Tile.of(PAWN_WHITE.create())
+                            },
+                            {
+                                    Tile.of(ROOK_WHITE.create()), Tile.of(EMPTY.create()), Tile.of(EMPTY.create()),
+                                    Tile.of(EMPTY.create()), Tile.of(EMPTY.create()), Tile.of(ROOK_WHITE.create()),
+                                    Tile.of(KING_WHITE.create()), Tile.of(EMPTY.create())
                             }
                     };
 

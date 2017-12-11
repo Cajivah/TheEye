@@ -1,5 +1,6 @@
 package com.theeye.api.v1.chess.board.model.domain;
 
+import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,6 @@ public class Coords {
 
      public String toInvertedChessboardString() {
           char boardColumnLetter = (char) ('a' + column);
-          return boardColumnLetter + String.valueOf(row + 1);
+          return boardColumnLetter + String.valueOf(BoardConsts.ROWS - row);
      }
 }
