@@ -16,7 +16,7 @@ class ChessBoard extends Component {
     render() {
         return (
                 <Chessdiagram flip={false}
-                              fen={'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1'}
+                              fen={'r6P/ppp5/1k6/8/1P4rP/2N5/1PK5/6NR b - - 0 26'}
                               allowMoves={true}
                               lightSquareColor={'#ffffff'}
                               darkSquareColor={'#5f5f5f'}
