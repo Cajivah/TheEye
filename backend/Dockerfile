@@ -3,21 +3,19 @@ label maintainer=<malyjasiak.jakub@gmail.com>
 
 # Basics
 RUN apt update && apt upgrade -y
-RUN apt install -y curl unzip wget zip build-essential checkinstall cmake pkg-config yasm git gfortran
+RUN apt install -y curl unzip wget zip build-essential checkinstall cmake pkg-config yasm git gfortran software-properties-common
 
-# Java
-RUN apt-get update && apt-get upgrade -y \
-	&& apt-get install -y  software-properties-common \
-	&& add-apt-repository ppa:webupd8team/java -y \
-	&& apt-get update \
-	&& echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
-	&& apt-get install -y oracle-java8-installer \
-	&& apt-get install -y oracle-java8-set-default \
-	&& apt-get clean \
-ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle/
-RUN ls /usr/lib/jvm/
-RUN ls /usr/lib/jvm/java-8-oracle/
-RUN print $JAVA_HOME
+# java
+RUN add-apt-repository -y ppa:webupd8team/java \
+	&& apt update \
+	&& echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
+	&& apt install -y oracle-java8-installer oracle-java8-set-default
+
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+
+RUN apt install -y ant
+
+ENV ANT_HOME /usr/bin/ant
 
 # Bitmap utils
 RUN apt-get install -y libjpeg8-dev libjasper-dev libpng12-dev libtiff5-dev
