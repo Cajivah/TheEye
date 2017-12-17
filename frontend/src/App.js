@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Chessboard from './ChessBoard';
+import Chessboard from './partials/ChessBoard';
 import Webcam from 'react-webcam';
 import './App.css';
-import FenTranslator from './FenTranslator';
+import FenTranslator from './util/FenTranslator';
 import Modal from "react-modal";
 import PromotionChangeComponent from './partials/PromotionChangeComponent';
+import RequestFactory from "./util/RequestFactory"
 
 
 const modalStyle = {
@@ -53,8 +54,8 @@ class App extends Component {
         this.webcam = webcam;
     };
 
-    uploadWebcamCapture = () => {
-        const imagesrc = this.webcam.getScreenshot();
+    capture = () => {
+        return this.webcam.getScreenshot();
     };
 
     choosePromotion(selectedPromotion){
@@ -62,6 +63,27 @@ class App extends Component {
         this.setState({currentPosition: newPosition});
         this.closeModal();
     };
+
+    handleImageSubmit() {
+        var image = this.capture();
+        switch (this.state.imageStage) {
+            case ImageStageEnum.COORDS:
+                this.doCoordsRequest(image);
+                break;
+            case ImageStageEnum.COLORS:
+                break;
+            case ImageStageEnum.PLAY:
+                break;
+        }
+    }
+
+    doCoordsRequest(image) {
+        var payload = RequestFactory.buildCoordsRequest(image);
+    }
+
+    handleFinish() {
+
+    }
 
     render() {
         return (
@@ -86,8 +108,8 @@ class App extends Component {
                             <button className="btn btn-grey btn-following" title="Take a snapshot every time you make a move">Play</button>
                         </div>
                         <div className="col-md-3">
-                            <button type="button" className="btn btn-green" onClick={this.openModal}>Submit snapshot</button>
-                            <button type="button" className="btn btn-green btn-following" onClick={this.closeModal}>Finish</button>
+                            <button type="button" className="btn btn-green" onClick={this.handleImageSubmit}>Submit snapshot</button>
+                            <button type="button" className="btn btn-green btn-following" onClick={this.handleFinish}>Finish</button>
                         </div>
                     </div>
                     <div className="row top-margin">
@@ -103,7 +125,11 @@ class App extends Component {
                         <div className="col-md-3">
                             <div className="row">
                                 <div className="webcam-holder">
-                                    <Webcam width={253} height={187} audio={false}/>
+                                    <Webcam width={253}
+                                            height={187}
+                                            audio={false}
+                                            screenshotFormat="image/jpeg"
+                                            ref={this.setRef}/>
                                 </div>
                             </div>
                             <div className="moves-holder">
@@ -116,31 +142,6 @@ class App extends Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td className="middle-border">d4</td>
-                                        <td>e5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td className="middle-border">e3</td>
-                                        <td>exd4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td className="middle-border">exd4</td>
-                                        <td>d5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.</td>
-                                        <td className="middle-border">Bd3</td>
-                                        <td>c5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5.</td>
-                                        <td className="middle-border">c3</td>
-                                        <td>cxd4</td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>

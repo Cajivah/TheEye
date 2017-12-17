@@ -6,8 +6,6 @@ const FEN_POSITION_DELIMITER = '/';
 const FEN_POSITIONS_SECTION = 0;
 export default class FenTranslator {
 
-
-
     static getPositionsAsRowArray(fen) {
         return fen.split(FEN_POSITION_DELIMITER);
     };
