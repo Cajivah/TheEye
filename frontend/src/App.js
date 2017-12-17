@@ -78,7 +78,14 @@ class App extends Component {
     }
 
     doCoordsRequest(image) {
-        var payload = RequestFactory.buildCoordsRequest(image);
+        const request = RequestFactory.buildCoordsRequest(image);
+        request
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     handleFinish() {
@@ -108,7 +115,7 @@ class App extends Component {
                             <button className="btn btn-grey btn-following" title="Take a snapshot every time you make a move">Play</button>
                         </div>
                         <div className="col-md-3">
-                            <button type="button" className="btn btn-green" onClick={this.handleImageSubmit}>Submit snapshot</button>
+                            <button type="button" className="btn btn-green" onClick={this.handleImageSubmit.bind(this)}>Submit snapshot</button>
                             <button type="button" className="btn btn-green btn-following" onClick={this.handleFinish}>Finish</button>
                         </div>
                     </div>

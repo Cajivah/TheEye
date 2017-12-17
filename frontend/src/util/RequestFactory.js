@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const env = require("../../env");
+const env = require("../env");
 
 export default class RequestFactory {
 
@@ -35,7 +35,7 @@ export default class RequestFactory {
     static buildMoveRequest(image, tiles, corners, colors, fen) {
         const url = `${env.API_URL}/chess/board/move`;
         let payload = JSON.stringify({
-            image: {
+            chessboardImage: {
                 base64Image: image
             },
             lastPosition: fen,
