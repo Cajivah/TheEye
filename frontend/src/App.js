@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import Chessboard from './ChessBoard';
 import Webcam from 'react-webcam';
 import './App.css';
+import FenTranslator from './FenTranslator';
 import Modal from "react-modal";
+import PromotionChangeComponent from './partials/PromotionChangeComponent';
 
-const customStyles = {
+
+const modalStyle = {
     content : {
         top                   : '40%',
         left                  : '50%',
@@ -15,18 +18,23 @@ const customStyles = {
     }
 };
 
+const ImageStageEnum = Object.freeze({'COORDS': 0, 'COLORS': 1, 'PLAY': 2});
+
 class App extends Component {
-    subtitle;
 
     constructor(props) {
         super(props);
         this.state = {
-            currentPosition: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-            modalIsOpen: false
+            currentPosition: 'P2qr1k1/1B1n1ppp/4pn2/2Pp4/3P4/P1B1P3/5PPP/R2QK1NR b KQ - 0 17',
+            modalIsOpen: false,
+            imageStage: ImageStageEnum.COORDS
         };
+
+
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+
     }
 
     openModal() {
@@ -49,6 +57,12 @@ class App extends Component {
         const imagesrc = this.webcam.getScreenshot();
     };
 
+    choosePromotion(selectedPromotion){
+        let newPosition = FenTranslator.updateFenAfterPromotion(this.state.currentPosition, selectedPromotion);
+        this.setState({currentPosition: newPosition});
+        this.closeModal();
+    };
+
     render() {
         return (
             <div className="App">
@@ -56,44 +70,18 @@ class App extends Component {
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
-                    style={customStyles}
+                    style={modalStyle}
                     contentLabel="Example Modal"
                     container={this}
                 >
-                    <h3>Promotion detected, pick a piece:</h3>
-                    <form>
-                        <div className="radio">
-                            <label>
-                                <input type="radio" value="queen" name="piece-select" checked={true} />
-                                Queen
-                            </label>
-                        </div>
-                        <div className="radio">
-                            <label>
-                                <input type="radio" value="rook" name="piece-select"/>
-                                Rook
-                            </label>
-                        </div>
-                        <div className="radio">
-                            <label>
-                                <input type="radio" value="knight" name="piece-select"/>
-                                Knight
-                            </label>
-                        </div>
-                        <div className="radio">
-                            <label>
-                                <input type="radio" value="bishop" name="piece-select"/>
-                                Bishop
-                            </label>
-                        </div>
-                    </form>
-                    <button type="button" className="btn btn-green">Confirm</button>
+                    <PromotionChangeComponent choosePromotion={this.choosePromotion.bind(this)}/>
                 </Modal>
+
                 <header> <h2>The Eye</h2> </header>
                 <div className="container">
                     <div className="row top-margin">
                         <div className="col-md-5 col-md-offset-2">
-                            <button className="btn btn-green" title="Take a snapshot of epmty chessboard to let us configure tiles coordinates">Configure coords</button>
+                            <button className="btn btn-green" title="Take a snapshot of empty chessboard to let us configure tiles coordinates">Configure coords</button>
                             <button className="btn btn-grey btn-following" title="Take a snapshot of board with all pieces set up to let us get reference color samples">Configure colors</button>
                             <button className="btn btn-grey btn-following" title="Take a snapshot every time you make a move">Play</button>
                         </div>
@@ -109,7 +97,7 @@ class App extends Component {
                                 <div className="zero-gauge-marker"/>
                             </div>
                             <div className="chessdiagram-holder">
-                                <Chessboard/>
+                                <Chessboard position={this.state.currentPosition}/>
                             </div>
                         </div>
                         <div className="col-md-3">
@@ -163,8 +151,7 @@ class App extends Component {
                         <div className="col-md-5 col-md-offset-2">
                             <div className="fen-text">
                                 <span className="fen-span">
-                                    {/*FEN:*/}
-                                    FEN: r6P/ppp5/1k6/8/1P4rP/2N5/1PK5/6NR b - - 0 26
+                                    FEN: {this.state.currentPosition}
                                 </span>
                             </div>
                         </div>
