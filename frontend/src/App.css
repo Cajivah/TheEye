@@ -39,7 +39,7 @@ div.chessdiagram-holder {
 div.advantage-gauge {
   background: #a9a9a9;
   border-radius: 5px 5px 0 0;
-  height: 49.3%;
+  height: 50%;
 }
 
 button.btn-following {
@@ -92,11 +92,11 @@ div.fen-text {
 }
 
 span.fen-span {
-  padding-top: 6px;
+  padding-top: 9px;
   padding-left: 5px;
   text-align: left;
   float: left;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 button.btn-green {

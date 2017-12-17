@@ -19,6 +19,7 @@ const modalStyle = {
     }
 };
 
+
 const ImageStageEnum = Object.freeze({'COORDS': 0, 'COLORS': 1, 'PLAY': 2});
 
 class App extends Component {
@@ -26,24 +27,35 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPosition: 'P2qr1k1/1B1n1ppp/4pn2/2Pp4/3P4/P1B1P3/5PPP/R2QK1NR b KQ - 0 17',
+            currentPosition: ' ',
             modalIsOpen: false,
-            imageStage: ImageStageEnum.COORDS
+            imageStage: ImageStageEnum.COORDS,
+            tiles:null,
+            corners:null,
+            colors:null,
+            score:0
         };
 
 
         this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.computeAdvantageHeight = this.computeAdvantageHeight.bind(this);
+    }
+
+
+    computeAdvantageHeight() {
+        const score = this.state.score < -8
+            ? -8
+            : this.state.score > 8
+                ? 8
+                : this.state.score;
+        console.log(score);
+        return 50 - (score * 50 / 8)
 
     }
 
     openModal() {
         this.setState({modalIsOpen: true});
-    }
-
-    afterOpenModal() {
-
     }
 
     closeModal() {
@@ -65,14 +77,17 @@ class App extends Component {
     };
 
     handleImageSubmit() {
-        var image = this.capture();
+        const image = this.capture();
         switch (this.state.imageStage) {
             case ImageStageEnum.COORDS:
                 this.doCoordsRequest(image);
                 break;
             case ImageStageEnum.COLORS:
+                this.doColorsRequest(image);
                 break;
             case ImageStageEnum.PLAY:
+                this.doMoveRequest(image);
+                this.doScoreRequest();
                 break;
         }
     }
@@ -80,16 +95,94 @@ class App extends Component {
     doCoordsRequest(image) {
         const request = RequestFactory.buildCoordsRequest(image);
         request
-            .then(function (response) {
+            .then(response => {
+                this.setState(
+                    {
+                        currentPosition:FenTranslator.STARTING_FEN,
+                        imageStage:ImageStageEnum.COLORS,
+                        tiles:response.data.tilesCornerPoints,
+                        corners:response.data.chessboardCorners
+                    });
+                console.log('@doCoordsRequest');
                 console.log(response)
             })
-            .catch(function (error) {
+            .catch(error =>  {
+                this.handleFinish();
+                console.log('@doCoordsRequest');
+                console.log(error)
+            })
+    }
+
+    doColorsRequest(image) {
+        const request = RequestFactory.buildColorsRequest(image, this.state.tiles, this.state.corners);
+        request
+            .then(response => {
+                this.setState(
+                    {
+                        currentPosition:FenTranslator.STARTING_FEN,
+                        imageStage:ImageStageEnum.PLAY,
+                        colors:response.data
+                    });
+                console.log('@doColorsRequest');
+                console.log(response)
+            })
+            .catch(error => {
+                console.log('@doColorsRequest');
+                console.log(error)
+            })
+    }
+
+    doMoveRequest(image) {
+        const request =
+            RequestFactory.buildMoveRequest(
+                image,
+                this.state.tiles,
+                this.state.corners,
+                this.state.colors,
+                this.state.currentPosition);
+
+        request
+            .then(response => {
+                this.setState({
+                    currentPosition:response.data.fenDescription,
+                    //todo move as algebraic notation
+                });
+                console.log('@doMoveRequest');
+                console.log(response)
+            })
+            .catch(error => {
+                console.log('@doMoveRequest');
+                console.log(error)
+            })
+    }
+
+    doScoreRequest() {
+        const request = RequestFactory.buildScoreEvalRequest(this.state.currentPosition);
+        request
+            .then(response => {
+                this.setState({
+                   score:response.data.centipawnScore
+                });
+                console.log('@doScoreRequest');
+                console.log(response);
+                console.log(this.state)
+            })
+            .catch(error => {
+                this.setState({
+                   score:0
+                });
+                console.log('@doScoreRequest');
                 console.log(error)
             })
     }
 
     handleFinish() {
-
+        this.setState(
+            {
+                currentPosition:" ",
+                imageStage:ImageStageEnum.COORDS
+            });
+        console.log('@handleFinish: Resetting setup')
     }
 
     render() {
@@ -97,7 +190,6 @@ class App extends Component {
             <div className="App">
                 <Modal
                     isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
                     style={modalStyle}
                     contentLabel="Example Modal"
@@ -110,19 +202,23 @@ class App extends Component {
                 <div className="container">
                     <div className="row top-margin">
                         <div className="col-md-5 col-md-offset-2">
-                            <button className="btn btn-green" title="Take a snapshot of empty chessboard to let us configure tiles coordinates">Configure coords</button>
-                            <button className="btn btn-grey btn-following" title="Take a snapshot of board with all pieces set up to let us get reference color samples">Configure colors</button>
-                            <button className="btn btn-grey btn-following" title="Take a snapshot every time you make a move">Play</button>
+                            <button className={this.state.imageStage === ImageStageEnum.COORDS ? "btn btn-green" : "btn"}
+                                    title="Take a snapshot of empty chessboard to let us configure tiles coordinates">Configure coords</button>
+                            <button className={this.state.imageStage === ImageStageEnum.COLORS ? "btn btn-green btn-following" : "btn btn-grey btn-following"}
+                                    title="Take a snapshot of board with all pieces set up to let us get reference color samples">Configure colors</button>
+                            <button className={this.state.imageStage === ImageStageEnum.PLAY ? "btn btn-green btn-following" : "btn btn-grey btn-following"}
+                                    title="Take a snapshot every time you make a move">Play</button>
                         </div>
                         <div className="col-md-3">
                             <button type="button" className="btn btn-green" onClick={this.handleImageSubmit.bind(this)}>Submit snapshot</button>
-                            <button type="button" className="btn btn-green btn-following" onClick={this.handleFinish}>Finish</button>
+                            <button type="button" className="btn btn-green btn-following" onClick={this.handleFinish.bind(this)}>Finish</button>
                         </div>
                     </div>
                     <div className="row top-margin">
                         <div className="col-md-5 col-md-offset-2">
                             <div className="advantage-gauge-holder">
-                                <div className="advantage-gauge"/>
+                                <div className="advantage-gauge"
+                                     style={{"height":50 - ((this.state.score > 7.8 ? 7.8 : this.state.score < -7.8 ? -7.8 : this.state.score) * 50 / 8) + "%"}}/>
                                 <div className="zero-gauge-marker"/>
                             </div>
                             <div className="chessdiagram-holder">
@@ -164,7 +260,7 @@ class App extends Component {
                             </div>
                         </div>
                         <div className="col-md-3">
-                            <button type="button" className="btn btn-green">Export game</button>
+                            <button type="button" className="btn btn-green" onClick={this.doScoreRequest.bind(this)}>Export game</button>
                         </div>
                     </div>
                 </div>
