@@ -143,10 +143,14 @@ class App extends Component {
 
         request
             .then(response => {
+                let fen = response.data.fenDescription;
                 this.setState({
-                    currentPosition:response.data.fenDescription,
+                    currentPosition: fen,
                     //todo move as algebraic notation
                 });
+                if(FenTranslator.isPromotion(fen)) {
+                    this.openModal();
+                }
                 console.log('@doMoveRequest');
                 console.log(response)
             })
