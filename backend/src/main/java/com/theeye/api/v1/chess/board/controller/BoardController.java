@@ -5,8 +5,8 @@ import com.theeye.api.v1.chess.board.mapper.MoveMapper;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.UnresolvedMove;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
+import com.theeye.api.v1.chess.board.model.dto.ResolvedMoveDTO;
 import com.theeye.api.v1.chess.board.service.MoveResolverService;
-import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,9 +31,9 @@ public class BoardController {
      }
 
      @PostMapping("/move")
-     public Fen findNewPosition(@RequestBody MoveToResolveDTO moveToResolve) {
+     public ResolvedMoveDTO findNewPosition(@RequestBody MoveToResolveDTO moveToResolve) {
           UnresolvedMove unresolvedMove = moveMapper.toUnresolvedMove(moveToResolve);
           Board newState = moveResolverService.resolveMove(unresolvedMove);
-          return boardMapper.toFEN(newState);
+          return boardMapper.toResolvedMoveDTO(newState);
      }
 }

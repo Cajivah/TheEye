@@ -54,4 +54,10 @@ export default class FenTranslator {
         fenSections[FEN_POSITIONS_SECTION] = positions.join(FEN_POSITION_DELIMITER);
         return fenSections.join(FEN_SECTION_DELIMITER);
     }
+
+    static isPromotion(fen) {
+        let fenSections = FenTranslator.splitFenSections(fen);
+        let positions = FenTranslator.getPositionsAsRowArray(fenSections[FEN_POSITIONS_SECTION]);
+        return positions[0].indexOf("P") >= 0 || positions[7].indexOf("P") >= 0;
+    }
 }

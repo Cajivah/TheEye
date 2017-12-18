@@ -65,6 +65,7 @@ public class BoardService {
                           lastState.getActiveColor(),
                           tileChanges);
           String enPassant = boardDetailsUpdaterService.getEnPassantStatus(lastState, moveType, tileChanges);
+          String lastMove = boardDetailsUpdaterService.getLastMoveAsLAN(lastState, moveType, tileChanges);
           return Board.builder()
                       .tiles(newTiles)
                       .fullmoveNumber(newFullmoveCounter)
@@ -72,6 +73,7 @@ public class BoardService {
                       .activeColor(nextActivePlayer)
                       .castling(newCastlingStatus)
                       .enPassant(enPassant)
+                      .lastMove(lastMove)
                       .build();
      }
 

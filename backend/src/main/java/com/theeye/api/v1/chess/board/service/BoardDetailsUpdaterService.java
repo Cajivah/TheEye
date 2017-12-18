@@ -5,6 +5,8 @@ import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
 import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
 import com.theeye.api.v1.chess.fen.model.consts.FenCodes;
+import com.theeye.api.v1.chess.fen.model.consts.LanCodes;
+import com.theeye.api.v1.chess.piece.model.domain.Piece;
 import com.theeye.api.v1.chess.piece.model.enumeration.PieceType;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
@@ -190,5 +192,86 @@ public class BoardDetailsUpdaterService {
                                         .white(newStatusWhite)
                                         .black(newStatusBlack)
                                         .build();
+     }
+
+     public String getLastMoveAsLAN(Board lastState, MoveType moveType, List<TileChange> tileChanges) {
+
+          switch(moveType) {
+               case CASTLE_KING:
+                    return LanCodes.KING_SIDE_CASTLE;
+               case CASTLE_QUEEN:
+                    return LanCodes.QUEEN_SIDE_CASTLE;
+               case REGULAR:
+                    return getRegularMoveLan(lastState, tileChanges);
+               case TAKE:
+                    return getTakeMoveLan(lastState, tileChanges);
+               case EN_PASSANT:
+                    return getEnPassantMoveLan(lastState, tileChanges);
+               default:
+                    return null;
+          }
+     }
+
+     private String getEnPassantMoveLan(Board lastState, List<TileChange> tileChanges) {
+          Optional<TileChange> unoccupiedByActive = tileChanges.stream()
+                                                               .filter(UNOCCUPIED_BY_ACTIVE)
+                                                               .findFirst();
+
+          Optional<TileChange> occupiedByActive = tileChanges.stream()
+                                                             .filter(OCCUPIED_BY_ACTIVE)
+                                                             .findFirst();
+
+          if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
+               TileChange to = occupiedByActive.get();
+               TileChange from = unoccupiedByActive.get();
+               return from.getCoords().toInvertedChessboardString()
+                       + LanCodes.TAKE_SEPARATOR
+                       + to.getCoords().toInvertedChessboardString();
+          }
+          return null;
+     }
+
+     private String getRegularMoveLan(Board lastState, List<TileChange> tileChanges) {
+          Optional<TileChange> unoccupiedByActive = tileChanges.stream()
+                                                               .filter(UNOCCUPIED_BY_ACTIVE)
+                                                               .findFirst();
+
+          Optional<TileChange> occupiedByActive = tileChanges.stream()
+                                                             .filter(OCCUPIED_BY_ACTIVE)
+                                                             .findFirst();
+
+          if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
+               TileChange to = occupiedByActive.get();
+               TileChange from = unoccupiedByActive.get();
+               Piece piece = lastState.getTiles()[from.getCoords().getRow()][to.getCoords().getColumn()]
+                       .getPiece();
+               return piece.toPGN()
+                       + from.getCoords().toInvertedChessboardString()
+                       + LanCodes.REGULAR_SEPARATOR
+                       + to.getCoords().toInvertedChessboardString();
+          }
+          return null;
+     }
+
+     private String getTakeMoveLan(Board lastState, List<TileChange> tileChanges) {
+          Optional<TileChange> unoccupiedByActive = tileChanges.stream()
+                                                               .filter(UNOCCUPIED_BY_ACTIVE)
+                                                               .findFirst();
+
+          Optional<TileChange> occupiedByActive = tileChanges.stream()
+                                                             .filter(UNOCCUPIED_BY_OPPONENT)
+                                                             .findFirst();
+
+          if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
+               TileChange to = occupiedByActive.get();
+               TileChange from = unoccupiedByActive.get();
+               Piece piece = lastState.getTiles()[from.getCoords().getRow()][to.getCoords().getColumn()]
+                       .getPiece();
+               return piece.toPGN()
+                       + from.getCoords().toInvertedChessboardString()
+                       + LanCodes.TAKE_SEPARATOR
+                       + to.getCoords().toInvertedChessboardString();
+          }
+          return null;
      }
 }

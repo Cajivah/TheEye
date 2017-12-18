@@ -22,6 +22,8 @@ public class Board {
      private int halfmoveClock = 0;
      @Builder.Default
      private int fullmoveNumber = 0;
+     private String lastMove; //long algebraic notation
+
 
      public Tile getTileAt(int row, int col) {
           return tiles[row][col];
