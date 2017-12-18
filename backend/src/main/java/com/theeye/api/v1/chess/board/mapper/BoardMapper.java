@@ -1,6 +1,7 @@
 package com.theeye.api.v1.chess.board.mapper;
 
 import com.theeye.api.v1.chess.board.model.domain.Board;
+import com.theeye.api.v1.chess.board.model.dto.ResolvedMoveDTO;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import com.theeye.api.v1.chess.fen.parser.FenDecoder;
 import com.theeye.api.v1.chess.fen.parser.FenEncoder;
@@ -26,5 +27,13 @@ public abstract class BoardMapper {
 
      public Fen toFEN(Board board) {
           return fenEncoder.encode(board);
+     }
+
+
+     public ResolvedMoveDTO toResolvedMoveDTO(Board board) {
+          return ResolvedMoveDTO.builder()
+                                .newPosition(toFEN(board).getFenDescription())
+                                .move(board.getLastMove())
+                                .build();
      }
 }

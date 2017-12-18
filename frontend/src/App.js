@@ -143,7 +143,8 @@ class App extends Component {
 
         request
             .then(response => {
-                let fen = response.data.fenDescription;
+                let fen = response.data.newPosition;
+                let move = response.data.move;
                 this.setState({
                     currentPosition: fen,
                     //todo move as algebraic notation
