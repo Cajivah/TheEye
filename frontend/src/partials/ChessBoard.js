@@ -8,19 +8,18 @@ class ChessBoard extends Component {
       position: PropTypes.string
     };
 
-    static logMove(piece, fromSquare, toSquare) {
-        let message = 'You moved ' + piece + fromSquare + ' to ' + toSquare + ' !';
-        console.log(message);
-    }
+    setRef = (chessdiagram) => {
+        this.chessdiagram = chessdiagram;
+    };
 
     render() {
         return (
                 <Chessdiagram flip={false}
-                              fen={'r6P/ppp5/1k6/8/1P4rP/2N5/1PK5/6NR b - - 0 26'}
+                              fen={this.props.position}
                               allowMoves={true}
                               lightSquareColor={'#ffffff'}
                               darkSquareColor={'#5f5f5f'}
-                              onMovePiece={ChessBoard.logMove}/>
+                              ref={this.setRef}/>
 
         );
     }
