@@ -34,4 +34,9 @@ public class Pawn extends Piece {
                   ? PieceType.PAWN_WHITE
                   : PieceType.PAWN_BLACK;
      }
+
+     @Override
+     public Piece copy() {
+          return Pawn.of(this.getOwner());
+     }
 }

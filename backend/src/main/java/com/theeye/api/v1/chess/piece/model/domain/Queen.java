@@ -34,4 +34,9 @@ public class Queen extends Piece {
                   ? PieceType.QUEEN_WHITE
                   : PieceType.QUEEN_BLACK;
      }
+
+     @Override
+     public Piece copy() {
+          return Queen.of(this.getOwner());
+     }
 }

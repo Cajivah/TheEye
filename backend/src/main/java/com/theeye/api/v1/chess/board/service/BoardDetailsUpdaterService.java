@@ -243,7 +243,7 @@ public class BoardDetailsUpdaterService {
           if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
                TileChange to = occupiedByActive.get();
                TileChange from = unoccupiedByActive.get();
-               Piece piece = lastState.getTiles()[from.getCoords().getRow()][to.getCoords().getColumn()]
+               Piece piece = lastState.getTiles()[from.getCoords().getRow()][from.getCoords().getColumn()]
                        .getPiece();
                return piece.toPGN()
                        + from.getCoords().toInvertedChessboardString()
@@ -265,7 +265,7 @@ public class BoardDetailsUpdaterService {
           if (unoccupiedByActive.isPresent() && occupiedByActive.isPresent()) {
                TileChange to = occupiedByActive.get();
                TileChange from = unoccupiedByActive.get();
-               Piece piece = lastState.getTiles()[from.getCoords().getRow()][to.getCoords().getColumn()]
+               Piece piece = lastState.getTiles()[from.getCoords().getRow()][from.getCoords().getColumn()]
                        .getPiece();
                return piece.toPGN()
                        + from.getCoords().toInvertedChessboardString()

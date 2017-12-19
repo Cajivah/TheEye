@@ -34,4 +34,9 @@ public class Bishop extends Piece {
                   ? PieceType.BISHOP_WHITE
                   : PieceType.BISHOP_BLACK;
      }
+
+     @Override
+     public Piece copy() {
+          return Bishop.of(this.getOwner());
+     }
 }

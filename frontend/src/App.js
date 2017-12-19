@@ -6,7 +6,8 @@ import FenTranslator from './util/FenTranslator';
 import Modal from "react-modal";
 import PromotionChangeComponent from './partials/PromotionChangeComponent';
 import RequestFactory from "./util/RequestFactory"
-
+import PgnUtils from "./util/PgnUtils";
+import fileDownload from 'js-file-download';
 
 const modalStyle = {
     content : {
@@ -33,7 +34,8 @@ class App extends Component {
             tiles:null,
             corners:null,
             colors:null,
-            score:0
+            score:0,
+            moves:[{moveNumber: 1, white: '...', black: ''}]
         };
 
 
@@ -41,7 +43,6 @@ class App extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.computeAdvantageHeight = this.computeAdvantageHeight.bind(this);
     }
-
 
     computeAdvantageHeight() {
         const score = this.state.score < -8
@@ -145,9 +146,10 @@ class App extends Component {
             .then(response => {
                 let fen = response.data.newPosition;
                 let move = response.data.move;
+                var newMovesArray = PgnUtils.appendMove(this.state.moves, move);
                 this.setState({
                     currentPosition: fen,
-                    //todo move as algebraic notation
+                    moves: newMovesArray
                 });
                 if(FenTranslator.isPromotion(fen)) {
                     this.openModal();
@@ -185,12 +187,18 @@ class App extends Component {
         this.setState(
             {
                 currentPosition:" ",
-                imageStage:ImageStageEnum.COORDS
+                imageStage:ImageStageEnum.COORDS,
+                tiles:null,
+                corners:null,
+                colors:null,
+                moves:[{moveNumber: 1, white: '...', black: ''}],
+                score:0
             });
         console.log('@handleFinish: Resetting setup')
     }
 
     render() {
+        var pgnMoves = this.state.moves;
         return (
             <div className="App">
                 <Modal
@@ -250,6 +258,7 @@ class App extends Component {
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    {pgnMoves.map(App.renderPgn)}
                                     </tbody>
                                 </table>
                             </div>
@@ -265,12 +274,26 @@ class App extends Component {
                             </div>
                         </div>
                         <div className="col-md-3">
-                            <button type="button" className="btn btn-green" onClick={this.doScoreRequest.bind(this)}>Export game</button>
+                            <button type="button" className="btn btn-green" onClick={this.handlePgnExport.bind(this)}>Export game</button>
                         </div>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    handlePgnExport() {
+        fileDownload(PgnUtils.exportPgn(this.state.moves), 'game.txt');
+    }
+
+    static renderPgn(move, index) {
+        return (
+            <tr key={index}>
+                <td>{move.moveNumber}</td>
+                <td>{move.white}</td>
+                <td>{move.black}</td>
+            </tr>
+        )
     }
 }
 

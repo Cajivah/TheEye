@@ -27,4 +27,9 @@ public class Empty extends Piece {
      public PieceType getPieceType() {
           return PieceType.EMPTY;
      }
+
+     @Override
+     public Piece copy() {
+          return Empty.of(this.getOwner());
+     }
 }
