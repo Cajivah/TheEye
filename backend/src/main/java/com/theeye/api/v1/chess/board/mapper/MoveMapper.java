@@ -14,7 +14,7 @@ import org.mapstruct.Mapping;
                 ImageMapper.class,
                 BoardMapper.class,
                 CoordsMapper.class,
-                ColorMapper.class
+                ColorMapper.class,
         }
 )
 public abstract class MoveMapper {

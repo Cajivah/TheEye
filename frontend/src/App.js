@@ -244,8 +244,7 @@ class App extends Component {
                                     <Webcam width={253}
                                             height={187}
                                             audio={false}
-                                            screenshotFormat="image/jpeg"
-                                            ref={this.setRef}/>
+                                            screenshotFormat="image/jpeg"/>
                                 </div>
                             </div>
                             <div className="moves-holder">
@@ -277,6 +276,14 @@ class App extends Component {
                             <button type="button" className="btn btn-green" onClick={this.handlePgnExport.bind(this)}>Export game</button>
                         </div>
                     </div>
+                </div>
+                <div >
+                <Webcam width={1280}
+                        height={720}
+                        audio={false}
+                        screenshotFormat="image/jpeg"
+                        ref={this.setRef}
+                />
                 </div>
             </div>
         );

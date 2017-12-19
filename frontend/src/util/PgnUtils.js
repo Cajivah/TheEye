@@ -7,7 +7,7 @@ export default class PgnUtils {
         if(lastLeg.white === PENDING) {
             lastLeg.white = move;
             lastLeg.black = PENDING;
-            moves.append(lastLeg);
+            moves.push(lastLeg);
         } else {
             lastLeg.black = move;
             var newLeg = {moveNumber: lastLeg.moveNumber+1, white:PENDING, black:''};
