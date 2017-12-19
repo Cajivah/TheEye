@@ -30,6 +30,7 @@ import static com.theeye.api.v1.chess.image.analysis.util.ParametrizedLineProces
 import static com.theeye.api.v1.common.util.ComparisionUtil.getBigger;
 import static com.theeye.api.v1.common.util.ComparisionUtil.getSmaller;
 import static org.opencv.calib3d.Calib3d.CALIB_CB_ADAPTIVE_THRESH;
+import static org.opencv.calib3d.Calib3d.CALIB_CB_FILTER_QUADS;
 
 @Service
 public class AnalysisService {
@@ -134,6 +135,9 @@ public class AnalysisService {
           Point leftTopFrameCorner = new Point(minLeft, minTop);
           Point rightBottomFrameCorner = new Point(maxRight, maxBottom);
           Rect frame = new Rect(leftTopFrameCorner, rightBottomFrameCorner);
+          Imgproc.circle(image, leftTopFrameCorner, 5, new Scalar(0, 0, 255), 3);
+          Imgproc.circle(image, rightBottomFrameCorner, 5, new Scalar(0, 0, 255), 3);
+          SaveToFile.save(image, "taasd");
           return image.submat(frame);
      }
 

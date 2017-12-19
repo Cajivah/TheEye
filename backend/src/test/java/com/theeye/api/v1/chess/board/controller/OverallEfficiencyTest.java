@@ -3,6 +3,7 @@ package com.theeye.api.v1.chess.board.controller;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.dto.ChessboardImageDTO;
 import com.theeye.api.v1.chess.board.model.dto.MoveToResolveDTO;
+import com.theeye.api.v1.chess.board.model.dto.ResolvedMoveDTO;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import com.theeye.api.v1.chess.image.analysis.controller.AnalysisController;
 import com.theeye.api.v1.chess.image.analysis.model.dto.ChessboardPositionFeaturesDTO;
@@ -12,6 +13,7 @@ import com.theeye.api.v1.common.util.Base64Util;
 import extension.SpringExtension;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import java.io.IOException;
 @ExtendWith({SpringExtension.class})
 @EffectivenessTest
 @Slf4j
+@Disabled
 public class OverallEfficiencyTest {
      public static final String PATH = "./img/";
 
@@ -65,7 +68,10 @@ public class OverallEfficiencyTest {
      private void runEfficiencyTest(String dirName, int moveCount) throws IOException {
           ChessboardPositionFeaturesDTO coords = getCoords(dirName);
           ReferenceColorsDTO colors = getColors(dirName, coords);
-          Fen lastPosition = Fen.of(BoardConsts.STARTING_SET_UP_FEN);
+          ResolvedMoveDTO lastPosition = ResolvedMoveDTO.builder()
+                                                        .newPosition(BoardConsts.STARTING_SET_UP_FEN)
+                                                        .move("")
+                                                        .build();
           Resource resource = new ClassPathResource(PATH + dirName + "fens");
           int i = 1;
           int success = 0;
@@ -76,8 +82,8 @@ public class OverallEfficiencyTest {
                     }
                     String correctFen = br.readLine();
                     try{
-                         lastPosition = getNextMove(PATH + dirName + i + ".jpg", coords, colors, lastPosition);
-                         if(!correctFen.equals(lastPosition.getFenDescription())) {
+                         ResolvedMoveDTO nextMove = getNextMove(PATH + dirName + i + ".jpg", coords, colors, lastPosition);
+                         if(!correctFen.equals(lastPosition.getNewPosition())) {
                               log.warn("DIFFERENCE: " + correctFen);
                          } else {
                               success++;
@@ -86,7 +92,9 @@ public class OverallEfficiencyTest {
                     } catch(Exception ignored) {
                          System.out.println("Failed for i = " + i);
                     }
-                    lastPosition = Fen.of(correctFen);
+                    lastPosition = ResolvedMoveDTO.builder()
+                                                  .newPosition(correctFen)
+                                                  .build();
                }
           } catch (Exception ignored) {
 
@@ -94,16 +102,15 @@ public class OverallEfficiencyTest {
           log.info("Analysed successfully " + success + " out of " + moveCount + " moves");
      }
 
-     private Fen getNextMove(String path, ChessboardPositionFeaturesDTO coords, ReferenceColorsDTO colors, Fen lastPosition) throws IOException {
+     private ResolvedMoveDTO getNextMove(String path, ChessboardPositionFeaturesDTO coords, ReferenceColorsDTO colors, ResolvedMoveDTO lastPosition) throws IOException {
           ChessboardImageDTO image = getChessboardImageDTO(path);
           MoveToResolveDTO move = MoveToResolveDTO.builder()
-                                                  .image(image)
-                                                  .lastPosition(lastPosition)
+                                                  .chessboardImage(image)
+                                                  .lastPosition(Fen.of(lastPosition.getNewPosition()))
                                                   .referenceColors(colors)
                                                   .positions(coords)
                                                   .build();
-          lastPosition = boardController.findNewPosition(move);
-          return lastPosition;
+          return boardController.findNewPosition(move);
      }
 
      private ReferenceColorsDTO getColors(String dirName, ChessboardPositionFeaturesDTO coords) throws IOException {

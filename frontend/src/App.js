@@ -273,13 +273,6 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-                <div >
-                <Webcam width={1280}
-                        height={720}
-                        audio={false}
-                        screenshotFormat="image/jpeg"
-                />
-                </div>
             </div>
         );
     }

@@ -84,6 +84,14 @@ junitPlatformTest {
     }
 }
 
+junitPlatform {
+    filters {
+        tags {
+            exclude 'effectiveness'
+        }
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '4.3.1'
 }

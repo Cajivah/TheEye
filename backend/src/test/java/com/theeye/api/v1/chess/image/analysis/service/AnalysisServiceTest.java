@@ -25,6 +25,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import tag.EffectivenessTest;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -191,6 +192,7 @@ class AnalysisServiceTest {
      }
 
      @Test
+     @EffectivenessTest
      void getChessboardOccupancy() throws IOException {
           UnresolvedMove after1e4 = UnresolvedMoveTestFactory.createAfter1e4();
           Occupancy[][] chessboardOccupancy = sut.getChessboardOccupancy(after1e4);

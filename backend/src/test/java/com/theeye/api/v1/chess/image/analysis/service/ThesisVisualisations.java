@@ -16,7 +16,6 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.opencv.calib3d.Calib3d;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -34,11 +33,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.theeye.api.v1.chess.image.analysis.service.AnalysisService.CORNERS_PATTERN_HEIGHT;
-import static com.theeye.api.v1.chess.image.analysis.service.AnalysisService.CORNERS_PATTERN_WIDTH;
 import static com.theeye.api.v1.common.util.SaveToFile.save;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ThesisVisualisations {
 
@@ -70,7 +65,7 @@ public class ThesisVisualisations {
 
      @BeforeEach
      public void setUp() throws IOException {
-          Resource resource = new ClassPathResource(filenames.get(1));
+          Resource resource = new ClassPathResource(filenames.get(0));
           byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
           BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
           ByteArrayOutputStream baos = new ByteArrayOutputStream();

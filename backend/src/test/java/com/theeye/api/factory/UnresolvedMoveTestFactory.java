@@ -9,15 +9,21 @@ import com.theeye.api.v1.chess.image.analysis.model.domain.ReferenceColors;
 import com.theeye.api.v1.chess.image.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.image.analysis.model.dto.PointDTO;
 import org.apache.commons.io.IOUtils;
-import org.opencv.core.Point;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import static com.theeye.api.factory.BoardTestFactory.*;
+import static com.theeye.api.factory.BoardTestFactory.createInitialBoard;
 
 public class UnresolvedMoveTestFactory {
 
@@ -31,11 +37,20 @@ public class UnresolvedMoveTestFactory {
      private final static CoordsMapper coordsMapper = new CoordsMapper();
      public static UnresolvedMove createAfter1e4() throws IOException {
 
-          Resource resource = new ClassPathResource("after1e4.txt");
-          String imageBase64 = IOUtils.toString(resource.getInputStream(), Charset.defaultCharset());
+//          Resource resource = new ClassPathResource("after1e4.txt");
+//          String imageBase64 = IOUtils.toString(resource.getInputStream(), Charset.defaultCharset());
+
+          Resource resource = new ClassPathResource("startingSetUp/aftere2e4.jpg");
+          byte[] imageBytes = IOUtils.toByteArray(resource.getInputStream());
+          BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageBytes));
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          ImageIO.write(bi, "jpg", baos);
+          byte[] bytes = baos.toByteArray();
+          Mat mat = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+
 
           ChessboardImage chessboardImage = ChessboardImage.builder()
-                                                           .image(imageMapper.toMat(imageBase64))
+                                                           .image(mat)
                                                            .cropped(false)
                                                            .rotated(false)
                                                            .warped(false)

@@ -25,3 +25,6 @@ Zakłada się, że użytkownik znajduje się w tym samym katalogu, w którym zna
 #### Uruchomienie
 Zakłada sie, że użytkownik jest w tym samym katalogu, w którym znajduje się ten plik.
 1. `gradle bootRun`
+#### Testy
+1. Po wykonaniu powyższych kroków, uruchomienie testów jest możliwe za pomocą 
+    `gradle junitPlatformTest`
