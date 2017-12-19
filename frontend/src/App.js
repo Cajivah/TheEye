@@ -6,6 +6,7 @@ import FenTranslator from './util/FenTranslator';
 import Modal from "react-modal";
 import PromotionChangeComponent from './partials/PromotionChangeComponent';
 import RequestFactory from "./util/RequestFactory"
+import PgnUtils from "./util/PgnUtils";
 
 
 const modalStyle = {
@@ -33,7 +34,8 @@ class App extends Component {
             tiles:null,
             corners:null,
             colors:null,
-            score:0
+            score:0,
+            moves:[{moveNumber: 1, white: '...', black: ''}]
         };
 
 
@@ -145,9 +147,10 @@ class App extends Component {
             .then(response => {
                 let fen = response.data.newPosition;
                 let move = response.data.move;
+                var newMovesArray = PgnUtils.appendMove(this.state.moves, move);
                 this.setState({
                     currentPosition: fen,
-                    //todo move as algebraic notation
+                    moves: newMovesArray
                 });
                 if(FenTranslator.isPromotion(fen)) {
                     this.openModal();
@@ -185,7 +188,12 @@ class App extends Component {
         this.setState(
             {
                 currentPosition:" ",
-                imageStage:ImageStageEnum.COORDS
+                imageStage:ImageStageEnum.COORDS,
+                tiles:null,
+                corners:null,
+                colors:null,
+                moves:[{moveNumber: 1, white: '...', black: ''}],
+                score:0
             });
         console.log('@handleFinish: Resetting setup')
     }
@@ -249,8 +257,7 @@ class App extends Component {
                                         <th>Black</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    </tbody>
+                                    <PgnViewerBody  moves={this.state.moves}/>
                                 </table>
                             </div>
                         </div>
@@ -273,5 +280,21 @@ class App extends Component {
         );
     }
 }
+
+const TableRow = ({row}) => (
+    <tr>
+        <td key={row.moveNumber}>{row.moveNumber}</td>
+        <td key={row.white}>{row.white}</td>
+        <td key={row.black}>{row.black}</td>
+    </tr>
+);
+
+const PgnViewerBody = ({moves}) = (
+    <tbody>
+        {moves.map(row => {
+            <TableRow row={row} />
+        })}
+    </tbody>
+);
 
 export default App;
