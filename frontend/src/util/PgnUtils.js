@@ -19,4 +19,12 @@ export default class PgnUtils {
     static isEmpty(str) {
         return (str.length === 0 || !str.trim());
     }
+
+    static exportPgn(moves) {
+        var data = "";
+        moves.forEach(move => {
+            data += (move.moveNumber + ". " + move.white + " " + move.black + " ")
+        });
+        return data;
+    }
 }

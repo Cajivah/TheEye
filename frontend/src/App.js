@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import PromotionChangeComponent from './partials/PromotionChangeComponent';
 import RequestFactory from "./util/RequestFactory"
 import PgnUtils from "./util/PgnUtils";
-
+import fileDownload from 'js-file-download';
 
 const modalStyle = {
     content : {
@@ -199,6 +199,7 @@ class App extends Component {
     }
 
     render() {
+        var pgnMoves = this.state.moves;
         return (
             <div className="App">
                 <Modal
@@ -257,7 +258,9 @@ class App extends Component {
                                         <th>Black</th>
                                     </tr>
                                     </thead>
-                                    <PgnViewerBody  moves={this.state.moves}/>
+                                    <tbody>
+                                    {pgnMoves.map(App.renderPgn)}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -272,29 +275,27 @@ class App extends Component {
                             </div>
                         </div>
                         <div className="col-md-3">
-                            <button type="button" className="btn btn-green" onClick={this.doScoreRequest.bind(this)}>Export game</button>
+                            <button type="button" className="btn btn-green" onClick={this.handlePgnExport.bind(this)}>Export game</button>
                         </div>
                     </div>
                 </div>
             </div>
         );
     }
+
+    handlePgnExport() {
+        fileDownload(PgnUtils.exportPgn(this.state.moves), 'game.txt');
+    }
+
+    static renderPgn(move, index) {
+        return (
+            <tr key={index}>
+                <td>{move.moveNumber}</td>
+                <td>{move.white}</td>
+                <td>{move.black}</td>
+            </tr>
+        )
+    }
 }
-
-const TableRow = ({row}) => (
-    <tr>
-        <td key={row.moveNumber}>{row.moveNumber}</td>
-        <td key={row.white}>{row.white}</td>
-        <td key={row.black}>{row.black}</td>
-    </tr>
-);
-
-const PgnViewerBody = ({moves}) = (
-    <tbody>
-        {moves.map(row => {
-            <TableRow row={row} />
-        })}
-    </tbody>
-);
 
 export default App;
