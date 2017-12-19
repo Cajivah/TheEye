@@ -1,9 +1,9 @@
 package com.theeye.api.v1.chess.board.service;
 
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
 import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.util.BoardUtils;
 import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.WHITE;
 import static com.theeye.api.v1.chess.board.model.consts.CastlingConsts.*;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.WHITE;
 import static com.theeye.api.v1.chess.board.util.BoardPredicates.*;
 
 @Service

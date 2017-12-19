@@ -1,9 +1,9 @@
 package com.theeye.api.v1.chess.board.service;
 
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.exception.MoveDetectionException;
 import com.theeye.api.v1.chess.board.model.domain.*;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.fen.model.consts.FenCodes;
 import com.theeye.api.v1.chess.fen.model.consts.LanCodes;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;

@@ -11,7 +11,6 @@ import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Base64;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;

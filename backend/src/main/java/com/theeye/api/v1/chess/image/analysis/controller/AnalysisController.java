@@ -12,7 +12,6 @@ import com.theeye.api.v1.chess.image.analysis.model.dto.PreprocessedChessboardIm
 import com.theeye.api.v1.chess.image.analysis.model.dto.ReferenceColorsDTO;
 import com.theeye.api.v1.chess.image.analysis.service.AnalysisService;
 import io.vavr.control.Try;
-import org.jetbrains.annotations.NotNull;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.Optional;
 
 
 @RestController

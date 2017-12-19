@@ -11,10 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.BLACK;
+import static com.theeye.api.v1.chess.board.model.enumeration.ChangeType.*;
 import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.NONE;
 import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.WHITE;
-import static com.theeye.api.v1.chess.board.model.enumeration.ChangeType.*;
 
 public class MoveAnalysisUtil {
 

@@ -1,13 +1,13 @@
 package com.theeye.api.v1.chess.board.service;
 
-import com.theeye.api.v1.chess.board.util.MoveAnalysisUtil;
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Coords;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
 import com.theeye.api.v1.chess.board.model.enumeration.ChangeType;
 import com.theeye.api.v1.chess.board.model.enumeration.MoveType;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
+import com.theeye.api.v1.chess.board.util.MoveAnalysisUtil;
 import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 import org.springframework.stereotype.Service;
 

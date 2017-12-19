@@ -1,10 +1,10 @@
 package com.theeye.api.v1.chess.fen.parser;
 
 import com.theeye.api.factory.BoardTestFactory;
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Board;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

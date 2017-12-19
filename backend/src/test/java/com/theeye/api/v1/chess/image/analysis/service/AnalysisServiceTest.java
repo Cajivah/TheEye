@@ -41,9 +41,7 @@ import java.util.List;
 import static com.theeye.api.v1.chess.image.analysis.service.AnalysisService.CORNERS_PATTERN_HEIGHT;
 import static com.theeye.api.v1.chess.image.analysis.service.AnalysisService.CORNERS_PATTERN_WIDTH;
 import static com.theeye.api.v1.common.util.SaveToFile.save;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(NativeLibraryExtension.class)
 class AnalysisServiceTest {

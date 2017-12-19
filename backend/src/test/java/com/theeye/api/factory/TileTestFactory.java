@@ -1,8 +1,8 @@
 package com.theeye.api.factory;
 
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Tile;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.fen.model.domain.Fen;
 import com.theeye.api.v1.chess.fen.parser.FenDecoder;
 import com.theeye.api.v1.chess.fen.parser.FenParser;

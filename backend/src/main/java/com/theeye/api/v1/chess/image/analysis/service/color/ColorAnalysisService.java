@@ -8,9 +8,10 @@ import com.theeye.api.v1.chess.image.analysis.model.domain.TileReferenceColors;
 import com.theeye.api.v1.chess.image.analysis.model.enumeration.TileColor;
 import com.theeye.api.v1.chess.image.analysis.util.CoordUtil;
 import com.theeye.api.v1.chess.image.analysis.util.TileScaler;
-import com.theeye.api.v1.common.util.SaveToFile;
-import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -64,14 +65,6 @@ public class ColorAnalysisService {
      private Scalar getWhiteOccupiedByWhiteAverage(Mat preparedImage, TileCorners[][] tilesCorners) {
           List<TileCorners> tiles =
                   getTilesFromRow(tilesCorners, TileColor.WHITE, InitialColorReferenceIndexes.ROWS_OCCUPIED_BY_WHITE);
-
-          tiles.forEach(a -> Imgproc.rectangle(preparedImage, a.getTopLeft(),a.getBottomRight(), new Scalar(0, 0, 255), 2));
-          SaveToFile.save(preparedImage, "check");
-          for (TileCorners tile : tiles) {
-               TileCorners roiCorners = limitRoi(tile, 0.25);
-               Rect rect = CoordUtil.innerRect(roiCorners);
-               Imgproc.rectangle(preparedImage, new Point(rect.x, rect.y), new Point(rect.x+rect.width, rect.y+rect.height), new Scalar(0, 0, 255), 2);
-          }
 
           return computeAverageColor(preparedImage, tiles);
      }

@@ -8,8 +8,8 @@ import org.assertj.core.util.Lists;
 
 import java.util.List;
 
-import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.*;
 import static com.theeye.api.v1.chess.board.model.enumeration.ChangeType.*;
+import static com.theeye.api.v1.chess.board.model.enumeration.PlayerColor.*;
 
 public class ChangesTestFactory {
 

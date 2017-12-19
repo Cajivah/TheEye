@@ -1,12 +1,10 @@
 package com.theeye.api.factory;
 
-import com.theeye.api.v1.chess.board.model.domain.CastlingStatus;
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.domain.Board;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 
-import static com.theeye.api.factory.CastlingStatusTestFactory.*;
-import static com.theeye.api.factory.CastlingStatusTestFactory.createAllFalse;
 import static com.theeye.api.factory.CastlingStatusTestFactory.createAllTrue;
+import static com.theeye.api.factory.CastlingStatusTestFactory.createOnlyBlackAllTrue;
 
 public class BoardTestFactory {
 

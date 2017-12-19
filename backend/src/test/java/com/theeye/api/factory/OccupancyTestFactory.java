@@ -5,9 +5,7 @@ import com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy;
 
 import java.util.stream.IntStream;
 
-import static com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy.OCCUPIED_BY_BLACK;
-import static com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy.OCCUPIED_BY_WHITE;
-import static com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy.UNOCCUPIED;
+import static com.theeye.api.v1.chess.image.analysis.model.enumeration.Occupancy.*;
 
 public class OccupancyTestFactory {
 

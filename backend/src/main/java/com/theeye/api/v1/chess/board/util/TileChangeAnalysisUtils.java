@@ -1,9 +1,9 @@
 package com.theeye.api.v1.chess.board.util;
 
-import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.board.model.consts.BoardConsts;
 import com.theeye.api.v1.chess.board.model.domain.Coords;
 import com.theeye.api.v1.chess.board.model.domain.TileChange;
+import com.theeye.api.v1.chess.board.model.enumeration.PlayerColor;
 import com.theeye.api.v1.chess.piece.model.domain.Piece;
 
 import java.util.List;
