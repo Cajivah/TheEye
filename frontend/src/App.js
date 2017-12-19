@@ -8,6 +8,7 @@ import PromotionChangeComponent from './partials/PromotionChangeComponent';
 import RequestFactory from "./util/RequestFactory"
 import PgnUtils from "./util/PgnUtils";
 import fileDownload from 'js-file-download';
+import Notifications, {notify} from 'react-notify-toast';
 
 const modalStyle = {
     content : {
@@ -103,13 +104,12 @@ class App extends Component {
                         tiles:response.data.tilesCornerPoints,
                         corners:response.data.chessboardCorners
                     });
-                console.log('@doCoordsRequest');
-                console.log(response)
+
+                notify.show('Successfully retrieved coords!', 'success', 3000)
             })
             .catch(error =>  {
                 this.handleFinish();
-                console.log('@doCoordsRequest');
-                console.log(error)
+                notify.show('Coords request failed!\nTry again.', 'error', 3000)
             })
     }
 
@@ -123,12 +123,10 @@ class App extends Component {
                         imageStage:ImageStageEnum.PLAY,
                         colors:response.data
                     });
-                console.log('@doColorsRequest');
-                console.log(response)
+                notify.show('Successfully retrieved colors!', 'success', 3000)
             })
             .catch(error => {
-                console.log('@doColorsRequest');
-                console.log(error)
+                notify.show('Failure when retrieving colors. Try again or go back to coords!', 'error', 3000)
             })
     }
 
@@ -154,12 +152,10 @@ class App extends Component {
                     this.openModal();
                 }
                 this.doScoreRequest();
-                console.log('@doMoveRequest');
-                console.log(response)
+                notify.show('Successfully detected move!', 'success', 3000)
             })
             .catch(error => {
-                console.log('@doMoveRequest');
-                console.log(error)
+                notify.show('Move detection failed, try again!', 'error', 3000)
             })
     }
 
@@ -170,16 +166,14 @@ class App extends Component {
                 this.setState({
                    score:response.data.centipawnScore
                 });
-                console.log('@doScoreRequest');
-                console.log(response);
-                console.log(this.state)
             })
             .catch(error => {
                 this.setState({
                    score:0
                 });
                 console.log('@doScoreRequest');
-                console.log(error)
+                console.log(error);
+                notify.show('Score request failed!', 'error', 3000)
             })
     }
 
@@ -194,13 +188,13 @@ class App extends Component {
                 moves:[{moveNumber: 1, white: '...', black: ''}],
                 score:0
             });
-        console.log('@handleFinish: Resetting setup')
     }
 
     render() {
         var pgnMoves = this.state.moves;
         return (
             <div className="App">
+                <Notifications />
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onRequestClose={this.closeModal}
@@ -215,11 +209,11 @@ class App extends Component {
                 <div className="container">
                     <div className="row top-margin">
                         <div className="col-md-5 col-md-offset-2">
-                            <button className={this.state.imageStage === ImageStageEnum.COORDS ? "btn btn-green" : "btn"}
+                            <button className={this.state.imageStage === ImageStageEnum.COORDS ? "btn btn-green" : "btn"} disabled={true}
                                     title="Take a snapshot of empty chessboard to let us configure tiles coordinates">Configure coords</button>
-                            <button className={this.state.imageStage === ImageStageEnum.COLORS ? "btn btn-green btn-following" : "btn btn-grey btn-following"}
+                            <button className={this.state.imageStage === ImageStageEnum.COLORS ? "btn btn-green btn-following" : "btn btn-grey btn-following"} disabled={true}
                                     title="Take a snapshot of board with all pieces set up to let us get reference color samples">Configure colors</button>
-                            <button className={this.state.imageStage === ImageStageEnum.PLAY ? "btn btn-green btn-following" : "btn btn-grey btn-following"}
+                            <button className={this.state.imageStage === ImageStageEnum.PLAY ? "btn btn-green btn-following" : "btn btn-grey btn-following"} disabled={true}
                                     title="Take a snapshot every time you make a move">Play</button>
                         </div>
                         <div className="col-md-3">

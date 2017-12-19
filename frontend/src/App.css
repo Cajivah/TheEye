@@ -80,6 +80,9 @@ button.top-nav-button {
 
 }
 
+button.no-hoover:hover {
+}
+
 div.fen-text {
   position: absolute;
   width: 450px;

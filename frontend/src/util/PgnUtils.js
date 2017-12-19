@@ -3,15 +3,16 @@ export default class PgnUtils {
 
     static appendMove(moves, move) {
         var lastLeg = moves.pop();
-
         if(lastLeg.white === PENDING) {
             lastLeg.white = move;
             lastLeg.black = PENDING;
             moves.push(lastLeg);
-        } else {
+        } else if(lastLeg.black === PENDING){
             lastLeg.black = move;
             var newLeg = {moveNumber: lastLeg.moveNumber+1, white:PENDING, black:''};
             moves.push(lastLeg, newLeg);
+        } else {
+            moves.push(lastLeg);
         }
         return moves;
     }
