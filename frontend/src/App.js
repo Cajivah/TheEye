@@ -290,7 +290,7 @@ class App extends Component {
         return (
             <tr key={index}>
                 <td>{move.moveNumber}</td>
-                <td>{move.white}</td>
+                <td className="middle-border">{move.white}</td>
                 <td>{move.black}</td>
             </tr>
         )
