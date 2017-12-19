@@ -16,6 +16,5 @@ public class PreprocessedChessboardImageDTO {
      @NotNull
      PointDTO[][] tilesCornerPoints;
 
-     @NotNull
      PointDTO[] chessboardCorners;
 }

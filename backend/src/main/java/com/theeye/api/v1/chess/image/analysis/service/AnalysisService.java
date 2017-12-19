@@ -157,7 +157,9 @@ public class AnalysisService {
 
      public Occupancy[][] getChessboardOccupancy(UnresolvedMove unresolvedMove) {
           Mat image = unresolvedMove.getChessboardImage().getImage();
-          Mat trimmed = trimToCorners(image, unresolvedMove.getChessboardCorners());
+          Mat trimmed = unresolvedMove.getChessboardCorners() == null
+                  ? image
+                  : trimToCorners(image, unresolvedMove.getChessboardCorners());
           Mat preprocessed = doPreprocessing(trimmed);
           Scalar[][] tilesColors = colorAnalysisService.getTilesColorsInPlay(preprocessed, unresolvedMove.getTilesCorners());
           return determineOccupancy(tilesColors, unresolvedMove.getReferenceColors());

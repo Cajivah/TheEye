@@ -84,6 +84,9 @@ public class CoordsMapper {
      }
 
      public Point[] toPoints(PointDTO[] pointDTOs) {
+          if(pointDTOs == null) {
+               return null;
+          }
           int count = pointDTOs.length;
           Point[] points = new Point[count];
           for (int i = 0; i < count; ++i) {
@@ -94,5 +97,15 @@ public class CoordsMapper {
 
      private Point toPoint(PointDTO pointDTO) {
           return new Point(pointDTO.getX(), pointDTO.getY());
+     }
+
+     public ChessboardPositionFeaturesDTO toChessboardFeaturesDTO(Point[][] points) {
+          if(points[0][0].y > points[1][0].y) {
+               reverseInnerCorners(points);
+          }
+          return ChessboardPositionFeaturesDTO.builder()
+                                              .tilesCornerPoints(toPointsDTO(points))
+                                              .chessboardCorners(null)
+                                              .build();
      }
 }

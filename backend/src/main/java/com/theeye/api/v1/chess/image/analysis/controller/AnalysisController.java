@@ -12,6 +12,7 @@ import com.theeye.api.v1.chess.image.analysis.model.dto.PreprocessedChessboardIm
 import com.theeye.api.v1.chess.image.analysis.model.dto.ReferenceColorsDTO;
 import com.theeye.api.v1.chess.image.analysis.service.AnalysisService;
 import io.vavr.control.Try;
+import org.jetbrains.annotations.NotNull;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 @RestController
@@ -52,12 +54,22 @@ public class AnalysisController {
              @RequestBody @Validated ChessboardImageDTO emptyChessboard) {
           Mat mat = Try.of(() -> imageMapper.toMat(emptyChessboard.getBase64Image()))
                        .getOrElseThrow(PatternNotFoundException::new);
-          Mat lines = analysisService.detectLines(mat);
-          Point[] roiCorners = analysisService.findCorners(mat, lines);
-          Mat trimmed = analysisService.trimToCorners(mat, roiCorners);
-          Mat rotated = analysisService.doPreprocessing(trimmed);
-          Point[][] points = analysisService.detectAllTilesCornerPoints(rotated);
-          return coordsMapper.toChessboardFeaturesDTO(roiCorners, points);
+          Point[] corners = Try.of(() -> analysisService.detectLines(mat))
+                                       .map(lines -> analysisService.findCorners(mat, lines))
+                                       .getOrNull();
+          ChessboardPositionFeaturesDTO coords =
+                  Try.of(() -> analysisService.trimToCorners(mat, corners))
+                     .mapTry(analysisService::doPreprocessing)
+                     .mapTry(analysisService::detectAllTilesCornerPoints)
+                     .mapTry(points -> coordsMapper.toChessboardFeaturesDTO(corners, points))
+                     .getOrNull();
+
+          return coords != null
+                  ? coords
+                  :Try.of(() -> analysisService.doPreprocessing(mat))
+                      .mapTry(analysisService::detectAllTilesCornerPoints)
+                      .mapTry(coordsMapper::toChessboardFeaturesDTO)
+                      .getOrElseThrow(PatternNotFoundException::new);
      }
 
      @PostMapping("/colors")
@@ -66,7 +78,9 @@ public class AnalysisController {
 
           Mat image = imageMapper.toMat(preprocessedChessboardImage.getImage().getBase64Image());
           Point[] roiCorners = coordsMapper.toPoints(preprocessedChessboardImage.getChessboardCorners());
-          Mat trimmed = analysisService.trimToCorners(image, roiCorners);
+          Mat trimmed = roiCorners == null
+                  ? image
+                  : analysisService.trimToCorners(image, roiCorners);
 
 
           Mat rotated = analysisService.doPreprocessing(trimmed);

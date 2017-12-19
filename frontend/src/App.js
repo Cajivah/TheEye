@@ -88,7 +88,6 @@ class App extends Component {
                 break;
             case ImageStageEnum.PLAY:
                 this.doMoveRequest(image);
-                this.doScoreRequest();
                 break;
         }
     }
@@ -154,6 +153,7 @@ class App extends Component {
                 if(FenTranslator.isPromotion(fen)) {
                     this.openModal();
                 }
+                this.doScoreRequest();
                 console.log('@doMoveRequest');
                 console.log(response)
             })
@@ -244,7 +244,9 @@ class App extends Component {
                                     <Webcam width={253}
                                             height={187}
                                             audio={false}
-                                            screenshotFormat="image/jpeg"/>
+                                            screenshotFormat="image/jpeg"
+
+                                            ref={this.setRef}/>
                                 </div>
                             </div>
                             <div className="moves-holder">
@@ -282,7 +284,6 @@ class App extends Component {
                         height={720}
                         audio={false}
                         screenshotFormat="image/jpeg"
-                        ref={this.setRef}
                 />
                 </div>
             </div>

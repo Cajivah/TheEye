@@ -13,5 +13,5 @@ public class MoveToResolveDTO {
      private ChessboardImageDTO chessboardImage;
      private ChessboardPositionFeaturesDTO positions;
      private ReferenceColorsDTO referenceColors;
-     private String lastPosition;
+     private Fen lastPosition;
 }

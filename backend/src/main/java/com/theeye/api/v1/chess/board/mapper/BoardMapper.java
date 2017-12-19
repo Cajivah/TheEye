@@ -25,10 +25,6 @@ public abstract class BoardMapper {
           return fenDecoder.decode(fen);
      }
 
-     public Board toBoard(String fen) {
-          return toBoard(Fen.of(fen));
-     }
-
      public Fen toFEN(Board board) {
           return fenEncoder.encode(board);
      }

@@ -38,7 +38,9 @@ export default class RequestFactory {
             chessboardImage: {
                 base64Image: image
             },
-            lastPosition: fen,
+            lastPosition: {
+                fenDescription: fen
+            },
             referenceColors: colors,
             positions: {
                 tilesCornerPoints: tiles,
