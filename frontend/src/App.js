@@ -44,7 +44,6 @@ class App extends Component {
         this.computeAdvantageHeight = this.computeAdvantageHeight.bind(this);
     }
 
-
     computeAdvantageHeight() {
         const score = this.state.score < -8
             ? -8

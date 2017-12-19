@@ -21,7 +21,14 @@ export default class PgnUtils {
     }
 
     static exportPgn(moves) {
-        var data = "";
+        var data =
+            "[Event \"\"] \n" +
+            "[Site \"\"] \n" +
+            "[Date \"\"] \n" +
+            "[Round \"\"] \n" +
+            "[White \"\"] \n" +
+            "[Black \"\"] \n" +
+            "[Result \"\"] \n";
         moves.forEach(move => {
             data += (move.moveNumber + ". " + move.white + " " + move.black + " ")
         });
