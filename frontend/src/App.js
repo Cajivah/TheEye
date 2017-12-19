@@ -253,7 +253,7 @@ class App extends Component {
                                     <thead className="moves-table-head">
                                     <tr>
                                         <th>Move</th>
-                                        <th className="middle-border">White</th>
+                                        <th>White</th>
                                         <th>Black</th>
                                     </tr>
                                     </thead>
