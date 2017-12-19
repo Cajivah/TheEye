@@ -34,4 +34,9 @@ public class Rook extends Piece {
                   ? PieceType.ROOK_WHITE
                   : PieceType.ROOK_BLACK;
      }
+
+     @Override
+     public Piece copy() {
+          return Rook.of(this.getOwner());
+     }
 }

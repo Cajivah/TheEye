@@ -18,4 +18,6 @@ public abstract class Piece {
      public abstract char getFenCode();
 
      public abstract PieceType getPieceType();
+
+     public abstract Piece copy();
 }

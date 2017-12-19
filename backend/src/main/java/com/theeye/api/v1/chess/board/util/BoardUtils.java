@@ -13,11 +13,15 @@ public class BoardUtils {
                int cols = oldTiles[i].length;
                Tile[] newTilesRow = new Tile[cols];
                for (int j = 0; j < cols; j++) {
-                    newTilesRow[j] = oldTiles[i][j];
+                    newTilesRow[j] = copyTile(oldTiles[i][j]);
                }
                newTiles[i] = newTilesRow;
           }
           return newTiles;
+     }
+
+     private static Tile copyTile(Tile tile) {
+          return Tile.of(tile.getPiece().copy());
      }
 
      public static boolean coordsValid(Coords coords) {

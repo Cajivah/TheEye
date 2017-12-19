@@ -35,4 +35,8 @@ public class Knight extends Piece {
                   : PieceType.KNIGHT_BLACK;
      }
 
+     @Override
+     public Piece copy() {
+          return Knight.of(this.getOwner());
+     }
 }
